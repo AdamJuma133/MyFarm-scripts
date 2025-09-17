@@ -2,18 +2,21 @@ import React, { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Upload, X, Image as ImageIcon } from 'lucide-react';
+import { Upload, X, Image as ImageIcon, Camera } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { Camera as CapacitorCamera, CameraResultType, CameraSource } from '@capacitor/camera';
 
 interface FileUploadProps {
   onFileSelect: (file: File) => void;
   onFileRemove: () => void;
   selectedFile?: File;
   className?: string;
+  showCamera?: boolean;
 }
 
-export function FileUpload({ onFileSelect, onFileRemove, selectedFile, className }: FileUploadProps) {
+export function FileUpload({ onFileSelect, onFileRemove, selectedFile, className, showCamera = true }: FileUploadProps) {
   const [preview, setPreview] = useState<string | null>(null);
+  const [isCapturing, setIsCapturing] = useState(false);
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     const file = acceptedFiles[0];
@@ -32,6 +35,35 @@ export function FileUpload({ onFileSelect, onFileRemove, selectedFile, className
   const handleRemove = () => {
     setPreview(null);
     onFileRemove();
+  };
+
+  const handleCameraCapture = async () => {
+    try {
+      setIsCapturing(true);
+      
+      const image = await CapacitorCamera.getPhoto({
+        quality: 90,
+        allowEditing: false,
+        resultType: CameraResultType.DataUrl,
+        source: CameraSource.Camera,
+      });
+
+      if (image.dataUrl) {
+        // Convert data URL to File object
+        const response = await fetch(image.dataUrl);
+        const blob = await response.blob();
+        const file = new File([blob], `crop-${Date.now()}.jpg`, { type: 'image/jpeg' });
+        
+        onFileSelect(file);
+        setPreview(image.dataUrl);
+      }
+    } catch (error) {
+      console.error('Error capturing image:', error);
+      // Fallback for web or if camera fails - just show message
+      alert('Camera not available. Please use the upload option instead.');
+    } finally {
+      setIsCapturing(false);
+    }
   };
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -88,14 +120,37 @@ export function FileUpload({ onFileSelect, onFileRemove, selectedFile, className
           )}
         </div>
         <h3 className="text-lg font-semibold mb-2">
-          {isDragActive ? 'Drop your image here' : 'Upload Crop Image'}
+          {isDragActive ? 'Drop your image here' : 'Capture or Upload Crop Image'}
         </h3>
         <p className="text-muted-foreground mb-4">
-          Drag and drop or click to select an image of your crop
+          Take a photo with your camera or upload an existing image
         </p>
-        <Button variant="outline">
-          Select Image
-        </Button>
+        <div className="flex gap-2 flex-col sm:flex-row">
+          {showCamera && (
+            <Button 
+              variant="default" 
+              onClick={handleCameraCapture}
+              disabled={isCapturing}
+              type="button"
+            >
+              {isCapturing ? (
+                <>
+                  <Upload className="h-4 w-4 mr-2 animate-spin" />
+                  Capturing...
+                </>
+              ) : (
+                <>
+                  <Camera className="h-4 w-4 mr-2" />
+                  Take Photo
+                </>
+              )}
+            </Button>
+          )}
+          <Button variant="outline" type="button">
+            <Upload className="h-4 w-4 mr-2" />
+            Select Image
+          </Button>
+        </div>
       </div>
     </Card>
   );
