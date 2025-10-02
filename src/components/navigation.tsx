@@ -1,7 +1,8 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Scan, Book, Sprout } from 'lucide-react';
+import { Scan, Book, Sprout, History } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 interface NavigationProps {
   activeTab: 'analyzer' | 'library';
@@ -9,6 +10,8 @@ interface NavigationProps {
 }
 
 export function Navigation({ activeTab, onTabChange }: NavigationProps) {
+  const navigate = useNavigate();
+  
   return (
     <Card className="mb-6">
       <div className="p-4">
@@ -40,6 +43,14 @@ export function Navigation({ activeTab, onTabChange }: NavigationProps) {
           >
             <Book className="h-4 w-4" />
             Disease Library
+          </Button>
+          <Button
+            variant="outline"
+            onClick={() => navigate('/history')}
+            className="flex items-center gap-2"
+          >
+            <History className="h-4 w-4" />
+            History
           </Button>
         </div>
       </div>

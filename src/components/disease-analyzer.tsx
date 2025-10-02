@@ -32,10 +32,32 @@ export function DiseaseAnalyzer() {
       const randomDisease = diseases[Math.floor(Math.random() * diseases.length)];
       const confidence = Math.random() * 0.4 + 0.6; // 60-100% confidence
       
-      setAnalysisResult({
+      const result = {
         disease: randomDisease,
         confidence
-      });
+      };
+      
+      setAnalysisResult(result);
+      
+      // Save to history
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const historyItem = {
+          id: Date.now().toString(),
+          timestamp: Date.now(),
+          imageName: file.name,
+          imageUrl: e.target?.result as string,
+          disease: randomDisease.name,
+          type: randomDisease.type,
+          confidence: `${Math.round(confidence * 100)}%`
+        };
+        
+        const existingHistory = localStorage.getItem('myfarm-scan-history');
+        const history = existingHistory ? JSON.parse(existingHistory) : [];
+        history.unshift(historyItem);
+        localStorage.setItem('myfarm-scan-history', JSON.stringify(history));
+      };
+      reader.readAsDataURL(file);
     } catch (err) {
       setError('Failed to analyze image. Please try again.');
     } finally {
