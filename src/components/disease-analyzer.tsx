@@ -10,10 +10,12 @@ import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 
 interface AnalysisResult {
-  disease: Disease;
+  disease: Disease | null;
   confidence: number;
   detectedCrop: string;
   aiConfidence: number;
+  isHealthy: boolean;
+  diseaseName?: string;
 }
 
 export function DiseaseAnalyzer() {
@@ -52,31 +54,56 @@ export function DiseaseAnalyzer() {
         throw new Error('No result from AI analysis');
       }
 
-      // Find matching disease based on detected crop and disease type
       const detectedCrop = aiResult.cropType;
-      const detectedDiseaseType = aiResult.diseaseType || 'fungal';
+      const isHealthy = aiResult.isHealthy;
       
-      // Filter diseases that match the detected crop and type
-      const matchingDiseases = diseases.filter(d => 
-        d.crops.some(crop => crop.toLowerCase().includes(detectedCrop.toLowerCase())) &&
-        d.type === detectedDiseaseType
-      );
+      let selectedDisease: Disease | null = null;
+      let matchConfidence = aiResult.confidence;
       
-      // If no exact match, find diseases for the crop
-      const cropDiseases = matchingDiseases.length > 0 
-        ? matchingDiseases 
-        : diseases.filter(d => d.crops.some(crop => crop.toLowerCase().includes(detectedCrop.toLowerCase())));
+      // Only search for disease if crop is not healthy
+      if (!isHealthy) {
+        const detectedDiseaseType = aiResult.diseaseType || 'fungal';
+        const diseaseName = aiResult.diseaseName;
+        
+        // Try to find matching disease in our database
+        if (diseaseName) {
+          // First try exact match by name
+          const exactMatch = diseases.find(d => 
+            d.name.toLowerCase().includes(diseaseName.toLowerCase()) ||
+            diseaseName.toLowerCase().includes(d.name.toLowerCase())
+          );
+          
+          if (exactMatch) {
+            selectedDisease = exactMatch;
+          }
+        }
+        
+        // If no exact match, try by crop and type
+        if (!selectedDisease) {
+          const matchingDiseases = diseases.filter(d => 
+            d.crops.some(crop => crop.toLowerCase().includes(detectedCrop.toLowerCase())) &&
+            d.type === detectedDiseaseType
+          );
+          
+          if (matchingDiseases.length > 0) {
+            selectedDisease = matchingDiseases[0];
+          } else {
+            // Fallback to any disease for this crop
+            const cropDiseases = diseases.filter(d => 
+              d.crops.some(crop => crop.toLowerCase().includes(detectedCrop.toLowerCase()))
+            );
+            selectedDisease = cropDiseases.length > 0 ? cropDiseases[0] : null;
+          }
+        }
+      }
       
-      // Select a disease or fall back to random
-      const selectedDisease = cropDiseases.length > 0
-        ? cropDiseases[Math.floor(Math.random() * cropDiseases.length)]
-        : diseases[Math.floor(Math.random() * diseases.length)];
-      
-      const result = {
+      const result: AnalysisResult = {
         disease: selectedDisease,
-        confidence: Math.random() * 0.2 + 0.75, // 75-95% for matching
+        confidence: matchConfidence,
         detectedCrop: detectedCrop,
-        aiConfidence: aiResult.confidence
+        aiConfidence: aiResult.confidence,
+        isHealthy: isHealthy,
+        diseaseName: aiResult.diseaseName
       };
       
       setAnalysisResult(result);
@@ -89,8 +116,8 @@ export function DiseaseAnalyzer() {
           timestamp: Date.now(),
           imageName: file.name,
           imageUrl: e.target?.result as string,
-          disease: selectedDisease.name,
-          type: selectedDisease.type,
+          disease: isHealthy ? 'Healthy' : (selectedDisease?.name || aiResult.diseaseName || 'Unknown Disease'),
+          type: isHealthy ? 'healthy' : (selectedDisease?.type || aiResult.diseaseType || 'unknown'),
           confidence: `${Math.round(result.confidence * 100)}%`,
           crop: detectedCrop
         };
@@ -102,7 +129,11 @@ export function DiseaseAnalyzer() {
       };
       historyReader.readAsDataURL(file);
       
-      toast.success(`Crop identified: ${detectedCrop}`);
+      if (isHealthy) {
+        toast.success(`${detectedCrop} appears healthy!`);
+      } else {
+        toast.success(`${detectedCrop} analyzed - disease detected`);
+      }
     } catch (err) {
       console.error('Analysis error:', err);
       const errorMessage = err instanceof Error ? err.message : 'Failed to analyze image. Please try again.';
@@ -207,68 +238,97 @@ export function DiseaseAnalyzer() {
                 </div>
               </div>
               
-              <div>
-                <div className="flex items-center gap-2 mb-2">
-                  <h3 className="text-xl font-semibold">{analysisResult.disease.name}</h3>
-                  <Badge 
-                    variant={getSeverityColor(analysisResult.disease.severity)}
-                    className="flex items-center gap-1"
-                  >
-                    {getSeverityIcon(analysisResult.disease.severity)}
-                    {analysisResult.disease.severity} severity
-                  </Badge>
-                  <Badge variant="secondary">
-                    {analysisResult.disease.type}
-                  </Badge>
-                </div>
-                <p className="text-muted-foreground">{analysisResult.disease.description}</p>
-              </div>
+              <div className="space-y-4">
+                {analysisResult.isHealthy ? (
+                  <div className="text-center py-6">
+                    <div className="inline-flex items-center gap-2 mb-4">
+                      <CheckCircle className="h-12 w-12 text-success" />
+                    </div>
+                    <h3 className="text-2xl font-bold text-success mb-2">Crop is Healthy!</h3>
+                    <p className="text-muted-foreground">
+                      No disease symptoms detected in your {analysisResult.detectedCrop}. Keep up the good practices!
+                    </p>
+                  </div>
+                ) : (
+                  <>
+                    <div>
+                      <div className="flex items-center gap-2 mb-2">
+                        <XCircle className="h-6 w-6 text-destructive" />
+                        <h3 className="text-xl font-semibold text-destructive">
+                          Infected with {analysisResult.diseaseName || analysisResult.disease?.name || 'Disease'}
+                        </h3>
+                      </div>
+                      {analysisResult.disease && (
+                        <>
+                          <div className="flex items-center gap-2 mb-2">
+                            <Badge 
+                              variant={getSeverityColor(analysisResult.disease.severity)}
+                              className="flex items-center gap-1"
+                            >
+                              {getSeverityIcon(analysisResult.disease.severity)}
+                              {analysisResult.disease.severity} severity
+                            </Badge>
+                            <Badge variant="secondary">
+                              {analysisResult.disease.type}
+                            </Badge>
+                          </div>
+                          <p className="text-muted-foreground">{analysisResult.disease.description}</p>
+                        </>
+                      )}
+                    </div>
 
-              <div>
-                <h4 className="font-semibold mb-2">Affected Crops</h4>
-                <div className="flex flex-wrap gap-2">
-                  {analysisResult.disease.crops.map((crop) => (
-                    <Badge key={crop} variant="outline">
-                      {crop}
-                    </Badge>
-                  ))}
-                </div>
-              </div>
+                    {analysisResult.disease && (
+                      <>
+                        <div>
+                          <h4 className="font-semibold mb-2">Affected Crops</h4>
+                          <div className="flex flex-wrap gap-2">
+                            {analysisResult.disease.crops.map((crop) => (
+                              <Badge key={crop} variant="outline">
+                                {crop}
+                              </Badge>
+                            ))}
+                          </div>
+                        </div>
 
-              <div>
-                <h4 className="font-semibold mb-2">Symptoms</h4>
-                <ul className="space-y-1">
-                  {analysisResult.disease.symptoms.map((symptom, index) => (
-                    <li key={index} className="flex items-start gap-2">
-                      <span className="text-muted-foreground">•</span>
-                      <span className="text-sm">{symptom}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+                        <div>
+                          <h4 className="font-semibold mb-2">Symptoms</h4>
+                          <ul className="space-y-1">
+                            {analysisResult.disease.symptoms.map((symptom, index) => (
+                              <li key={index} className="flex items-start gap-2">
+                                <span className="text-muted-foreground">•</span>
+                                <span className="text-sm">{symptom}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
 
-              <div>
-                <h4 className="font-semibold mb-2">Treatment Recommendations</h4>
-                <ul className="space-y-1">
-                  {analysisResult.disease.treatment.map((treatment, index) => (
-                    <li key={index} className="flex items-start gap-2">
-                      <span className="text-success">✓</span>
-                      <span className="text-sm">{treatment}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+                        <div>
+                          <h4 className="font-semibold mb-2">Treatment Recommendations</h4>
+                          <ul className="space-y-1">
+                            {analysisResult.disease.treatment.map((treatment, index) => (
+                              <li key={index} className="flex items-start gap-2">
+                                <span className="text-success">✓</span>
+                                <span className="text-sm">{treatment}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
 
-              <div>
-                <h4 className="font-semibold mb-2">Prevention Measures</h4>
-                <ul className="space-y-1">
-                  {analysisResult.disease.prevention.map((prevention, index) => (
-                    <li key={index} className="flex items-start gap-2">
-                      <span className="text-primary">→</span>
-                      <span className="text-sm">{prevention}</span>
-                    </li>
-                  ))}
-                </ul>
+                        <div>
+                          <h4 className="font-semibold mb-2">Prevention Measures</h4>
+                          <ul className="space-y-1">
+                            {analysisResult.disease.prevention.map((prevention, index) => (
+                              <li key={index} className="flex items-start gap-2">
+                                <span className="text-primary">→</span>
+                                <span className="text-sm">{prevention}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </>
+                    )}
+                  </>
+                )}
               </div>
             </div>
 

@@ -37,14 +37,14 @@ serve(async (req) => {
         messages: [
           {
             role: "system",
-            content: "You are an expert agricultural AI that identifies crop types and diseases from images. Analyze the image and provide: 1) The specific crop type (e.g., 'Tomato', 'Wheat', 'Rice', 'Corn', 'Potato'), 2) Whether you detect any disease signs, 3) If disease is present, identify the disease type (bacterial, viral, fungal, or nutritional deficiency). Be specific and accurate. If you cannot identify the crop or disease with confidence, say so."
+            content: "You are an expert agricultural AI that identifies crop types and diseases from images. Analyze the image carefully and provide: 1) The specific crop type (e.g., 'Tomato', 'Wheat', 'Rice', 'Corn', 'Potato'), 2) Whether the crop appears HEALTHY or has DISEASE symptoms, 3) If disease is present, identify the specific disease name and type (bacterial, viral, fungal, or nutritional deficiency). Be accurate and specific about the disease name if you detect one."
           },
           {
             role: "user",
             content: [
               {
                 type: "text",
-                text: "Identify the crop type in this image and check if there are any disease symptoms visible. Return a JSON object with: cropType (string), hasDisease (boolean), diseaseType (string or null: 'bacterial', 'viral', 'fungal', 'nutritional', or null), and confidence (number 0-1)."
+                text: "Analyze this crop image and determine: 1) The crop type, 2) If the crop is healthy or diseased, 3) If diseased, identify the specific disease name and type. Return a JSON object with: cropType (string), isHealthy (boolean), diseaseName (string or null - specific disease name if detected), diseaseType (string or null: 'bacterial', 'viral', 'fungal', 'nutritional'), and confidence (number 0-1)."
               },
               {
                 type: "image_url",
@@ -68,13 +68,17 @@ serve(async (req) => {
                     type: "string",
                     description: "The specific crop identified (e.g., 'Tomato', 'Wheat', 'Rice')"
                   },
-                  hasDisease: {
+                  isHealthy: {
                     type: "boolean",
-                    description: "Whether disease symptoms are visible"
+                    description: "Whether the crop appears healthy (true) or diseased (false)"
+                  },
+                  diseaseName: {
+                    type: "string",
+                    description: "Specific disease name if detected (e.g., 'Late Blight', 'Powdery Mildew')"
                   },
                   diseaseType: {
                     type: "string",
-                    enum: ["bacterial", "viral", "fungal", "nutritional", "unknown"],
+                    enum: ["bacterial", "viral", "fungal", "nutritional"],
                     description: "Type of disease if present"
                   },
                   confidence: {
@@ -86,7 +90,7 @@ serve(async (req) => {
                     description: "Brief observations about the crop condition"
                   }
                 },
-                required: ["cropType", "hasDisease", "confidence"],
+                required: ["cropType", "isHealthy", "confidence"],
                 additionalProperties: false
               }
             }
