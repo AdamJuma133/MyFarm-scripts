@@ -13,6 +13,7 @@ interface ScanHistory {
   disease: string;
   type: string;
   confidence: string;
+  crop?: string;
 }
 
 const History = () => {
@@ -83,7 +84,10 @@ const History = () => {
                   />
                 </div>
                 <CardHeader>
-                  <CardTitle className="text-lg">{item.disease}</CardTitle>
+                  <CardTitle className="text-lg flex items-center gap-2">
+                    {item.crop && <Badge variant="outline">🌾 {item.crop}</Badge>}
+                    {item.disease}
+                  </CardTitle>
                   <CardDescription className="flex items-center gap-2">
                     <Clock className="h-3 w-3" />
                     {new Date(item.timestamp).toLocaleString()}

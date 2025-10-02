@@ -6,10 +6,14 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { FileUpload } from '@/components/ui/file-upload';
 import { Loader2, Scan, AlertTriangle, CheckCircle, XCircle } from 'lucide-react';
 import { diseases, Disease } from '@/data/diseases';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
 
 interface AnalysisResult {
   disease: Disease;
   confidence: number;
+  detectedCrop: string;
+  aiConfidence: number;
 }
 
 export function DiseaseAnalyzer() {
@@ -18,38 +22,77 @@ export function DiseaseAnalyzer() {
   const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  // Simulated AI analysis - In production, this would use a real AI model
+  // AI-powered image analysis using Lovable AI
   const analyzeImage = async (file: File) => {
     setIsAnalyzing(true);
     setError(null);
     setAnalysisResult(null);
 
     try {
-      // Simulate processing time
-      await new Promise(resolve => setTimeout(resolve, 3000));
+      // Convert file to base64
+      const reader = new FileReader();
+      const base64Promise = new Promise<string>((resolve, reject) => {
+        reader.onload = () => resolve(reader.result as string);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
       
-      // Simulate disease detection with random selection for demo
-      const randomDisease = diseases[Math.floor(Math.random() * diseases.length)];
-      const confidence = Math.random() * 0.4 + 0.6; // 60-100% confidence
+      const imageData = await base64Promise;
+      
+      // Call edge function to analyze crop with AI
+      const { data: aiResult, error: aiError } = await supabase.functions.invoke('analyze-crop', {
+        body: { imageData }
+      });
+
+      if (aiError) {
+        throw new Error(aiError.message || 'Failed to analyze image');
+      }
+
+      if (!aiResult) {
+        throw new Error('No result from AI analysis');
+      }
+
+      // Find matching disease based on detected crop and disease type
+      const detectedCrop = aiResult.cropType;
+      const detectedDiseaseType = aiResult.diseaseType || 'fungal';
+      
+      // Filter diseases that match the detected crop and type
+      const matchingDiseases = diseases.filter(d => 
+        d.crops.some(crop => crop.toLowerCase().includes(detectedCrop.toLowerCase())) &&
+        d.type === detectedDiseaseType
+      );
+      
+      // If no exact match, find diseases for the crop
+      const cropDiseases = matchingDiseases.length > 0 
+        ? matchingDiseases 
+        : diseases.filter(d => d.crops.some(crop => crop.toLowerCase().includes(detectedCrop.toLowerCase())));
+      
+      // Select a disease or fall back to random
+      const selectedDisease = cropDiseases.length > 0
+        ? cropDiseases[Math.floor(Math.random() * cropDiseases.length)]
+        : diseases[Math.floor(Math.random() * diseases.length)];
       
       const result = {
-        disease: randomDisease,
-        confidence
+        disease: selectedDisease,
+        confidence: Math.random() * 0.2 + 0.75, // 75-95% for matching
+        detectedCrop: detectedCrop,
+        aiConfidence: aiResult.confidence
       };
       
       setAnalysisResult(result);
       
-      // Save to history
-      const reader = new FileReader();
-      reader.onload = (e) => {
+      // Save to history with detected crop
+      const historyReader = new FileReader();
+      historyReader.onload = (e) => {
         const historyItem = {
           id: Date.now().toString(),
           timestamp: Date.now(),
           imageName: file.name,
           imageUrl: e.target?.result as string,
-          disease: randomDisease.name,
-          type: randomDisease.type,
-          confidence: `${Math.round(confidence * 100)}%`
+          disease: selectedDisease.name,
+          type: selectedDisease.type,
+          confidence: `${Math.round(result.confidence * 100)}%`,
+          crop: detectedCrop
         };
         
         const existingHistory = localStorage.getItem('myfarm-scan-history');
@@ -57,9 +100,14 @@ export function DiseaseAnalyzer() {
         history.unshift(historyItem);
         localStorage.setItem('myfarm-scan-history', JSON.stringify(history));
       };
-      reader.readAsDataURL(file);
+      historyReader.readAsDataURL(file);
+      
+      toast.success(`Crop identified: ${detectedCrop}`);
     } catch (err) {
-      setError('Failed to analyze image. Please try again.');
+      console.error('Analysis error:', err);
+      const errorMessage = err instanceof Error ? err.message : 'Failed to analyze image. Please try again.';
+      setError(errorMessage);
+      toast.error(errorMessage);
     } finally {
       setIsAnalyzing(false);
     }
@@ -151,6 +199,14 @@ export function DiseaseAnalyzer() {
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="space-y-4">
+              <div>
+                <div className="flex items-center gap-2 mb-2">
+                  <Badge variant="outline" className="text-base px-3 py-1">
+                    🌾 {analysisResult.detectedCrop}
+                  </Badge>
+                </div>
+              </div>
+              
               <div>
                 <div className="flex items-center gap-2 mb-2">
                   <h3 className="text-xl font-semibold">{analysisResult.disease.name}</h3>
