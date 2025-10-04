@@ -1,0 +1,63 @@
+{
+  "app": {
+    "title": "MyFarm",
+    "subtitle": "Kitambulisho cha Magonjwa ya Mazao kwa AI",
+    "description": "Linda mazao yako kwa teknolojia ya hali ya juu ya AI. Pakia picha za mimea yako kutambua magonjwa mara moja na kupata mapendekezo ya matibabu ya kitaalamu.",
+    "footer": "© 2024 MyFarm - Kuwapa wakulima nguvu kwa teknolojia ya AI"
+  },
+  "navigation": {
+    "diseaseAnalyzer": "Kichanganuzi cha Magonjwa",
+    "diseaseLibrary": "Maktaba ya Magonjwa",
+    "history": "Historia"
+  },
+  "analyzer": {
+    "title": "Uchanganuzi wa Magonjwa ya Mazao kwa AI",
+    "analyzeCrop": "Chunguza Picha ya Zao",
+    "analyzing": "Inachambua picha yako ya zao kwa teknolojia ya AI...",
+    "analysisResults": "Matokeo ya Uchanganuzi",
+    "confidence": "Uaminifu",
+    "healthy": "Zao ni Afya!",
+    "healthyDescription": "Hakuna dalili za ugonjwa zinazopatikana katika {crop} yako. Endelea na mazoezi mazuri!",
+    "infectedWith": "Imeambukizwa na {disease}",
+    "severity": "ukali",
+    "affectedCrops": "Mazao Yaliyoathiriwa",
+    "symptoms": "Dalili",
+    "treatment": "Mapendekezo ya Matibabu",
+    "prevention": "Hatua za Kuzuia",
+    "analyzeAnother": "Chunguza Picha Nyingine"
+  },
+  "library": {
+    "title": "Maktaba ya Magonjwa",
+    "search": "Tafuta magonjwa, mazao, au aina...",
+    "backToLibrary": "← Rudi kwenye Maktaba",
+    "all": "Yote",
+    "fungal": "Kuvu",
+    "bacterial": "Bakteria",
+    "viral": "Virusi",
+    "nutritional": "Lishe",
+    "disease": "ugonjwa",
+    "causes": "Sababu",
+    "noResults": "Hakuna magonjwa yaliyopatikana yanayolingana na utafutaji wako."
+  },
+  "history": {
+    "title": "Historia ya Uchunguzi",
+    "clear": "Futa Historia Yote",
+    "delete": "Futa",
+    "confidence": "Uaminifu",
+    "noHistory": "Bado hakuna historia ya uchunguzi",
+    "startAnalyzing": "Anza kuchambua mazao ili kuona historia yako hapa."
+  },
+  "severity": {
+    "low": "chini",
+    "medium": "wastani",
+    "high": "juu"
+  },
+  "toast": {
+    "healthy": "{crop} inaonekana afya!",
+    "diseaseDetected": "{crop} imechambuliwa - ugonjwa umegunduliwa",
+    "error": "Imeshindwa kuchambua picha. Tafadhali jaribu tena."
+  },
+  "language": {
+    "select": "Lugha"
+  }
+}

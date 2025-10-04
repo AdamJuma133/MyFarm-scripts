@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -19,6 +20,7 @@ interface AnalysisResult {
 }
 
 export function DiseaseAnalyzer() {
+  const { t } = useTranslation();
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(null);
@@ -130,13 +132,13 @@ export function DiseaseAnalyzer() {
       historyReader.readAsDataURL(file);
       
       if (isHealthy) {
-        toast.success(`${detectedCrop} appears healthy!`);
+        toast.success(t('toast.healthy', { crop: detectedCrop }));
       } else {
-        toast.success(`${detectedCrop} analyzed - disease detected`);
+        toast.success(t('toast.diseaseDetected', { crop: detectedCrop }));
       }
     } catch (err) {
       console.error('Analysis error:', err);
-      const errorMessage = err instanceof Error ? err.message : 'Failed to analyze image. Please try again.';
+      const errorMessage = err instanceof Error ? err.message : t('toast.error');
       setError(errorMessage);
       toast.error(errorMessage);
     } finally {
@@ -180,7 +182,7 @@ export function DiseaseAnalyzer() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Scan className="h-5 w-5" />
-            AI Crop Disease Analysis
+            {t('analyzer.title')}
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -196,7 +198,7 @@ export function DiseaseAnalyzer() {
               className="w-full"
             >
               <Scan className="h-4 w-4 mr-2" />
-              Analyze Crop Image
+              {t('analyzer.analyzeCrop')}
             </Button>
           )}
 
@@ -204,7 +206,7 @@ export function DiseaseAnalyzer() {
             <Alert>
               <Loader2 className="h-4 w-4 animate-spin" />
               <AlertDescription>
-                Analyzing your crop image with AI technology...
+                {t('analyzer.analyzing')}
               </AlertDescription>
             </Alert>
           )}
@@ -222,9 +224,9 @@ export function DiseaseAnalyzer() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center justify-between">
-              Analysis Results
+              {t('analyzer.analysisResults')}
               <Badge variant="outline">
-                {Math.round(analysisResult.confidence * 100)}% Confidence
+                {Math.round(analysisResult.confidence * 100)}% {t('analyzer.confidence')}
               </Badge>
             </CardTitle>
           </CardHeader>
@@ -244,9 +246,9 @@ export function DiseaseAnalyzer() {
                     <div className="inline-flex items-center gap-2 mb-4">
                       <CheckCircle className="h-12 w-12 text-success" />
                     </div>
-                    <h3 className="text-2xl font-bold text-success mb-2">Crop is Healthy!</h3>
+                    <h3 className="text-2xl font-bold text-success mb-2">{t('analyzer.healthy')}</h3>
                     <p className="text-muted-foreground">
-                      No disease symptoms detected in your {analysisResult.detectedCrop}. Keep up the good practices!
+                      {t('analyzer.healthyDescription', { crop: analysisResult.detectedCrop })}
                     </p>
                   </div>
                 ) : (
@@ -255,7 +257,7 @@ export function DiseaseAnalyzer() {
                       <div className="flex items-center gap-2 mb-2">
                         <XCircle className="h-6 w-6 text-destructive" />
                         <h3 className="text-xl font-semibold text-destructive">
-                          Infected with {analysisResult.diseaseName || analysisResult.disease?.name || 'Disease'}
+                          {t('analyzer.infectedWith', { disease: analysisResult.diseaseName || analysisResult.disease?.name || 'Disease' })}
                         </h3>
                       </div>
                       {analysisResult.disease && (
@@ -266,10 +268,10 @@ export function DiseaseAnalyzer() {
                               className="flex items-center gap-1"
                             >
                               {getSeverityIcon(analysisResult.disease.severity)}
-                              {analysisResult.disease.severity} severity
+                              {t(`severity.${analysisResult.disease.severity}`)} {t('analyzer.severity')}
                             </Badge>
                             <Badge variant="secondary">
-                              {analysisResult.disease.type}
+                              {t(`library.${analysisResult.disease.type}`)}
                             </Badge>
                           </div>
                           <p className="text-muted-foreground">{analysisResult.disease.description}</p>
@@ -341,7 +343,7 @@ export function DiseaseAnalyzer() {
               }}
               className="w-full"
             >
-              Analyze Another Image
+              {t('analyzer.analyzeAnother')}
             </Button>
           </CardContent>
         </Card>

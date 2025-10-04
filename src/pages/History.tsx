@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Clock, Trash2, ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { LanguageSelector } from '@/components/language-selector';
 
 interface ScanHistory {
   id: string;
@@ -17,6 +19,7 @@ interface ScanHistory {
 }
 
 const History = () => {
+  const { t } = useTranslation();
   const [history, setHistory] = useState<ScanHistory[]>([]);
   const navigate = useNavigate();
 
@@ -49,26 +52,29 @@ const History = () => {
               <ArrowLeft className="h-4 w-4 mr-2" />
               Back
             </Button>
-            <h1 className="text-3xl font-bold">Scan History</h1>
+            <h1 className="text-3xl font-bold">{t('history.title')}</h1>
           </div>
-          {history.length > 0 && (
-            <Button variant="destructive" onClick={handleClearAll}>
-              <Trash2 className="h-4 w-4 mr-2" />
-              Clear All
-            </Button>
-          )}
+          <div className="flex items-center gap-2">
+            {history.length > 0 && (
+              <Button variant="destructive" onClick={handleClearAll}>
+                <Trash2 className="h-4 w-4 mr-2" />
+                {t('history.clear')}
+              </Button>
+            )}
+            <LanguageSelector />
+          </div>
         </div>
 
         {history.length === 0 ? (
           <Card>
             <CardContent className="py-12 text-center">
               <Clock className="h-16 w-16 mx-auto mb-4 text-muted-foreground opacity-50" />
-              <h3 className="text-xl font-semibold mb-2">No Scan History</h3>
+              <h3 className="text-xl font-semibold mb-2">{t('history.noHistory')}</h3>
               <p className="text-muted-foreground mb-4">
-                Your disease analysis history will appear here
+                {t('history.startAnalyzing')}
               </p>
               <Button onClick={() => navigate('/')}>
-                Start Analyzing
+                {t('navigation.diseaseAnalyzer')}
               </Button>
             </CardContent>
           </Card>
@@ -114,7 +120,7 @@ const History = () => {
                     onClick={() => handleDelete(item.id)}
                   >
                     <Trash2 className="h-4 w-4 mr-2" />
-                    Delete
+                    {t('history.delete')}
                   </Button>
                 </CardContent>
               </Card>

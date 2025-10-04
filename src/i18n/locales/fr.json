@@ -1,0 +1,63 @@
+{
+  "app": {
+    "title": "MyFarm",
+    "subtitle": "Identificateur de Maladies des Cultures par IA",
+    "description": "Protégez vos cultures avec une technologie IA avancée. Téléchargez des images de vos plantes pour identifier instantanément les maladies et obtenir des recommandations de traitement expertes.",
+    "footer": "© 2024 MyFarm - Autonomiser les agriculteurs avec la technologie IA"
+  },
+  "navigation": {
+    "diseaseAnalyzer": "Analyseur de Maladies",
+    "diseaseLibrary": "Bibliothèque des Maladies",
+    "history": "Historique"
+  },
+  "analyzer": {
+    "title": "Analyse des Maladies des Cultures par IA",
+    "analyzeCrop": "Analyser l'Image de la Culture",
+    "analyzing": "Analyse de votre image de culture avec la technologie IA...",
+    "analysisResults": "Résultats de l'Analyse",
+    "confidence": "Confiance",
+    "healthy": "La Culture est Saine!",
+    "healthyDescription": "Aucun symptôme de maladie détecté dans votre {crop}. Continuez les bonnes pratiques!",
+    "infectedWith": "Infecté par {disease}",
+    "severity": "sévérité",
+    "affectedCrops": "Cultures Affectées",
+    "symptoms": "Symptômes",
+    "treatment": "Recommandations de Traitement",
+    "prevention": "Mesures de Prévention",
+    "analyzeAnother": "Analyser une Autre Image"
+  },
+  "library": {
+    "title": "Bibliothèque des Maladies",
+    "search": "Rechercher des maladies, cultures ou types...",
+    "backToLibrary": "← Retour à la Bibliothèque",
+    "all": "Tout",
+    "fungal": "Fongique",
+    "bacterial": "Bactérienne",
+    "viral": "Virale",
+    "nutritional": "Nutritionnelle",
+    "disease": "maladie",
+    "causes": "Causes",
+    "noResults": "Aucune maladie trouvée correspondant à votre recherche."
+  },
+  "history": {
+    "title": "Historique des Analyses",
+    "clear": "Effacer Tout l'Historique",
+    "delete": "Supprimer",
+    "confidence": "Confiance",
+    "noHistory": "Aucun historique d'analyse pour le moment",
+    "startAnalyzing": "Commencez à analyser les cultures pour voir votre historique ici."
+  },
+  "severity": {
+    "low": "faible",
+    "medium": "moyenne",
+    "high": "élevée"
+  },
+  "toast": {
+    "healthy": "{crop} semble sain!",
+    "diseaseDetected": "{crop} analysé - maladie détectée",
+    "error": "Échec de l'analyse de l'image. Veuillez réessayer."
+  },
+  "language": {
+    "select": "Langue"
+  }
+}

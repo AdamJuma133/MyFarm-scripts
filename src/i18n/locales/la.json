@@ -1,0 +1,63 @@
+{
+  "app": {
+    "title": "MyFarm",
+    "subtitle": "AI-Potens Morborum Culturarum Identificator",
+    "description": "Protege tuas culturas cum technologia AI progressa. Onera imagines plantarum tuarum ad morbos statim identificandos et consilia peritorum curationis accipienda.",
+    "footer": "© 2024 MyFarm - Agricolas potentiam dantes cum technologia AI"
+  },
+  "navigation": {
+    "diseaseAnalyzer": "Analyzer Morborum",
+    "diseaseLibrary": "Bibliotheca Morborum",
+    "history": "Historia"
+  },
+  "analyzer": {
+    "title": "AI Analysatio Morborum Culturarum",
+    "analyzeCrop": "Analysa Imaginem Culturae",
+    "analyzing": "Analysans imaginem culturae tuae cum technologia AI...",
+    "analysisResults": "Resultata Analysationis",
+    "confidence": "Fiducia",
+    "healthy": "Cultura Sana Est!",
+    "healthyDescription": "Nulla symptomata morbi detecta in {crop} tua. Continua bonas practiones!",
+    "infectedWith": "Infectus cum {disease}",
+    "severity": "gravitas",
+    "affectedCrops": "Culturae Affectae",
+    "symptoms": "Symptomata",
+    "treatment": "Consilia Curationis",
+    "prevention": "Mensura Praeventionis",
+    "analyzeAnother": "Analysa Aliam Imaginem"
+  },
+  "library": {
+    "title": "Bibliotheca Morborum",
+    "search": "Quaere morbos, culturas, vel species...",
+    "backToLibrary": "← Redi ad Bibliothecam",
+    "all": "Omnia",
+    "fungal": "Fungalis",
+    "bacterial": "Bacterialis",
+    "viral": "Viralis",
+    "nutritional": "Nutritionalis",
+    "disease": "morbus",
+    "causes": "Causae",
+    "noResults": "Nulli morbi inventi concordantes cum quaesitione tua."
+  },
+  "history": {
+    "title": "Historia Scansionum",
+    "clear": "Dele Omnem Historiam",
+    "delete": "Dele",
+    "confidence": "Fiducia",
+    "noHistory": "Nondum historia scansionum",
+    "startAnalyzing": "Incipe analysare culturas ad historiam tuam hic videre."
+  },
+  "severity": {
+    "low": "humilis",
+    "medium": "media",
+    "high": "alta"
+  },
+  "toast": {
+    "healthy": "{crop} videtur sana!",
+    "diseaseDetected": "{crop} analysata - morbus detectus",
+    "error": "Analysatio imaginis defecit. Quaeso iterum temptes."
+  },
+  "language": {
+    "select": "Lingua"
+  }
+}

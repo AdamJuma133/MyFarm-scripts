@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -8,6 +9,7 @@ import { Search, Book, AlertTriangle, CheckCircle, XCircle } from 'lucide-react'
 import { diseases, Disease, getDiseasesByType } from '@/data/diseases';
 
 export function DiseaseLibrary() {
+  const { t } = useTranslation();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedDisease, setSelectedDisease] = useState<Disease | null>(null);
 
@@ -59,13 +61,13 @@ export function DiseaseLibrary() {
               className="flex items-center gap-1"
             >
               {getSeverityIcon(disease.severity)}
-              {disease.severity}
+              {t(`severity.${disease.severity}`)}
             </Badge>
           </div>
           
           <div className="flex items-center gap-2">
             <Badge variant={getTypeColor(disease.type)}>
-              {disease.type}
+              {t(`library.${disease.type}`)}
             </Badge>
           </div>
           
@@ -98,7 +100,7 @@ export function DiseaseLibrary() {
             variant="outline" 
             onClick={() => setSelectedDisease(null)}
           >
-            ← Back to Library
+            {t('library.backToLibrary')}
           </Button>
           <h2 className="text-2xl font-bold">{selectedDisease.name}</h2>
         </div>
@@ -111,10 +113,10 @@ export function DiseaseLibrary() {
                 className="flex items-center gap-1"
               >
                 {getSeverityIcon(selectedDisease.severity)}
-                {selectedDisease.severity} severity
+                {t(`severity.${selectedDisease.severity}`)} {t('analyzer.severity')}
               </Badge>
               <Badge variant={getTypeColor(selectedDisease.type)}>
-                {selectedDisease.type} disease
+                {t(`library.${selectedDisease.type}`)} {t('library.disease')}
               </Badge>
             </div>
 
@@ -198,7 +200,7 @@ export function DiseaseLibrary() {
     <div className="space-y-6">
       <div className="flex items-center gap-4">
         <Book className="h-6 w-6" />
-        <h2 className="text-2xl font-bold">Disease Library</h2>
+        <h2 className="text-2xl font-bold">{t('library.title')}</h2>
       </div>
 
       <Card>
@@ -206,7 +208,7 @@ export function DiseaseLibrary() {
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
-              placeholder="Search diseases, crops, or types..."
+              placeholder={t('library.search')}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="pl-10"
@@ -217,11 +219,11 @@ export function DiseaseLibrary() {
 
       <Tabs defaultValue="all" className="space-y-4">
         <TabsList className="grid w-full grid-cols-5">
-          <TabsTrigger value="all">All</TabsTrigger>
-          <TabsTrigger value="fungal">Fungal</TabsTrigger>
-          <TabsTrigger value="bacterial">Bacterial</TabsTrigger>
-          <TabsTrigger value="viral">Viral</TabsTrigger>
-          <TabsTrigger value="nutritional">Nutritional</TabsTrigger>
+          <TabsTrigger value="all">{t('library.all')}</TabsTrigger>
+          <TabsTrigger value="fungal">{t('library.fungal')}</TabsTrigger>
+          <TabsTrigger value="bacterial">{t('library.bacterial')}</TabsTrigger>
+          <TabsTrigger value="viral">{t('library.viral')}</TabsTrigger>
+          <TabsTrigger value="nutritional">{t('library.nutritional')}</TabsTrigger>
         </TabsList>
 
         <TabsContent value="all">
@@ -252,7 +254,7 @@ export function DiseaseLibrary() {
         <Card>
           <CardContent className="py-12 text-center">
             <Book className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
-            <p className="text-muted-foreground">No diseases found matching your search.</p>
+            <p className="text-muted-foreground">{t('library.noResults')}</p>
           </CardContent>
         </Card>
       )}

@@ -1,0 +1,63 @@
+{
+  "app": {
+    "title": "MyFarm",
+    "subtitle": "AI Destekli Ürün Hastalığı Tanımlayıcı",
+    "description": "İleri AI teknolojisi ile ürünlerinizi koruyun. Hastalıkları anında tespit etmek ve uzman tedavi önerileri almak için bitki görsellerinizi yükleyin.",
+    "footer": "© 2024 MyFarm - AI teknolojisi ile çiftçileri güçlendirme"
+  },
+  "navigation": {
+    "diseaseAnalyzer": "Hastalık Analizörü",
+    "diseaseLibrary": "Hastalık Kütüphanesi",
+    "history": "Geçmiş"
+  },
+  "analyzer": {
+    "title": "AI Ürün Hastalık Analizi",
+    "analyzeCrop": "Ürün Görselini Analiz Et",
+    "analyzing": "Ürün görseliniz AI teknolojisi ile analiz ediliyor...",
+    "analysisResults": "Analiz Sonuçları",
+    "confidence": "Güven",
+    "healthy": "Ürün Sağlıklı!",
+    "healthyDescription": "{crop} ürününüzde hastalık belirtisi tespit edilmedi. İyi uygulamalara devam edin!",
+    "infectedWith": "{disease} ile Enfekte",
+    "severity": "şiddet",
+    "affectedCrops": "Etkilenen Ürünler",
+    "symptoms": "Belirtiler",
+    "treatment": "Tedavi Önerileri",
+    "prevention": "Önleme Tedbirleri",
+    "analyzeAnother": "Başka Bir Görsel Analiz Et"
+  },
+  "library": {
+    "title": "Hastalık Kütüphanesi",
+    "search": "Hastalıkları, ürünleri veya türleri ara...",
+    "backToLibrary": "← Kütüphaneye Dön",
+    "all": "Tümü",
+    "fungal": "Mantar",
+    "bacterial": "Bakteriyel",
+    "viral": "Viral",
+    "nutritional": "Beslenme",
+    "disease": "hastalık",
+    "causes": "Nedenler",
+    "noResults": "Aramanızla eşleşen hastalık bulunamadı."
+  },
+  "history": {
+    "title": "Tarama Geçmişi",
+    "clear": "Tüm Geçmişi Temizle",
+    "delete": "Sil",
+    "confidence": "Güven",
+    "noHistory": "Henüz tarama geçmişi yok",
+    "startAnalyzing": "Geçmişinizi burada görmek için ürünleri analiz etmeye başlayın."
+  },
+  "severity": {
+    "low": "düşük",
+    "medium": "orta",
+    "high": "yüksek"
+  },
+  "toast": {
+    "healthy": "{crop} sağlıklı görünüyor!",
+    "diseaseDetected": "{crop} analiz edildi - hastalık tespit edildi",
+    "error": "Görsel analiz edilemedi. Lütfen tekrar deneyin."
+  },
+  "language": {
+    "select": "Dil"
+  }
+}

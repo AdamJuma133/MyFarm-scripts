@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Navigation } from '@/components/navigation';
 import { DiseaseAnalyzer } from '@/components/disease-analyzer';
 import { DiseaseLibrary } from '@/components/disease-library';
 import heroImage from '@/assets/hero-farm.jpg';
 
 const Index = () => {
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<'analyzer' | 'library'>('analyzer');
 
   return (
@@ -17,14 +19,13 @@ const Index = () => {
         />
         <div className="relative container mx-auto px-4 py-12 text-center">
           <h1 className="text-4xl md:text-6xl font-bold mb-4">
-            MyFarm
+            {t('app.title')}
           </h1>
           <p className="text-xl md:text-2xl mb-6 opacity-90">
-            AI-Powered Crop Disease Identifier
+            {t('app.subtitle')}
           </p>
           <p className="text-lg opacity-80 max-w-2xl mx-auto">
-            Protect your crops with advanced AI technology. Upload images of your plants 
-            to instantly identify diseases and get expert treatment recommendations.
+            {t('app.description')}
           </p>
         </div>
       </div>
@@ -40,7 +41,7 @@ const Index = () => {
       {/* Footer */}
       <footer className="border-t mt-12 py-8">
         <div className="container mx-auto px-4 text-center text-muted-foreground">
-          <p>© 2024 MyFarm - Empowering farmers with AI technology</p>
+          <p>{t('app.footer')}</p>
         </div>
       </footer>
     </div>

@@ -1,0 +1,63 @@
+{
+  "app": {
+    "title": "MyFarm",
+    "subtitle": "Identificador de Enfermedades de Cultivos con IA",
+    "description": "Protege tus cultivos con tecnología IA avanzada. Sube imágenes de tus plantas para identificar enfermedades al instante y obtener recomendaciones de tratamiento expertas.",
+    "footer": "© 2024 MyFarm - Empoderando agricultores con tecnología IA"
+  },
+  "navigation": {
+    "diseaseAnalyzer": "Analizador de Enfermedades",
+    "diseaseLibrary": "Biblioteca de Enfermedades",
+    "history": "Historial"
+  },
+  "analyzer": {
+    "title": "Análisis de Enfermedades de Cultivos con IA",
+    "analyzeCrop": "Analizar Imagen del Cultivo",
+    "analyzing": "Analizando tu imagen de cultivo con tecnología IA...",
+    "analysisResults": "Resultados del Análisis",
+    "confidence": "Confianza",
+    "healthy": "¡El Cultivo está Sano!",
+    "healthyDescription": "No se detectaron síntomas de enfermedad en tu {crop}. ¡Continúa con las buenas prácticas!",
+    "infectedWith": "Infectado con {disease}",
+    "severity": "severidad",
+    "affectedCrops": "Cultivos Afectados",
+    "symptoms": "Síntomas",
+    "treatment": "Recomendaciones de Tratamiento",
+    "prevention": "Medidas de Prevención",
+    "analyzeAnother": "Analizar Otra Imagen"
+  },
+  "library": {
+    "title": "Biblioteca de Enfermedades",
+    "search": "Buscar enfermedades, cultivos o tipos...",
+    "backToLibrary": "← Volver a la Biblioteca",
+    "all": "Todos",
+    "fungal": "Fúngica",
+    "bacterial": "Bacteriana",
+    "viral": "Viral",
+    "nutritional": "Nutricional",
+    "disease": "enfermedad",
+    "causes": "Causas",
+    "noResults": "No se encontraron enfermedades que coincidan con tu búsqueda."
+  },
+  "history": {
+    "title": "Historial de Escaneos",
+    "clear": "Borrar Todo el Historial",
+    "delete": "Eliminar",
+    "confidence": "Confianza",
+    "noHistory": "Aún no hay historial de escaneos",
+    "startAnalyzing": "Comienza a analizar cultivos para ver tu historial aquí."
+  },
+  "severity": {
+    "low": "baja",
+    "medium": "media",
+    "high": "alta"
+  },
+  "toast": {
+    "healthy": "¡{crop} parece saludable!",
+    "diseaseDetected": "{crop} analizado - enfermedad detectada",
+    "error": "No se pudo analizar la imagen. Por favor, inténtalo de nuevo."
+  },
+  "language": {
+    "select": "Idioma"
+  }
+}

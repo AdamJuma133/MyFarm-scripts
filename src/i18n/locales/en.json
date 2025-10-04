@@ -1,0 +1,63 @@
+{
+  "app": {
+    "title": "MyFarm",
+    "subtitle": "AI-Powered Crop Disease Identifier",
+    "description": "Protect your crops with advanced AI technology. Upload images of your plants to instantly identify diseases and get expert treatment recommendations.",
+    "footer": "© 2024 MyFarm - Empowering farmers with AI technology"
+  },
+  "navigation": {
+    "diseaseAnalyzer": "Disease Analyzer",
+    "diseaseLibrary": "Disease Library",
+    "history": "History"
+  },
+  "analyzer": {
+    "title": "AI Crop Disease Analysis",
+    "analyzeCrop": "Analyze Crop Image",
+    "analyzing": "Analyzing your crop image with AI technology...",
+    "analysisResults": "Analysis Results",
+    "confidence": "Confidence",
+    "healthy": "Crop is Healthy!",
+    "healthyDescription": "No disease symptoms detected in your {crop}. Keep up the good practices!",
+    "infectedWith": "Infected with {disease}",
+    "severity": "severity",
+    "affectedCrops": "Affected Crops",
+    "symptoms": "Symptoms",
+    "treatment": "Treatment Recommendations",
+    "prevention": "Prevention Measures",
+    "analyzeAnother": "Analyze Another Image"
+  },
+  "library": {
+    "title": "Disease Library",
+    "search": "Search diseases, crops, or types...",
+    "backToLibrary": "← Back to Library",
+    "all": "All",
+    "fungal": "Fungal",
+    "bacterial": "Bacterial",
+    "viral": "Viral",
+    "nutritional": "Nutritional",
+    "disease": "disease",
+    "causes": "Causes",
+    "noResults": "No diseases found matching your search."
+  },
+  "history": {
+    "title": "Scan History",
+    "clear": "Clear All History",
+    "delete": "Delete",
+    "confidence": "Confidence",
+    "noHistory": "No scan history yet",
+    "startAnalyzing": "Start analyzing crops to see your history here."
+  },
+  "severity": {
+    "low": "low",
+    "medium": "medium",
+    "high": "high"
+  },
+  "toast": {
+    "healthy": "{crop} appears healthy!",
+    "diseaseDetected": "{crop} analyzed - disease detected",
+    "error": "Failed to analyze image. Please try again."
+  },
+  "language": {
+    "select": "Language"
+  }
+}

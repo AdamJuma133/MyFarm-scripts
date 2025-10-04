@@ -1,0 +1,63 @@
+{
+  "app": {
+    "title": "MyFarm",
+    "subtitle": "AI 作物病害识别器",
+    "description": "使用先进的 AI 技术保护您的作物。上传植物图像以立即识别病害并获得专家治疗建议。",
+    "footer": "© 2024 MyFarm - 通过 AI 技术赋能农民"
+  },
+  "navigation": {
+    "diseaseAnalyzer": "病害分析器",
+    "diseaseLibrary": "病害库",
+    "history": "历史记录"
+  },
+  "analyzer": {
+    "title": "AI 作物病害分析",
+    "analyzeCrop": "分析作物图像",
+    "analyzing": "正在使用 AI 技术分析您的作物图像...",
+    "analysisResults": "分析结果",
+    "confidence": "置信度",
+    "healthy": "作物健康!",
+    "healthyDescription": "未在您的 {crop} 中检测到疾病症状。继续保持良好做法!",
+    "infectedWith": "感染了 {disease}",
+    "severity": "严重程度",
+    "affectedCrops": "受影响作物",
+    "symptoms": "症状",
+    "treatment": "治疗建议",
+    "prevention": "预防措施",
+    "analyzeAnother": "分析另一张图像"
+  },
+  "library": {
+    "title": "病害库",
+    "search": "搜索病害、作物或类型...",
+    "backToLibrary": "← 返回病害库",
+    "all": "全部",
+    "fungal": "真菌",
+    "bacterial": "细菌",
+    "viral": "病毒",
+    "nutritional": "营养",
+    "disease": "病害",
+    "causes": "原因",
+    "noResults": "未找到与您的搜索匹配的病害。"
+  },
+  "history": {
+    "title": "扫描历史",
+    "clear": "清除所有历史",
+    "delete": "删除",
+    "confidence": "置信度",
+    "noHistory": "尚无扫描历史",
+    "startAnalyzing": "开始分析作物以在此处查看您的历史记录。"
+  },
+  "severity": {
+    "low": "低",
+    "medium": "中",
+    "high": "高"
+  },
+  "toast": {
+    "healthy": "{crop} 看起来健康!",
+    "diseaseDetected": "{crop} 已分析 - 检测到病害",
+    "error": "分析图像失败。请重试。"
+  },
+  "language": {
+    "select": "语言"
+  }
+}
