@@ -131,7 +131,10 @@ export function FileUpload({ onFileSelect, onFileRemove, selectedFile, className
           {showCamera && (
             <Button 
               variant="default" 
-              onClick={handleCameraCapture}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleCameraCapture();
+              }}
               disabled={isCapturing}
               type="button"
             >
