@@ -158,6 +158,10 @@ serve(async (req) => {
     const toolCall = data.choices?.[0]?.message?.tool_calls?.[0];
     if (toolCall?.function?.arguments) {
       const result = JSON.parse(toolCall.function.arguments);
+      
+      // Add 5-second delay before returning diagnosis
+      await new Promise(resolve => setTimeout(resolve, 5000));
+      
       return new Response(
         JSON.stringify(result),
         { headers: { ...corsHeaders, "Content-Type": "application/json" } }
