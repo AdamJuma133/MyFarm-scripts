@@ -78,7 +78,7 @@ export function FileUpload({ onFileSelect, onFileRemove, selectedFile, className
 
   if (selectedFile && preview) {
     return (
-      <Card className={cn("relative overflow-hidden", className)}>
+      <Card className={cn("relative overflow-hidden max-w-md mx-auto", className)}>
         <div className="relative">
           <img 
             src={preview} 
@@ -107,7 +107,7 @@ export function FileUpload({ onFileSelect, onFileRemove, selectedFile, className
     <Card 
       {...getRootProps()} 
       className={cn(
-        "border-2 border-dashed border-border hover:border-primary/50 transition-colors cursor-pointer",
+        "border-2 border-dashed border-border hover:border-primary/50 transition-colors cursor-pointer max-w-md mx-auto",
         isDragActive && "border-primary bg-accent/20",
         className
       )}
