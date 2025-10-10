@@ -46,8 +46,8 @@ export function FileUpload({ onFileSelect, onFileRemove, selectedFile, className
         allowEditing: false,
         resultType: CameraResultType.DataUrl,
         source: CameraSource.Camera,
-        width: 1000,
-        height: 1000,
+        width: 200,
+        height: 200,
       });
 
       if (image.dataUrl) {
