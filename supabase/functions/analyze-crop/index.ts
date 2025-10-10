@@ -13,10 +13,37 @@ serve(async (req) => {
   try {
     const { imageData } = await req.json();
     
-    if (!imageData) {
+    // Validate image data presence and type
+    if (!imageData || typeof imageData !== 'string') {
       return new Response(
-        JSON.stringify({ error: "No image data provided" }),
+        JSON.stringify({ error: "Invalid image data" }),
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    // Validate data URL format
+    if (!imageData.startsWith('data:image/')) {
+      return new Response(
+        JSON.stringify({ error: "Only image data URLs are accepted" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    // Validate image size (max 10MB)
+    const base64Data = imageData.split(',')[1];
+    if (!base64Data) {
+      return new Response(
+        JSON.stringify({ error: "Invalid image format" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+    
+    const approximateSizeMB = (base64Data.length * 0.75) / (1024 * 1024);
+    if (approximateSizeMB > 10) {
+      console.warn(`Image too large: ${approximateSizeMB.toFixed(2)}MB`);
+      return new Response(
+        JSON.stringify({ error: "Image too large (max 10MB)" }),
+        { status: 413, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
 
@@ -102,21 +129,25 @@ serve(async (req) => {
 
     if (!response.ok) {
       if (response.status === 429) {
+        console.warn("Rate limit exceeded for AI gateway");
         return new Response(
           JSON.stringify({ error: "Rate limit exceeded. Please try again later." }),
           { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } }
         );
       }
       if (response.status === 402) {
+        console.warn("AI credits exhausted");
         return new Response(
           JSON.stringify({ error: "AI credits exhausted. Please add credits to continue." }),
           { status: 402, headers: { ...corsHeaders, "Content-Type": "application/json" } }
         );
       }
+      // Log detailed error server-side only
       const errorText = await response.text();
       console.error("AI gateway error:", response.status, errorText);
+      // Return generic error to client
       return new Response(
-        JSON.stringify({ error: "Failed to analyze image" }),
+        JSON.stringify({ error: "Analysis service temporarily unavailable" }),
         { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
@@ -133,14 +164,18 @@ serve(async (req) => {
       );
     }
 
+    // Log detailed error server-side
+    console.error("Failed to parse AI response");
     return new Response(
-      JSON.stringify({ error: "Failed to parse AI response" }),
+      JSON.stringify({ error: "Unable to process image analysis" }),
       { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   } catch (error) {
+    // Log detailed error server-side only
     console.error("Error in analyze-crop function:", error);
+    // Return generic error to client
     return new Response(
-      JSON.stringify({ error: error instanceof Error ? error.message : "Unknown error" }),
+      JSON.stringify({ error: "An error occurred processing your request" }),
       { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   }
