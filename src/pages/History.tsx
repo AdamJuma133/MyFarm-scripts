@@ -24,9 +24,17 @@ const History = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const savedHistory = localStorage.getItem('myfarm-scan-history');
-    if (savedHistory) {
-      setHistory(JSON.parse(savedHistory));
+    try {
+      const savedHistory = localStorage.getItem('myfarm-scan-history');
+      if (savedHistory) {
+        const parsed = JSON.parse(savedHistory);
+        if (Array.isArray(parsed)) {
+          setHistory(parsed);
+        }
+      }
+    } catch (error) {
+      console.error('Failed to parse scan history:', error);
+      localStorage.removeItem('myfarm-scan-history');
     }
   }, []);
 

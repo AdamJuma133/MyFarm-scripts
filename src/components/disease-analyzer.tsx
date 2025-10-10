@@ -124,10 +124,24 @@ export function DiseaseAnalyzer() {
           crop: detectedCrop
         };
         
-        const existingHistory = localStorage.getItem('myfarm-scan-history');
-        const history = existingHistory ? JSON.parse(existingHistory) : [];
-        history.unshift(historyItem);
-        localStorage.setItem('myfarm-scan-history', JSON.stringify(history));
+        try {
+          const existingHistory = localStorage.getItem('myfarm-scan-history');
+          let history = [];
+          
+          if (existingHistory) {
+            const parsed = JSON.parse(existingHistory);
+            if (Array.isArray(parsed)) {
+              history = parsed;
+            }
+          }
+          
+          history.unshift(historyItem);
+          localStorage.setItem('myfarm-scan-history', JSON.stringify(history));
+        } catch (error) {
+          console.error('Failed to parse scan history:', error);
+          localStorage.removeItem('myfarm-scan-history');
+          localStorage.setItem('myfarm-scan-history', JSON.stringify([historyItem]));
+        }
       };
       historyReader.readAsDataURL(file);
       
@@ -147,6 +161,18 @@ export function DiseaseAnalyzer() {
   };
 
   const handleFileSelect = (file: File) => {
+    // Validate file size (10MB limit)
+    if (file.size > 10 * 1024 * 1024) {
+      toast.error('Image too large. Maximum size is 10MB.');
+      return;
+    }
+    
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+      toast.error('Please select an image file (JPEG, PNG, or WebP).');
+      return;
+    }
+    
     setSelectedFile(file);
     setAnalysisResult(null);
     setError(null);
