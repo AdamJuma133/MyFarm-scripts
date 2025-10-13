@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Scan, Book, Sprout, History } from 'lucide-react';
+import { Scan, Book, Sprout, History, Lightbulb } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { LanguageSelector } from './language-selector';
 
@@ -33,7 +33,7 @@ export function Navigation({ activeTab, onTabChange }: NavigationProps) {
           <LanguageSelector />
         </div>
         
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           <Button
             variant={activeTab === 'analyzer' ? 'default' : 'outline'}
             onClick={() => onTabChange('analyzer')}
@@ -49,6 +49,14 @@ export function Navigation({ activeTab, onTabChange }: NavigationProps) {
           >
             <Book className="h-4 w-4" />
             {t('navigation.diseaseLibrary')}
+          </Button>
+          <Button
+            variant="outline"
+            onClick={() => navigate('/advice')}
+            className="flex items-center gap-2"
+          >
+            <Lightbulb className="h-4 w-4" />
+            Advice
           </Button>
           <Button
             variant="outline"
