@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useNavigate } from 'react-router-dom';
 import { 
   Sprout, 
@@ -12,124 +13,230 @@ import {
   AlertTriangle,
   CheckCircle,
   Clock,
-  ArrowLeft
+  ArrowLeft,
+  Bug,
+  Thermometer,
+  CloudRain,
+  FlaskConical,
+  Recycle,
+  Package,
+  Globe
 } from 'lucide-react';
 
 const Advice = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState('overview');
 
-  const adviceCategories = [
-    {
-      icon: Shield,
-      title: 'Disease Prevention',
-      color: 'text-green-600 dark:text-green-400',
-      tips: [
-        'Rotate crops annually to prevent soil-borne diseases',
-        'Maintain proper plant spacing for air circulation',
-        'Remove infected plants immediately to prevent spread',
-        'Use disease-resistant crop varieties when available'
-      ]
-    },
-    {
-      icon: Droplets,
-      title: 'Watering Best Practices',
-      color: 'text-blue-600 dark:text-blue-400',
-      tips: [
-        'Water early in the morning to reduce fungal growth',
-        'Avoid overhead watering; use drip irrigation when possible',
-        'Ensure proper drainage to prevent root rot',
-        'Adjust watering based on weather conditions'
-      ]
-    },
-    {
-      icon: Sprout,
-      title: 'Soil Health',
-      color: 'text-amber-600 dark:text-amber-400',
-      tips: [
-        'Test soil pH and nutrient levels regularly',
-        'Add organic matter to improve soil structure',
-        'Practice crop rotation to maintain soil fertility',
-        'Use mulch to retain moisture and prevent weeds'
-      ]
-    },
-    {
-      icon: Sun,
-      title: 'Environmental Management',
-      color: 'text-orange-600 dark:text-orange-400',
-      tips: [
-        'Ensure crops receive adequate sunlight (6-8 hours daily)',
-        'Monitor temperature fluctuations that stress plants',
-        'Protect crops from extreme weather conditions',
-        'Provide shade during heat waves for sensitive crops'
-      ]
-    },
-    {
+  const diseaseManagement = {
+    fungal: {
+      title: 'Fungal Diseases',
       icon: Leaf,
-      title: 'Nutrient Management',
       color: 'text-emerald-600 dark:text-emerald-400',
-      tips: [
-        'Apply fertilizers based on soil test results',
-        'Use balanced NPK ratios appropriate for each crop',
-        'Consider organic alternatives like compost',
-        'Avoid over-fertilization which can harm plants'
+      recommendations: [
+        {
+          category: 'Fungicide Application',
+          points: [
+            'Apply appropriate fungicides for detected diseases (e.g., powdery mildew, late blight, fusarium wilt)',
+            'Follow recommended dosages and application frequencies',
+            'Rotate fungicide classes to prevent resistance development'
+          ]
+        },
+        {
+          category: 'Water Management',
+          points: [
+            'Reduce leaf wetness through proper irrigation scheduling',
+            'Ensure good drainage in the field to prevent standing water',
+            'Water early in the morning to allow foliage to dry during the day'
+          ]
+        },
+        {
+          category: 'Crop Rotation',
+          points: [
+            'Rotate with non-host crops to break the disease cycle',
+            'Plan minimum 2-3 year rotation periods',
+            'Keep detailed records of crop placement'
+          ]
+        }
+      ]
+    },
+    bacterial: {
+      title: 'Bacterial Diseases',
+      icon: AlertTriangle,
+      color: 'text-orange-600 dark:text-orange-400',
+      recommendations: [
+        {
+          category: 'Antibiotic Treatments',
+          points: [
+            'Apply specific bactericides for bacterial wilt or blight',
+            'Use copper-based compounds where appropriate',
+            'Follow resistance management protocols'
+          ]
+        },
+        {
+          category: 'Pruning and Removal',
+          points: [
+            'Prune infected plant parts immediately (e.g., citrus canker)',
+            'Properly dispose of infected material - burn or bury',
+            'Disinfect pruning tools between plants'
+          ]
+        },
+        {
+          category: 'Field Sanitation',
+          points: [
+            'Clean farm tools after touching infected plants',
+            'Avoid overhead irrigation to prevent bacterial spread',
+            'Implement strict sanitation protocols during wet conditions'
+          ]
+        }
+      ]
+    },
+    viral: {
+      title: 'Viral Diseases',
+      icon: Bug,
+      color: 'text-red-600 dark:text-red-400',
+      recommendations: [
+        {
+          category: 'Vector Control',
+          points: [
+            'Control insect vectors like aphids and whiteflies',
+            'Use yellow sticky traps for monitoring and control',
+            'Apply appropriate insecticides when vector populations are high'
+          ]
+        },
+        {
+          category: 'Resistant Varieties',
+          points: [
+            'Plant genetically resistant crop varieties',
+            'Choose virus-resistant tomatoes, peppers, or cucumbers',
+            'Source certified disease-free seeds and transplants'
+          ]
+        },
+        {
+          category: 'Infected Plant Management',
+          points: [
+            'Remove and destroy infected plants immediately',
+            'Create buffer zones around infected areas',
+            'Monitor neighboring plants closely for symptoms'
+          ]
+        }
+      ]
+    },
+    nematode: {
+      title: 'Nematode Diseases',
+      icon: FlaskConical,
+      color: 'text-purple-600 dark:text-purple-400',
+      recommendations: [
+        {
+          category: 'Soil Treatment',
+          points: [
+            'Apply soil fumigation with nematicides for severe infestations',
+            'Consider organic alternatives like nematode-resistant crops',
+            'Use bio-fumigation with plants like marigold or mustard'
+          ]
+        },
+        {
+          category: 'Crop Rotation',
+          points: [
+            'Rotate with crops not susceptible to nematodes',
+            'Plant cereals instead of root vegetables',
+            'Allow sufficient fallow periods between susceptible crops'
+          ]
+        },
+        {
+          category: 'Organic Soil Amendments',
+          points: [
+            'Add compost to improve soil health',
+            'Incorporate green manures to suppress nematode populations',
+            'Maintain high organic matter content'
+          ]
+        }
+      ]
+    }
+  };
+
+  const environmentalAdvice = [
+    {
+      title: 'Temperature and Humidity',
+      icon: Thermometer,
+      color: 'text-red-500',
+      recommendations: [
+        'Control humidity with dehumidifiers or adjust irrigation to prevent fungal/bacterial outbreaks',
+        'Use shading or fans in greenhouses when temperatures exceed optimal growing conditions',
+        'Protect crops from frost using row covers or heaters during cold spells',
+        'Monitor temperature fluctuations that can stress plants'
       ]
     },
     {
-      icon: AlertTriangle,
-      title: 'Early Detection',
-      color: 'text-red-600 dark:text-red-400',
-      tips: [
-        'Inspect plants regularly for disease symptoms',
-        'Check undersides of leaves for pests and diseases',
-        'Monitor plant growth patterns for abnormalities',
-        'Use MyFarm AI analyzer for quick disease identification'
+      title: 'Soil Moisture',
+      icon: Droplets,
+      color: 'text-blue-500',
+      recommendations: [
+        'Use drip irrigation or sprinkler systems to maintain optimal moisture levels',
+        'Apply mulching to reduce water loss and increase soil moisture retention',
+        'Install soil moisture sensors for precise irrigation management',
+        'Adjust watering frequency based on weather conditions and plant needs'
+      ]
+    },
+    {
+      title: 'Rain and Wind Protection',
+      icon: CloudRain,
+      color: 'text-slate-500',
+      recommendations: [
+        'Apply fungicides before heavy rain to prevent waterborne diseases',
+        'Harvest vulnerable crops early when storms are forecasted',
+        'Install windbreaks (trees, nets) to prevent crop damage',
+        'Ensure proper drainage systems are in place before rainy seasons'
       ]
     }
   ];
 
-  const seasonalTips = [
+  const soilHealthAdvice = [
     {
-      season: 'Spring',
-      icon: Sprout,
-      tips: [
-        'Prepare soil beds and test soil quality',
-        'Start seedlings indoors for warm-season crops',
-        'Apply pre-emergent treatments for weeds',
-        'Monitor for early pest activity'
+      title: 'Nutrient Deficiencies',
+      recommendations: [
+        'Apply specific fertilizers based on soil test results',
+        'Use foliar feeding for quick nutrient uptake when soil absorption is slow',
+        'Follow recommended application rates and timing',
+        'Monitor plant response and adjust fertilization accordingly'
       ]
     },
     {
-      season: 'Summer',
-      icon: Sun,
-      tips: [
-        'Increase watering frequency during heat',
-        'Monitor for fungal diseases in humid conditions',
-        'Harvest crops at peak ripeness',
-        'Provide shade for heat-sensitive plants'
+      title: 'Soil pH Management',
+      recommendations: [
+        'Apply lime to raise pH in acidic soils',
+        'Use sulfur to lower pH in alkaline soils',
+        'Target optimal pH range for specific crops (usually 6.0-7.0)',
+        'Test soil pH regularly (at least annually)'
       ]
     },
     {
-      season: 'Fall',
-      icon: Leaf,
-      tips: [
-        'Plant cool-season crops',
-        'Clean up plant debris to prevent disease overwintering',
-        'Add compost to soil for next season',
-        'Protect crops from early frost'
-      ]
-    },
-    {
-      season: 'Winter',
-      icon: Clock,
-      tips: [
-        'Plan crop rotation for next season',
-        'Maintain greenhouse conditions for winter crops',
-        'Service and clean farming equipment',
-        'Study disease patterns from past season'
+      title: 'Compaction and Aeration',
+      recommendations: [
+        'Use tillers or soil penetrators to improve soil aeration',
+        'Implement deep plowing or subsoiling for compacted soils',
+        'Avoid working soil when too wet to prevent compaction',
+        'Add organic matter to improve soil structure'
       ]
     }
   ];
+
+  const quickChecklist = {
+    morning: [
+      'Inspect plants for new disease symptoms',
+      'Check soil moisture levels',
+      'Water if needed (before 10 AM)',
+      'Monitor weather forecast',
+      'Check for pest activity'
+    ],
+    evening: [
+      'Remove any dead or diseased plant material',
+      'Check for pest activity',
+      'Harvest ripe produce',
+      'Plan next day\'s tasks',
+      'Record observations in farm journal'
+    ]
+  };
 
   return (
     <div className="min-h-screen bg-gradient-secondary">
@@ -145,36 +252,179 @@ const Advice = () => {
             Back to Home
           </Button>
           <h1 className="text-4xl md:text-5xl font-bold mb-3">
-            Farming Advice & Recommendations
+            AI-Powered Agricultural Advice & Recommendations
           </h1>
-          <p className="text-lg opacity-90 max-w-3xl">
-            Expert tips and best practices to keep your crops healthy and productive
+          <p className="text-lg opacity-90 max-w-4xl">
+            Comprehensive farming guidance tailored to disease detection, environmental conditions, and crop management practices
           </p>
         </div>
       </div>
 
       {/* Main Content */}
       <div className="container mx-auto px-4 py-8">
-        {/* General Best Practices */}
-        <section className="mb-12">
-          <h2 className="text-3xl font-bold mb-6">Best Practices</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {adviceCategories.map((category, index) => {
-              const Icon = category.icon;
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+          <TabsList className="grid w-full grid-cols-2 lg:grid-cols-5 mb-8">
+            <TabsTrigger value="overview">Overview</TabsTrigger>
+            <TabsTrigger value="diseases">Disease Management</TabsTrigger>
+            <TabsTrigger value="environment">Environment</TabsTrigger>
+            <TabsTrigger value="soil">Soil Health</TabsTrigger>
+            <TabsTrigger value="advanced">Advanced</TabsTrigger>
+          </TabsList>
+
+          {/* Overview Tab */}
+          <TabsContent value="overview" className="space-y-8">
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-2xl">About This System</CardTitle>
+                <CardDescription>
+                  How AI-powered crop disease identification helps farmers
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="prose prose-sm max-w-none dark:prose-invert">
+                <p>
+                  This AI-powered crop disease identifier provides farmers with personalized farming advice and recommendations. 
+                  These recommendations are tailored to the specific disease detected, environmental conditions, and crop type.
+                </p>
+                <p>
+                  By integrating real-time monitoring, personalized recommendations, and cutting-edge technologies, this system 
+                  plays a pivotal role in helping farmers manage their crops more effectively while combating diseases in a timely manner.
+                </p>
+              </CardContent>
+            </Card>
+
+            {/* Quick Daily Checklist */}
+            <Card className="bg-gradient-primary text-primary-foreground">
+              <CardHeader>
+                <CardTitle className="text-2xl">Quick Daily Checklist</CardTitle>
+                <CardDescription className="text-primary-foreground/80">
+                  Essential tasks for healthy crops
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-3">
+                    <h3 className="font-semibold text-lg mb-3 flex items-center gap-2">
+                      <Sun className="h-5 w-5" />
+                      Morning Tasks
+                    </h3>
+                    {quickChecklist.morning.map((task, index) => (
+                      <div key={index} className="flex items-center gap-2">
+                        <CheckCircle className="h-5 w-5 flex-shrink-0" />
+                        <span>{task}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="space-y-3">
+                    <h3 className="font-semibold text-lg mb-3 flex items-center gap-2">
+                      <Clock className="h-5 w-5" />
+                      Evening Tasks
+                    </h3>
+                    {quickChecklist.evening.map((task, index) => (
+                      <div key={index} className="flex items-center gap-2">
+                        <CheckCircle className="h-5 w-5 flex-shrink-0" />
+                        <span>{task}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* Disease Management Tab */}
+          <TabsContent value="diseases" className="space-y-8">
+            <div className="mb-6">
+              <h2 className="text-3xl font-bold mb-2">Disease-Specific Management</h2>
+              <p className="text-muted-foreground">
+                Tailored advice for different types of crop diseases
+              </p>
+            </div>
+
+            {Object.values(diseaseManagement).map((disease, index) => {
+              const Icon = disease.icon;
               return (
-                <Card key={index} className="hover:shadow-lg transition-shadow">
+                <Card key={index}>
                   <CardHeader>
-                    <div className="flex items-center gap-3 mb-2">
-                      <Icon className={`h-6 w-6 ${category.color}`} />
-                      <CardTitle className="text-xl">{category.title}</CardTitle>
+                    <div className="flex items-center gap-3">
+                      <Icon className={`h-8 w-8 ${disease.color}`} />
+                      <CardTitle className="text-2xl">{disease.title}</CardTitle>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-6">
+                      {disease.recommendations.map((rec, recIndex) => (
+                        <div key={recIndex}>
+                          <h4 className="font-semibold text-lg mb-3 text-primary">
+                            {rec.category}
+                          </h4>
+                          <ul className="space-y-2">
+                            {rec.points.map((point, pointIndex) => (
+                              <li key={pointIndex} className="flex items-start gap-2">
+                                <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" />
+                                <span>{point}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              );
+            })}
+
+            {/* IPM Section */}
+            <Card className="border-2 border-primary">
+              <CardHeader>
+                <div className="flex items-center gap-3">
+                  <Bug className="h-8 w-8 text-primary" />
+                  <CardTitle className="text-2xl">Integrated Pest Management (IPM)</CardTitle>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div>
+                    <h4 className="font-semibold text-lg mb-2 text-primary">Biological Control</h4>
+                    <p>Introduce natural predators like ladybugs for aphid control, parasitic wasps for caterpillars, and nematodes for soil pests.</p>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-lg mb-2 text-primary">Mechanical Control</h4>
+                    <p>Use physical barriers, nets, traps, and manual removal. Install insect screens in greenhouses and use row covers for protection.</p>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-lg mb-2 text-primary">Chemical Control</h4>
+                    <p>Apply eco-friendly pesticides with correct application rates and schedules. Rotate pesticide classes to prevent resistance.</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* Environment Tab */}
+          <TabsContent value="environment" className="space-y-8">
+            <div className="mb-6">
+              <h2 className="text-3xl font-bold mb-2">Environmental & Weather-Based Advice</h2>
+              <p className="text-muted-foreground">
+                Optimize growing conditions based on environmental factors
+              </p>
+            </div>
+
+            {environmentalAdvice.map((advice, index) => {
+              const Icon = advice.icon;
+              return (
+                <Card key={index}>
+                  <CardHeader>
+                    <div className="flex items-center gap-3">
+                      <Icon className={`h-8 w-8 ${advice.color}`} />
+                      <CardTitle className="text-2xl">{advice.title}</CardTitle>
                     </div>
                   </CardHeader>
                   <CardContent>
                     <ul className="space-y-3">
-                      {category.tips.map((tip, tipIndex) => (
-                        <li key={tipIndex} className="flex items-start gap-2">
+                      {advice.recommendations.map((rec, recIndex) => (
+                        <li key={recIndex} className="flex items-start gap-2">
                           <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" />
-                          <span className="text-sm">{tip}</span>
+                          <span>{rec}</span>
                         </li>
                       ))}
                     </ul>
@@ -182,92 +432,173 @@ const Advice = () => {
                 </Card>
               );
             })}
-          </div>
-        </section>
+          </TabsContent>
 
-        {/* Seasonal Recommendations */}
-        <section className="mb-12">
-          <h2 className="text-3xl font-bold mb-6">Seasonal Recommendations</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {seasonalTips.map((season, index) => {
-              const Icon = season.icon;
-              return (
-                <Card key={index} className="hover:shadow-lg transition-shadow">
-                  <CardHeader>
-                    <div className="flex items-center gap-3 mb-2">
-                      <Icon className="h-6 w-6 text-primary" />
-                      <CardTitle className="text-xl">{season.season}</CardTitle>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <ul className="space-y-3">
-                      {season.tips.map((tip, tipIndex) => (
-                        <li key={tipIndex} className="flex items-start gap-2">
-                          <span className="text-primary text-xs mt-1">•</span>
-                          <span className="text-sm">{tip}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-              );
-            })}
-          </div>
-        </section>
+          {/* Soil Health Tab */}
+          <TabsContent value="soil" className="space-y-8">
+            <div className="mb-6">
+              <h2 className="text-3xl font-bold mb-2">Soil Health & Fertility</h2>
+              <p className="text-muted-foreground">
+                Maintain optimal soil conditions for healthy crop growth
+              </p>
+            </div>
 
-        {/* Quick Tips */}
-        <section>
-          <Card className="bg-gradient-primary text-primary-foreground">
-            <CardHeader>
-              <CardTitle className="text-2xl">Quick Daily Checklist</CardTitle>
-              <CardDescription className="text-primary-foreground/80">
-                Essential tasks for healthy crops
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <h3 className="font-semibold text-lg mb-3">Morning Tasks</h3>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="h-5 w-5" />
-                    <span>Inspect plants for new disease symptoms</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="h-5 w-5" />
-                    <span>Check soil moisture levels</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="h-5 w-5" />
-                    <span>Water if needed (before 10 AM)</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="h-5 w-5" />
-                    <span>Monitor weather forecast</span>
-                  </div>
+            {soilHealthAdvice.map((advice, index) => (
+              <Card key={index}>
+                <CardHeader>
+                  <CardTitle className="text-2xl">{advice.title}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <ul className="space-y-3">
+                    {advice.recommendations.map((rec, recIndex) => (
+                      <li key={recIndex} className="flex items-start gap-2">
+                        <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" />
+                        <span>{rec}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </CardContent>
+              </Card>
+            ))}
+          </TabsContent>
+
+          {/* Advanced Tab */}
+          <TabsContent value="advanced" className="space-y-8">
+            <div className="mb-6">
+              <h2 className="text-3xl font-bold mb-2">Advanced Practices</h2>
+              <p className="text-muted-foreground">
+                Long-term strategies for sustainable farming
+              </p>
+            </div>
+
+            {/* Crop Variety Selection */}
+            <Card>
+              <CardHeader>
+                <div className="flex items-center gap-3">
+                  <Recycle className="h-8 w-8 text-green-600" />
+                  <CardTitle className="text-2xl">Crop Variety Selection & Rotation</CardTitle>
                 </div>
-                <div className="space-y-2">
-                  <h3 className="font-semibold text-lg mb-3">Evening Tasks</h3>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="h-5 w-5" />
-                    <span>Remove any dead or diseased plant material</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="h-5 w-5" />
-                    <span>Check for pest activity</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="h-5 w-5" />
-                    <span>Harvest ripe produce</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="h-5 w-5" />
-                    <span>Plan next day's tasks</span>
-                  </div>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div>
+                  <h4 className="font-semibold text-lg mb-3 text-primary">Disease-Resistant Varieties</h4>
+                  <ul className="space-y-2">
+                    <li className="flex items-start gap-2">
+                      <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" />
+                      <span>Plant disease-resistant crop varieties (e.g., resistant tomatoes for bacterial wilt)</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" />
+                      <span>Choose varieties suited to your local climate and soil conditions</span>
+                    </li>
+                  </ul>
                 </div>
-              </div>
-            </CardContent>
-          </Card>
-        </section>
+                <div>
+                  <h4 className="font-semibold text-lg mb-3 text-primary">Crop Rotation Strategies</h4>
+                  <ul className="space-y-2">
+                    <li className="flex items-start gap-2">
+                      <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" />
+                      <span>Rotate tomatoes with cereals (wheat or corn) to avoid soil-borne diseases</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" />
+                      <span>Plan 3-4 year rotation cycles for optimal disease management</span>
+                    </li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 className="font-semibold text-lg mb-3 text-primary">Polyculture & Agroforestry</h4>
+                  <ul className="space-y-2">
+                    <li className="flex items-start gap-2">
+                      <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" />
+                      <span>Grow multiple crops together to reduce pest and disease risks</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" />
+                      <span>Incorporate trees and shrubs to improve soil health and biodiversity</span>
+                    </li>
+                  </ul>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Post-Harvest Management */}
+            <Card>
+              <CardHeader>
+                <div className="flex items-center gap-3">
+                  <Package className="h-8 w-8 text-amber-600" />
+                  <CardTitle className="text-2xl">Post-Harvest Management & Storage</CardTitle>
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div>
+                  <h4 className="font-semibold text-lg mb-3 text-primary">Disease Prevention in Storage</h4>
+                  <ul className="space-y-2">
+                    <li className="flex items-start gap-2">
+                      <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" />
+                      <span>Maintain low humidity and good ventilation in storage areas</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" />
+                      <span>Treat crops with appropriate fungicides before storing (e.g., potato blight)</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" />
+                      <span>Regularly inspect stored crops for early disease signs</span>
+                    </li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 className="font-semibold text-lg mb-3 text-primary">Processing & Packaging</h4>
+                  <ul className="space-y-2">
+                    <li className="flex items-start gap-2">
+                      <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" />
+                      <span>Wash and disinfect equipment and packaging materials</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" />
+                      <span>Use cold storage for perishable crops to prevent post-harvest rot</span>
+                    </li>
+                  </ul>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Climate Change Adaptation */}
+            <Card>
+              <CardHeader>
+                <div className="flex items-center gap-3">
+                  <Globe className="h-8 w-8 text-blue-600" />
+                  <CardTitle className="text-2xl">Climate Change Adaptation & Resilience</CardTitle>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-3">
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" />
+                    <span>Implement climate-smart agriculture practices including efficient water management</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" />
+                    <span>Diversify crops to spread risk across different weather patterns</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" />
+                    <span>Use heat-tolerant and drought-resistant crop varieties</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" />
+                    <span>Adopt conservation agriculture techniques to improve soil resilience</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" />
+                    <span>Monitor and adapt to changing growing seasons and weather patterns</span>
+                  </li>
+                </ul>
+              </CardContent>
+            </Card>
+          </TabsContent>
+        </Tabs>
       </div>
 
       {/* Footer */}
