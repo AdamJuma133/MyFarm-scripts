@@ -42,6 +42,10 @@ const Index = () => {
       <footer className="border-t mt-12 py-8">
         <div className="container mx-auto px-4 text-center text-muted-foreground">
           <p>{t('app.footer')}</p>
+          <div className="mt-4 flex justify-center gap-4">
+            <a href="/advice" className="text-primary hover:underline">Farming Advice</a>
+            <a href="/history" className="text-primary hover:underline">Scan History</a>
+          </div>
         </div>
       </footer>
     </div>
