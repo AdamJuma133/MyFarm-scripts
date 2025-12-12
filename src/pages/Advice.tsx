@@ -20,7 +20,20 @@ import {
   FlaskConical,
   Recycle,
   Package,
-  Globe
+  Globe,
+  Tractor,
+  Wheat,
+  TreePine,
+  Calendar,
+  Shovel,
+  Zap,
+  Heart,
+  TrendingUp,
+  Target,
+  Sparkles,
+  Layers,
+  HandHeart,
+  Scale
 } from 'lucide-react';
 
 const Advice = () => {
@@ -238,6 +251,215 @@ const Advice = () => {
     ]
   };
 
+  const waterManagement = [
+    {
+      title: 'Irrigation Systems',
+      icon: Droplets,
+      color: 'text-blue-500',
+      recommendations: [
+        'Install drip irrigation for 30-50% water savings compared to flood irrigation',
+        'Use sprinkler systems for larger field crops with even water distribution',
+        'Implement subsurface drip irrigation for high-value crops',
+        'Schedule irrigation during early morning or late evening to reduce evaporation',
+        'Monitor soil moisture at different depths using sensors'
+      ]
+    },
+    {
+      title: 'Water Conservation',
+      icon: Recycle,
+      color: 'text-green-500',
+      recommendations: [
+        'Apply organic mulch (straw, wood chips) to reduce water evaporation by 25-50%',
+        'Harvest rainwater using collection systems and storage tanks',
+        'Use cover crops to improve soil water retention',
+        'Implement terracing on sloped land to reduce runoff',
+        'Recycle treated wastewater for non-edible crops where regulations permit'
+      ]
+    },
+    {
+      title: 'Deficit Irrigation Strategies',
+      icon: Target,
+      color: 'text-amber-500',
+      recommendations: [
+        'Apply regulated deficit irrigation during non-critical growth stages',
+        'Monitor plant stress indicators (leaf wilting, color changes)',
+        'Use partial root-zone drying to improve water use efficiency',
+        'Adjust irrigation frequency based on crop growth stage',
+        'Combine deficit irrigation with drought-tolerant varieties'
+      ]
+    }
+  ];
+
+  const plantingGuide = {
+    preparation: [
+      'Test soil for pH, nutrients, and organic matter content before planting',
+      'Clear field of weeds, debris, and previous crop residues',
+      'Apply base fertilizers based on soil test recommendations',
+      'Prepare seedbeds with proper tilth for good seed-soil contact',
+      'Plan plant spacing based on variety and growth habits'
+    ],
+    techniques: [
+      'Direct seeding: Best for large seeds (corn, beans, squash)',
+      'Transplanting: Ideal for tomatoes, peppers, and brassicas',
+      'Raised beds: Improve drainage and soil warming',
+      'No-till planting: Preserves soil structure and moisture',
+      'Intercropping: Maximize space and reduce pest pressure'
+    ],
+    timing: [
+      'Check last frost date for your region before planting tender crops',
+      'Use soil temperature (not air temperature) as planting indicator',
+      'Stagger plantings every 2-3 weeks for continuous harvest',
+      'Consider photoperiod requirements for flowering crops',
+      'Plan succession planting for year-round production'
+    ]
+  };
+
+  const seasonalTips = {
+    spring: {
+      title: 'Spring (Planting Season)',
+      icon: Sprout,
+      color: 'text-green-500',
+      tips: [
+        'Prepare soil as soon as it can be worked (not too wet)',
+        'Start seeds indoors 6-8 weeks before last frost',
+        'Apply pre-emergent herbicides before weed seeds germinate',
+        'Install irrigation systems before peak water needs',
+        'Scout for early-season pests like cutworms and aphids'
+      ]
+    },
+    summer: {
+      title: 'Summer (Growing Season)',
+      icon: Sun,
+      color: 'text-yellow-500',
+      tips: [
+        'Maintain consistent watering during fruit development',
+        'Apply side-dressing of nitrogen for heavy feeders',
+        'Monitor for heat stress and provide shade if needed',
+        'Scout regularly for pests and diseases (weekly minimum)',
+        'Harvest regularly to encourage continued production'
+      ]
+    },
+    fall: {
+      title: 'Fall (Harvest Season)',
+      icon: Wheat,
+      color: 'text-orange-500',
+      tips: [
+        'Begin harvesting before first frost for tender crops',
+        'Plant cover crops immediately after harvest',
+        'Prepare storage areas for root crops and winter squash',
+        'Collect and save seeds from best-performing plants',
+        'Apply fall fertilizers to perennial crops and fruit trees'
+      ]
+    },
+    winter: {
+      title: 'Winter (Planning Season)',
+      icon: TreePine,
+      color: 'text-blue-400',
+      tips: [
+        'Review crop records and plan next year\'s rotation',
+        'Order seeds early for best variety selection',
+        'Maintain and repair equipment during downtime',
+        'Prune dormant fruit trees and berry bushes',
+        'Plan infrastructure improvements (irrigation, fencing)'
+      ]
+    }
+  };
+
+  const organicFarming = [
+    {
+      title: 'Soil Building',
+      icon: Layers,
+      recommendations: [
+        'Apply compost at 2-4 tons per acre annually',
+        'Use green manures (legumes) to fix nitrogen naturally',
+        'Practice minimal tillage to preserve soil biology',
+        'Encourage earthworm populations through organic matter',
+        'Rotate between heavy feeders, light feeders, and soil builders'
+      ]
+    },
+    {
+      title: 'Natural Pest Control',
+      icon: Bug,
+      recommendations: [
+        'Encourage beneficial insects with habitat plantings',
+        'Use biological controls (Bt, beneficial nematodes)',
+        'Apply neem oil, insecticidal soaps for soft-bodied pests',
+        'Install physical barriers (row covers, nets)',
+        'Practice crop rotation to break pest cycles'
+      ]
+    },
+    {
+      title: 'Organic Fertilization',
+      icon: HandHeart,
+      recommendations: [
+        'Use blood meal (12-0-0) for quick nitrogen boost',
+        'Apply bone meal (3-15-0) for phosphorus-deficient soils',
+        'Use kelp meal for micronutrients and growth hormones',
+        'Compost tea as foliar spray for nutrient boost',
+        'Fish emulsion for balanced, fast-acting nutrition'
+      ]
+    }
+  ];
+
+  const economicAdvice = [
+    {
+      title: 'Cost Reduction Strategies',
+      icon: Scale,
+      recommendations: [
+        'Produce your own seedlings to reduce input costs',
+        'Implement precision agriculture to optimize input use',
+        'Group purchases with neighboring farmers for bulk discounts',
+        'Maintain equipment properly to avoid costly repairs',
+        'Use renewable energy (solar) for irrigation and processing'
+      ]
+    },
+    {
+      title: 'Market Optimization',
+      icon: TrendingUp,
+      recommendations: [
+        'Diversify sales channels (farmers markets, CSA, wholesale)',
+        'Grow high-value specialty crops for premium prices',
+        'Add value through processing (dried, preserved products)',
+        'Build direct consumer relationships for customer loyalty',
+        'Time harvests for peak market prices'
+      ]
+    },
+    {
+      title: 'Risk Management',
+      icon: Shield,
+      recommendations: [
+        'Diversify crops to spread risk across multiple products',
+        'Consider crop insurance for major commodity crops',
+        'Maintain emergency reserves (seed, feed, cash)',
+        'Contract farming for guaranteed prices on key crops',
+        'Keep detailed records for tax and insurance purposes'
+      ]
+    }
+  ];
+
+  const livestockIntegration = [
+    {
+      title: 'Crop-Livestock Synergies',
+      recommendations: [
+        'Use livestock manure as organic fertilizer for crops',
+        'Graze cover crops to add value and reduce termination costs',
+        'Rotate livestock through fields after harvest for gleaning',
+        'Produce feed crops (hay, silage, grain) on-farm',
+        'Use crop residues as bedding or supplemental feed'
+      ]
+    },
+    {
+      title: 'Pasture Management',
+      recommendations: [
+        'Implement rotational grazing to improve pasture health',
+        'Allow adequate rest periods (21-45 days) between grazing',
+        'Maintain pasture height (3-6 inches) for optimal regrowth',
+        'Overseed thin areas with improved grass varieties',
+        'Control weeds through timely mowing and grazing management'
+      ]
+    }
+  ];
+
   return (
     <div className="min-h-screen bg-gradient-secondary">
       {/* Header */}
@@ -263,11 +485,15 @@ const Advice = () => {
       {/* Main Content */}
       <div className="container mx-auto px-4 py-8">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-2 lg:grid-cols-5 mb-8">
+          <TabsList className="grid w-full grid-cols-3 lg:grid-cols-9 mb-8">
             <TabsTrigger value="overview">Overview</TabsTrigger>
-            <TabsTrigger value="diseases">Disease Management</TabsTrigger>
+            <TabsTrigger value="diseases">Diseases</TabsTrigger>
             <TabsTrigger value="environment">Environment</TabsTrigger>
-            <TabsTrigger value="soil">Soil Health</TabsTrigger>
+            <TabsTrigger value="soil">Soil</TabsTrigger>
+            <TabsTrigger value="water">Water</TabsTrigger>
+            <TabsTrigger value="planting">Planting</TabsTrigger>
+            <TabsTrigger value="seasonal">Seasonal</TabsTrigger>
+            <TabsTrigger value="organic">Organic</TabsTrigger>
             <TabsTrigger value="advanced">Advanced</TabsTrigger>
           </TabsList>
 
@@ -593,6 +819,269 @@ const Advice = () => {
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" />
                     <span>Monitor and adapt to changing growing seasons and weather patterns</span>
+                  </li>
+                </ul>
+              </CardContent>
+            </Card>
+
+            {/* Economic Advice Section */}
+            <div className="mt-8 mb-6">
+              <h2 className="text-3xl font-bold mb-2">Economic & Farm Business Advice</h2>
+              <p className="text-muted-foreground">
+                Strategies for profitable and sustainable farming operations
+              </p>
+            </div>
+
+            {economicAdvice.map((advice, index) => {
+              const Icon = advice.icon;
+              return (
+                <Card key={index}>
+                  <CardHeader>
+                    <div className="flex items-center gap-3">
+                      <Icon className="h-8 w-8 text-primary" />
+                      <CardTitle className="text-2xl">{advice.title}</CardTitle>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <ul className="space-y-3">
+                      {advice.recommendations.map((rec, recIndex) => (
+                        <li key={recIndex} className="flex items-start gap-2">
+                          <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" />
+                          <span>{rec}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                </Card>
+              );
+            })}
+
+            {/* Livestock Integration */}
+            <div className="mt-8 mb-6">
+              <h2 className="text-3xl font-bold mb-2">Livestock Integration</h2>
+              <p className="text-muted-foreground">
+                Integrating livestock for diversified and sustainable farming
+              </p>
+            </div>
+
+            {livestockIntegration.map((advice, index) => (
+              <Card key={index}>
+                <CardHeader>
+                  <div className="flex items-center gap-3">
+                    <Tractor className="h-8 w-8 text-amber-600" />
+                    <CardTitle className="text-2xl">{advice.title}</CardTitle>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <ul className="space-y-3">
+                    {advice.recommendations.map((rec, recIndex) => (
+                      <li key={recIndex} className="flex items-start gap-2">
+                        <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" />
+                        <span>{rec}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </CardContent>
+              </Card>
+            ))}
+          </TabsContent>
+
+          {/* Water Management Tab */}
+          <TabsContent value="water" className="space-y-8">
+            <div className="mb-6">
+              <h2 className="text-3xl font-bold mb-2">Water Management</h2>
+              <p className="text-muted-foreground">
+                Efficient irrigation and water conservation strategies
+              </p>
+            </div>
+
+            {waterManagement.map((advice, index) => {
+              const Icon = advice.icon;
+              return (
+                <Card key={index}>
+                  <CardHeader>
+                    <div className="flex items-center gap-3">
+                      <Icon className={`h-8 w-8 ${advice.color}`} />
+                      <CardTitle className="text-2xl">{advice.title}</CardTitle>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <ul className="space-y-3">
+                      {advice.recommendations.map((rec, recIndex) => (
+                        <li key={recIndex} className="flex items-start gap-2">
+                          <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" />
+                          <span>{rec}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </TabsContent>
+
+          {/* Planting Guide Tab */}
+          <TabsContent value="planting" className="space-y-8">
+            <div className="mb-6">
+              <h2 className="text-3xl font-bold mb-2">Planting Guide</h2>
+              <p className="text-muted-foreground">
+                Best practices for successful crop establishment
+              </p>
+            </div>
+
+            <Card>
+              <CardHeader>
+                <div className="flex items-center gap-3">
+                  <Shovel className="h-8 w-8 text-amber-600" />
+                  <CardTitle className="text-2xl">Field Preparation</CardTitle>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-3">
+                  {plantingGuide.preparation.map((rec, recIndex) => (
+                    <li key={recIndex} className="flex items-start gap-2">
+                      <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" />
+                      <span>{rec}</span>
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <div className="flex items-center gap-3">
+                  <Sprout className="h-8 w-8 text-green-600" />
+                  <CardTitle className="text-2xl">Planting Techniques</CardTitle>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-3">
+                  {plantingGuide.techniques.map((rec, recIndex) => (
+                    <li key={recIndex} className="flex items-start gap-2">
+                      <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" />
+                      <span>{rec}</span>
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <div className="flex items-center gap-3">
+                  <Calendar className="h-8 w-8 text-blue-600" />
+                  <CardTitle className="text-2xl">Timing & Scheduling</CardTitle>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-3">
+                  {plantingGuide.timing.map((rec, recIndex) => (
+                    <li key={recIndex} className="flex items-start gap-2">
+                      <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" />
+                      <span>{rec}</span>
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* Seasonal Tips Tab */}
+          <TabsContent value="seasonal" className="space-y-8">
+            <div className="mb-6">
+              <h2 className="text-3xl font-bold mb-2">Seasonal Farming Tips</h2>
+              <p className="text-muted-foreground">
+                Season-specific guidance for year-round success
+              </p>
+            </div>
+
+            {Object.values(seasonalTips).map((season, index) => {
+              const Icon = season.icon;
+              return (
+                <Card key={index}>
+                  <CardHeader>
+                    <div className="flex items-center gap-3">
+                      <Icon className={`h-8 w-8 ${season.color}`} />
+                      <CardTitle className="text-2xl">{season.title}</CardTitle>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <ul className="space-y-3">
+                      {season.tips.map((tip, tipIndex) => (
+                        <li key={tipIndex} className="flex items-start gap-2">
+                          <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" />
+                          <span>{tip}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </TabsContent>
+
+          {/* Organic Farming Tab */}
+          <TabsContent value="organic" className="space-y-8">
+            <div className="mb-6">
+              <h2 className="text-3xl font-bold mb-2">Organic Farming Practices</h2>
+              <p className="text-muted-foreground">
+                Natural and sustainable farming methods
+              </p>
+            </div>
+
+            {organicFarming.map((advice, index) => {
+              const Icon = advice.icon;
+              return (
+                <Card key={index}>
+                  <CardHeader>
+                    <div className="flex items-center gap-3">
+                      <Icon className="h-8 w-8 text-green-600" />
+                      <CardTitle className="text-2xl">{advice.title}</CardTitle>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <ul className="space-y-3">
+                      {advice.recommendations.map((rec, recIndex) => (
+                        <li key={recIndex} className="flex items-start gap-2">
+                          <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" />
+                          <span>{rec}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                </Card>
+              );
+            })}
+
+            <Card className="border-2 border-primary">
+              <CardHeader>
+                <div className="flex items-center gap-3">
+                  <Sparkles className="h-8 w-8 text-primary" />
+                  <CardTitle className="text-2xl">Organic Certification Tips</CardTitle>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-3">
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" />
+                    <span>Maintain detailed records of all inputs, practices, and sales for 3+ years</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" />
+                    <span>Establish buffer zones between organic and conventional fields</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" />
+                    <span>Use only approved inputs listed by your certifying agency</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" />
+                    <span>Plan for the 3-year transition period before achieving full certification</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" />
+                    <span>Connect with local organic farming associations for guidance and support</span>
                   </li>
                 </ul>
               </CardContent>
