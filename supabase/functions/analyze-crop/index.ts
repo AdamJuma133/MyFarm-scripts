@@ -64,14 +64,55 @@ serve(async (req) => {
         messages: [
           {
             role: "system",
-            content: "You are an expert agricultural AI that identifies crop types and diseases from images. Analyze the image carefully and provide: 1) The specific crop type (e.g., 'Tomato', 'Wheat', 'Rice', 'Corn', 'Potato'), 2) Whether the crop appears HEALTHY or has DISEASE symptoms, 3) If disease is present, identify the specific disease name and type (bacterial, viral, fungal, or nutritional deficiency). Be accurate and specific about the disease name if you detect one."
+            content: `You are an expert agricultural botanist and plant pathologist AI. Your task is to precisely identify plants/crops and diagnose diseases from leaf and plant images.
+
+PLANT IDENTIFICATION GUIDELINES:
+- Look at leaf shape, venation pattern, margins (edges), texture, and arrangement
+- Consider stem structure, color, and growth habit
+- Note any flowers, fruits, or seeds visible
+- Identify specific species when possible (e.g., "Roma Tomato" not just "Tomato")
+
+COMMON CROPS TO IDENTIFY:
+Vegetables: Tomato, Potato, Pepper (Bell, Chili), Eggplant, Cucumber, Squash, Zucchini, Pumpkin, Cabbage, Lettuce, Spinach, Kale, Broccoli, Cauliflower, Carrot, Onion, Garlic, Bean, Pea, Okra
+Grains: Corn/Maize, Wheat, Rice, Barley, Sorghum, Millet, Oat
+Fruits: Apple, Orange, Lemon, Grape, Strawberry, Banana, Mango, Papaya, Guava, Watermelon, Melon
+Cash Crops: Cotton, Coffee, Tea, Sugarcane, Tobacco, Cocoa, Cassava
+Legumes: Soybean, Peanut/Groundnut, Chickpea, Lentil, Cowpea
+
+DISEASE IDENTIFICATION:
+- Check for spots, lesions, discoloration, wilting, mold, rust, blight
+- Note the pattern and distribution of symptoms
+- Identify specific disease names (e.g., "Early Blight", "Powdery Mildew", "Bacterial Leaf Spot")
+
+Be PRECISE and SPECIFIC. If uncertain, provide your best assessment with lower confidence.`
           },
           {
             role: "user",
             content: [
               {
                 type: "text",
-                text: "Analyze this crop image and determine: 1) The crop type, 2) If the crop is healthy or diseased, 3) If diseased, identify the specific disease name and type. Return a JSON object with: cropType (string), isHealthy (boolean), diseaseName (string or null - specific disease name if detected), diseaseType (string or null: 'bacterial', 'viral', 'fungal', 'nutritional'), and confidence (number 0-1)."
+                text: `Analyze this plant/crop image carefully.
+
+STEP 1 - PLANT IDENTIFICATION:
+- What specific plant or crop is this? Look at the leaf shape, texture, color, vein patterns, and any visible fruits/flowers.
+- Be as specific as possible (e.g., "Cherry Tomato", "Bell Pepper", "Sweet Corn")
+
+STEP 2 - HEALTH ASSESSMENT:
+- Is this plant HEALTHY or showing signs of DISEASE/STRESS?
+- Look for: spots, lesions, yellowing, browning, wilting, mold, unusual patterns
+
+STEP 3 - DISEASE DIAGNOSIS (if applicable):
+- What specific disease is affecting this plant?
+- What type: bacterial, viral, fungal, or nutritional deficiency?
+- Look at symptom patterns to determine the exact disease name
+
+Return a JSON object with:
+- cropType: specific plant/crop name (string)
+- isHealthy: true if healthy, false if diseased (boolean)  
+- diseaseName: specific disease name if detected, null if healthy (string or null)
+- diseaseType: 'bacterial', 'viral', 'fungal', or 'nutritional' if diseased (string or null)
+- confidence: your confidence level 0-1 (number)
+- observations: brief notes on what you observed (string)`
               },
               {
                 type: "image_url",
