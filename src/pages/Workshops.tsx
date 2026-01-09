@@ -43,57 +43,57 @@ interface UpcomingEvent {
 const videoTutorials: VideoTutorial[] = [
   {
     id: '1',
-    title: 'How to Identify Tomato Diseases',
-    description: 'Learn to recognize common tomato diseases like early blight, late blight, and septoria leaf spot.',
-    youtubeId: 'e8dDiLCcBQc',
-    duration: '12:34',
+    title: 'Video Title 1',
+    description: 'Add your video description here.',
+    youtubeId: '',
+    duration: '00:00',
     category: 'Disease ID',
-    views: '45K'
+    views: '0'
   },
   {
     id: '2',
-    title: 'Organic Pest Control Methods',
-    description: 'Natural ways to protect your crops from pests without using harmful chemicals.',
-    youtubeId: 'wPqvX3YELrM',
-    duration: '18:22',
+    title: 'Video Title 2',
+    description: 'Add your video description here.',
+    youtubeId: '',
+    duration: '00:00',
     category: 'Pest Control',
-    views: '32K'
+    views: '0'
   },
   {
     id: '3',
-    title: 'Drip Irrigation Setup Guide',
-    description: 'Step-by-step tutorial on setting up efficient drip irrigation for your farm.',
-    youtubeId: 'Z8C5MBv8Xyc',
-    duration: '15:45',
+    title: 'Video Title 3',
+    description: 'Add your video description here.',
+    youtubeId: '',
+    duration: '00:00',
     category: 'Irrigation',
-    views: '28K'
+    views: '0'
   },
   {
     id: '4',
-    title: 'Soil Health and Testing',
-    description: 'Understanding your soil composition and how to test for nutrients.',
-    youtubeId: '8tD0OrqQxWA',
-    duration: '20:10',
+    title: 'Video Title 4',
+    description: 'Add your video description here.',
+    youtubeId: '',
+    duration: '00:00',
     category: 'Soil',
-    views: '22K'
+    views: '0'
   },
   {
     id: '5',
-    title: 'Companion Planting Strategies',
-    description: 'Which crops grow well together and how to maximize your garden space.',
-    youtubeId: 'Bfmv6T5FzKg',
-    duration: '14:55',
+    title: 'Video Title 5',
+    description: 'Add your video description here.',
+    youtubeId: '',
+    duration: '00:00',
     category: 'Planting',
-    views: '38K'
+    views: '0'
   },
   {
     id: '6',
-    title: 'Managing Fungal Diseases in Crops',
-    description: 'Prevention and treatment strategies for common fungal infections in crops.',
-    youtubeId: 'EfOofjqtFbE',
-    duration: '16:30',
+    title: 'Video Title 6',
+    description: 'Add your video description here.',
+    youtubeId: '',
+    duration: '00:00',
     category: 'Disease ID',
-    views: '41K'
+    views: '0'
   }
 ];
 
