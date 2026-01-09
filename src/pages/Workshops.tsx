@@ -47,7 +47,7 @@ const videoTutorials: VideoTutorial[] = [
     description: 'Add your video description here.',
     youtubeId: '',
     duration: '00:00',
-    category: 'Disease ID',
+    category: 'Diseases',
     views: '0'
   },
   {
@@ -56,7 +56,7 @@ const videoTutorials: VideoTutorial[] = [
     description: 'Add your video description here.',
     youtubeId: '',
     duration: '00:00',
-    category: 'Pest Control',
+    category: 'Planting',
     views: '0'
   },
   {
@@ -65,7 +65,7 @@ const videoTutorials: VideoTutorial[] = [
     description: 'Add your video description here.',
     youtubeId: '',
     duration: '00:00',
-    category: 'Irrigation',
+    category: 'Soil',
     views: '0'
   },
   {
@@ -74,7 +74,7 @@ const videoTutorials: VideoTutorial[] = [
     description: 'Add your video description here.',
     youtubeId: '',
     duration: '00:00',
-    category: 'Soil',
+    category: 'Irrigation',
     views: '0'
   },
   {
@@ -83,7 +83,7 @@ const videoTutorials: VideoTutorial[] = [
     description: 'Add your video description here.',
     youtubeId: '',
     duration: '00:00',
-    category: 'Planting',
+    category: 'Climate-Smart',
     views: '0'
   },
   {
@@ -92,7 +92,25 @@ const videoTutorials: VideoTutorial[] = [
     description: 'Add your video description here.',
     youtubeId: '',
     duration: '00:00',
-    category: 'Disease ID',
+    category: 'Pest Management',
+    views: '0'
+  },
+  {
+    id: '7',
+    title: 'Video Title 7',
+    description: 'Add your video description here.',
+    youtubeId: '',
+    duration: '00:00',
+    category: 'Organic Certification',
+    views: '0'
+  },
+  {
+    id: '8',
+    title: 'Video Title 8',
+    description: 'Add your video description here.',
+    youtubeId: '',
+    duration: '00:00',
+    category: 'Water Conservation',
     views: '0'
   }
 ];
@@ -138,10 +156,14 @@ const upcomingEvents: UpcomingEvent[] = [
 
 const categories = [
   { id: 'all', label: 'All', icon: BookOpen },
-  { id: 'Disease ID', label: 'Diseases', icon: Bug },
-  { id: 'Irrigation', label: 'Irrigation', icon: Droplets },
+  { id: 'Diseases', label: 'Diseases', icon: Bug },
   { id: 'Planting', label: 'Planting', icon: Sprout },
-  { id: 'Soil', label: 'Soil', icon: Sun }
+  { id: 'Soil', label: 'Soil', icon: Sun },
+  { id: 'Irrigation', label: 'Irrigation', icon: Droplets },
+  { id: 'Climate-Smart', label: 'Climate-Smart', icon: Sun },
+  { id: 'Pest Management', label: 'Pest Management', icon: Bug },
+  { id: 'Organic Certification', label: 'Organic', icon: Sprout },
+  { id: 'Water Conservation', label: 'Water Conservation', icon: Droplets }
 ];
 
 export default function Workshops() {
