@@ -45,7 +45,7 @@ const videoTutorials: VideoTutorial[] = [
     id: '1',
     title: 'How to Identify Tomato Diseases',
     description: 'Learn to recognize common tomato diseases like early blight, late blight, and septoria leaf spot.',
-    youtubeId: 'dQw4w9WgXcQ',
+    youtubeId: 'e8dDiLCcBQc',
     duration: '12:34',
     category: 'Disease ID',
     views: '45K'
@@ -54,7 +54,7 @@ const videoTutorials: VideoTutorial[] = [
     id: '2',
     title: 'Organic Pest Control Methods',
     description: 'Natural ways to protect your crops from pests without using harmful chemicals.',
-    youtubeId: 'dQw4w9WgXcQ',
+    youtubeId: 'wPqvX3YELrM',
     duration: '18:22',
     category: 'Pest Control',
     views: '32K'
@@ -63,7 +63,7 @@ const videoTutorials: VideoTutorial[] = [
     id: '3',
     title: 'Drip Irrigation Setup Guide',
     description: 'Step-by-step tutorial on setting up efficient drip irrigation for your farm.',
-    youtubeId: 'dQw4w9WgXcQ',
+    youtubeId: 'Z8C5MBv8Xyc',
     duration: '15:45',
     category: 'Irrigation',
     views: '28K'
@@ -72,7 +72,7 @@ const videoTutorials: VideoTutorial[] = [
     id: '4',
     title: 'Soil Health and Testing',
     description: 'Understanding your soil composition and how to test for nutrients.',
-    youtubeId: 'dQw4w9WgXcQ',
+    youtubeId: '8tD0OrqQxWA',
     duration: '20:10',
     category: 'Soil',
     views: '22K'
@@ -81,16 +81,16 @@ const videoTutorials: VideoTutorial[] = [
     id: '5',
     title: 'Companion Planting Strategies',
     description: 'Which crops grow well together and how to maximize your garden space.',
-    youtubeId: 'dQw4w9WgXcQ',
+    youtubeId: 'Bfmv6T5FzKg',
     duration: '14:55',
     category: 'Planting',
     views: '38K'
   },
   {
     id: '6',
-    title: 'Managing Fungal Diseases',
+    title: 'Managing Fungal Diseases in Crops',
     description: 'Prevention and treatment strategies for common fungal infections in crops.',
-    youtubeId: 'dQw4w9WgXcQ',
+    youtubeId: 'EfOofjqtFbE',
     duration: '16:30',
     category: 'Disease ID',
     views: '41K'
