@@ -203,15 +203,15 @@ export function DiseaseAnalyzer() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 md:space-y-6">
       <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
+        <CardHeader className="pb-3 md:pb-6">
+          <CardTitle className="flex items-center gap-2 text-lg md:text-xl">
             <Scan className="h-5 w-5" />
             {t('analyzer.title')}
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 pt-0">
           <FileUpload
             onFileSelect={handleFileSelect}
             onFileRemove={handleFileRemove}
@@ -221,17 +221,17 @@ export function DiseaseAnalyzer() {
           {selectedFile && !isAnalyzing && !analysisResult && (
             <Button 
               onClick={() => analyzeImage(selectedFile)}
-              className="w-full"
+              className="w-full h-12 md:h-10 text-base touch-manipulation"
             >
-              <Scan className="h-4 w-4 mr-2" />
+              <Scan className="h-5 w-5 mr-2" />
               {t('analyzer.analyzeCrop')}
             </Button>
           )}
 
           {isAnalyzing && (
             <Alert>
-              <Loader2 className="h-4 w-4 animate-spin" />
-              <AlertDescription>
+              <Loader2 className="h-5 w-5 animate-spin" />
+              <AlertDescription className="ml-2">
                 {t('analyzer.analyzing')}
               </AlertDescription>
             </Alert>
@@ -239,8 +239,8 @@ export function DiseaseAnalyzer() {
 
           {error && (
             <Alert variant="destructive">
-              <AlertTriangle className="h-4 w-4" />
-              <AlertDescription>{error}</AlertDescription>
+              <AlertTriangle className="h-5 w-5" />
+              <AlertDescription className="ml-2">{error}</AlertDescription>
             </Alert>
           )}
         </CardContent>
@@ -367,7 +367,7 @@ export function DiseaseAnalyzer() {
                 setAnalysisResult(null);
                 setError(null);
               }}
-              className="w-full"
+              className="w-full h-12 md:h-10 text-base touch-manipulation"
             >
               {t('analyzer.analyzeAnother')}
             </Button>

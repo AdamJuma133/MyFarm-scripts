@@ -83,19 +83,19 @@ export function FileUpload({ onFileSelect, onFileRemove, selectedFile, className
           <img 
             src={preview} 
             alt="Selected crop" 
-            className="w-full h-64 object-cover"
+            className="w-full h-48 sm:h-64 object-cover"
           />
           <Button
             variant="destructive"
-            size="sm"
-            className="absolute top-2 right-2"
+            size="icon"
+            className="absolute top-3 right-3 h-10 w-10 touch-manipulation"
             onClick={handleRemove}
           >
-            <X className="h-4 w-4" />
+            <X className="h-5 w-5" />
           </Button>
         </div>
-        <div className="p-4">
-          <p className="text-sm text-muted-foreground">
+        <div className="p-3 sm:p-4">
+          <p className="text-sm text-muted-foreground truncate">
             {selectedFile.name} ({(selectedFile.size / 1024 / 1024).toFixed(2)} MB)
           </p>
         </div>
@@ -107,13 +107,13 @@ export function FileUpload({ onFileSelect, onFileRemove, selectedFile, className
     <Card 
       {...getRootProps()} 
       className={cn(
-        "border-2 border-dashed border-border hover:border-primary/50 transition-colors cursor-pointer max-w-md mx-auto",
+        "border-2 border-dashed border-border hover:border-primary/50 transition-colors cursor-pointer max-w-md mx-auto touch-manipulation",
         isDragActive && "border-primary bg-accent/20",
         className
       )}
     >
       <input {...getInputProps()} />
-      <div className="flex flex-col items-center justify-center p-8 text-center">
+      <div className="flex flex-col items-center justify-center p-6 sm:p-8 text-center">
         <div className="mb-4 p-4 bg-accent rounded-full">
           {isDragActive ? (
             <Upload className="h-8 w-8 text-primary animate-bounce" />
@@ -121,13 +121,13 @@ export function FileUpload({ onFileSelect, onFileRemove, selectedFile, className
             <ImageIcon className="h-8 w-8 text-muted-foreground" />
           )}
         </div>
-        <h3 className="text-lg font-semibold mb-2">
+        <h3 className="text-base sm:text-lg font-semibold mb-2">
           {isDragActive ? 'Drop your image here' : 'Capture or Upload Crop Image'}
         </h3>
-        <p className="text-muted-foreground mb-4">
+        <p className="text-sm text-muted-foreground mb-4 px-2">
           Take a photo with your camera or upload an existing image
         </p>
-        <div className="flex gap-2 flex-col sm:flex-row">
+        <div className="flex gap-2 flex-col w-full sm:flex-row sm:w-auto">
           {showCamera && (
             <Button 
               variant="default" 
@@ -137,22 +137,23 @@ export function FileUpload({ onFileSelect, onFileRemove, selectedFile, className
               }}
               disabled={isCapturing}
               type="button"
+              className="h-12 sm:h-10 touch-manipulation"
             >
               {isCapturing ? (
                 <>
-                  <Upload className="h-4 w-4 mr-2 animate-spin" />
+                  <Upload className="h-5 w-5 mr-2 animate-spin" />
                   Capturing...
                 </>
               ) : (
                 <>
-                  <Camera className="h-4 w-4 mr-2" />
+                  <Camera className="h-5 w-5 mr-2" />
                   Take Photo
                 </>
               )}
             </Button>
           )}
-          <Button variant="outline" type="button">
-            <Upload className="h-4 w-4 mr-2" />
+          <Button variant="outline" type="button" className="h-12 sm:h-10 touch-manipulation">
+            <Upload className="h-5 w-5 mr-2" />
             Select Image
           </Button>
         </div>
