@@ -49,19 +49,19 @@ export function DiseaseLibrary() {
 
   const DiseaseCard = ({ disease }: { disease: Disease }) => (
     <Card 
-      className="cursor-pointer hover:shadow-medium transition-all duration-200 hover:scale-[1.02]"
+      className="cursor-pointer hover:shadow-medium transition-all duration-200 active:scale-[0.98] touch-manipulation"
       onClick={() => setSelectedDisease(disease)}
     >
       <CardContent className="p-4">
         <div className="space-y-3">
-          <div className="flex items-start justify-between">
-            <h3 className="font-semibold">{disease.name}</h3>
+          <div className="flex items-start justify-between gap-2">
+            <h3 className="font-semibold text-base leading-tight">{disease.name}</h3>
             <Badge 
               variant={getSeverityColor(disease.severity)}
-              className="flex items-center gap-1"
+              className="flex items-center gap-1 shrink-0"
             >
               {getSeverityIcon(disease.severity)}
-              {t(`severity.${disease.severity}`)}
+              <span className="hidden sm:inline">{t(`severity.${disease.severity}`)}</span>
             </Badge>
           </div>
           
@@ -83,7 +83,7 @@ export function DiseaseLibrary() {
             ))}
             {disease.crops.length > 3 && (
               <Badge variant="outline" className="text-xs">
-                +{disease.crops.length - 3} more
+                +{disease.crops.length - 3}
               </Badge>
             )}
           </div>
@@ -94,15 +94,16 @@ export function DiseaseLibrary() {
 
   if (selectedDisease) {
     return (
-      <div className="space-y-6">
-        <div className="flex items-center gap-4">
+      <div className="space-y-4 md:space-y-6">
+        <div className="flex items-center gap-3">
           <Button 
             variant="outline" 
             onClick={() => setSelectedDisease(null)}
+            className="h-11 touch-manipulation"
           >
             {t('library.backToLibrary')}
           </Button>
-          <h2 className="text-2xl font-bold">{selectedDisease.name}</h2>
+          <h2 className="text-xl md:text-2xl font-bold truncate">{selectedDisease.name}</h2>
         </div>
 
         <Card>
@@ -197,33 +198,39 @@ export function DiseaseLibrary() {
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center gap-4">
+    <div className="space-y-4 md:space-y-6">
+      <div className="flex items-center gap-3">
         <Book className="h-6 w-6" />
-        <h2 className="text-2xl font-bold">{t('library.title')}</h2>
+        <h2 className="text-xl md:text-2xl font-bold">{t('library.title')}</h2>
       </div>
 
       <Card>
-        <CardHeader>
+        <CardHeader className="pb-3 md:pb-6">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
             <Input
               placeholder={t('library.search')}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10"
+              className="pl-11 h-12 md:h-10 text-base"
             />
           </div>
         </CardHeader>
       </Card>
 
       <Tabs defaultValue="all" className="space-y-4">
-        <TabsList className="grid w-full grid-cols-5">
-          <TabsTrigger value="all">{t('library.all')}</TabsTrigger>
-          <TabsTrigger value="fungal">{t('library.fungal')}</TabsTrigger>
-          <TabsTrigger value="bacterial">{t('library.bacterial')}</TabsTrigger>
-          <TabsTrigger value="viral">{t('library.viral')}</TabsTrigger>
-          <TabsTrigger value="nutritional">{t('library.nutritional')}</TabsTrigger>
+        <TabsList className="grid w-full grid-cols-3 md:grid-cols-5 h-auto gap-1 p-1">
+          <TabsTrigger value="all" className="h-10 touch-manipulation text-sm">{t('library.all')}</TabsTrigger>
+          <TabsTrigger value="fungal" className="h-10 touch-manipulation text-sm">{t('library.fungal')}</TabsTrigger>
+          <TabsTrigger value="bacterial" className="h-10 touch-manipulation text-sm">{t('library.bacterial')}</TabsTrigger>
+          <TabsTrigger value="viral" className="h-10 touch-manipulation text-sm hidden md:flex">{t('library.viral')}</TabsTrigger>
+          <TabsTrigger value="nutritional" className="h-10 touch-manipulation text-sm hidden md:flex">{t('library.nutritional')}</TabsTrigger>
+        </TabsList>
+        
+        {/* Mobile-only second row of tabs */}
+        <TabsList className="grid w-full grid-cols-2 md:hidden h-auto gap-1 p-1">
+          <TabsTrigger value="viral" className="h-10 touch-manipulation text-sm">{t('library.viral')}</TabsTrigger>
+          <TabsTrigger value="nutritional" className="h-10 touch-manipulation text-sm">{t('library.nutritional')}</TabsTrigger>
         </TabsList>
 
         <TabsContent value="all">

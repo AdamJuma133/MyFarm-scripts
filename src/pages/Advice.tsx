@@ -4,6 +4,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useNavigate } from 'react-router-dom';
+import { MobileHeader } from '@/components/mobile-header';
+import { BottomNavigation } from '@/components/bottom-navigation';
 import { 
   Sprout, 
   Droplets, 
@@ -461,41 +463,49 @@ const Advice = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-secondary">
+    <div className="min-h-screen bg-gradient-secondary pb-20 md:pb-0">
+      {/* Mobile Header */}
+      <div className="md:hidden">
+        <MobileHeader />
+      </div>
+
       {/* Header */}
       <div className="bg-gradient-primary text-primary-foreground">
-        <div className="container mx-auto px-4 py-8">
+        <div className="container mx-auto px-3 md:px-4 py-6 md:py-8">
           <Button
             variant="ghost"
             onClick={() => navigate('/')}
-            className="mb-4 text-primary-foreground hover:bg-primary-foreground/20"
+            className="mb-3 md:mb-4 text-primary-foreground hover:bg-primary-foreground/20 h-11 touch-manipulation hidden md:flex"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Home
           </Button>
-          <h1 className="text-4xl md:text-5xl font-bold mb-3">
-            AI-Powered Agricultural Advice & Recommendations
+          <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold mb-2 md:mb-3">
+            AI-Powered Agricultural Advice
           </h1>
-          <p className="text-lg opacity-90 max-w-4xl">
-            Comprehensive farming guidance tailored to disease detection, environmental conditions, and crop management practices
+          <p className="text-sm md:text-lg opacity-90 max-w-4xl">
+            Comprehensive farming guidance for disease detection & crop management
           </p>
         </div>
       </div>
 
       {/* Main Content */}
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-3 md:px-4 py-4 md:py-8">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-3 lg:grid-cols-9 mb-8">
-            <TabsTrigger value="overview">Overview</TabsTrigger>
-            <TabsTrigger value="diseases">Diseases</TabsTrigger>
-            <TabsTrigger value="environment">Environment</TabsTrigger>
-            <TabsTrigger value="soil">Soil</TabsTrigger>
-            <TabsTrigger value="water">Water</TabsTrigger>
-            <TabsTrigger value="planting">Planting</TabsTrigger>
-            <TabsTrigger value="seasonal">Seasonal</TabsTrigger>
-            <TabsTrigger value="organic">Organic</TabsTrigger>
-            <TabsTrigger value="advanced">Advanced</TabsTrigger>
-          </TabsList>
+          {/* Mobile-optimized scrollable tabs */}
+          <div className="overflow-x-auto -mx-3 px-3 mb-6 md:mb-8">
+            <TabsList className="inline-flex w-max md:grid md:w-full md:grid-cols-9 gap-1 p-1 h-auto">
+              <TabsTrigger value="overview" className="h-10 px-3 touch-manipulation whitespace-nowrap">Overview</TabsTrigger>
+              <TabsTrigger value="diseases" className="h-10 px-3 touch-manipulation whitespace-nowrap">Diseases</TabsTrigger>
+              <TabsTrigger value="environment" className="h-10 px-3 touch-manipulation whitespace-nowrap">Environment</TabsTrigger>
+              <TabsTrigger value="soil" className="h-10 px-3 touch-manipulation whitespace-nowrap">Soil</TabsTrigger>
+              <TabsTrigger value="water" className="h-10 px-3 touch-manipulation whitespace-nowrap">Water</TabsTrigger>
+              <TabsTrigger value="planting" className="h-10 px-3 touch-manipulation whitespace-nowrap">Planting</TabsTrigger>
+              <TabsTrigger value="seasonal" className="h-10 px-3 touch-manipulation whitespace-nowrap">Seasonal</TabsTrigger>
+              <TabsTrigger value="organic" className="h-10 px-3 touch-manipulation whitespace-nowrap">Organic</TabsTrigger>
+              <TabsTrigger value="advanced" className="h-10 px-3 touch-manipulation whitespace-nowrap">Advanced</TabsTrigger>
+            </TabsList>
+          </div>
 
           {/* Overview Tab */}
           <TabsContent value="overview" className="space-y-8">
@@ -1090,12 +1100,15 @@ const Advice = () => {
         </Tabs>
       </div>
 
-      {/* Footer */}
-      <footer className="border-t mt-12 py-8">
+      {/* Footer - hidden on mobile */}
+      <footer className="hidden md:block border-t mt-12 py-8">
         <div className="container mx-auto px-4 text-center text-muted-foreground">
           <p>© 2024 MyFarm - Empowering farmers with AI technology</p>
         </div>
       </footer>
+      
+      {/* Bottom Navigation for Mobile */}
+      <BottomNavigation />
     </div>
   );
 };

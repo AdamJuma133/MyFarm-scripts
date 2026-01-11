@@ -6,6 +6,8 @@ import { Badge } from '@/components/ui/badge';
 import { Clock, Trash2, ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { LanguageSelector } from '@/components/language-selector';
+import { MobileHeader } from '@/components/mobile-header';
+import { BottomNavigation } from '@/components/bottom-navigation';
 
 interface ScanHistory {
   id: string;
@@ -52,11 +54,17 @@ const History = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-secondary">
-      <div className="container mx-auto px-4 py-8">
-        <div className="mb-6 flex items-center justify-between">
+    <div className="min-h-screen bg-gradient-secondary pb-20 md:pb-0">
+      {/* Mobile Header */}
+      <div className="md:hidden">
+        <MobileHeader />
+      </div>
+      
+      <div className="container mx-auto px-3 md:px-4 py-4 md:py-8">
+        {/* Desktop header with back button */}
+        <div className="hidden md:flex mb-6 items-center justify-between">
           <div className="flex items-center gap-4">
-            <Button variant="ghost" onClick={() => navigate('/')}>
+            <Button variant="ghost" onClick={() => navigate('/')} className="h-11 touch-manipulation">
               <ArrowLeft className="h-4 w-4 mr-2" />
               Back
             </Button>
@@ -64,12 +72,30 @@ const History = () => {
           </div>
           <div className="flex items-center gap-2">
             {history.length > 0 && (
-              <Button variant="destructive" onClick={handleClearAll}>
+              <Button variant="destructive" onClick={handleClearAll} className="h-11 touch-manipulation">
                 <Trash2 className="h-4 w-4 mr-2" />
                 {t('history.clear')}
               </Button>
             )}
             <LanguageSelector />
+          </div>
+        </div>
+
+        {/* Mobile header */}
+        <div className="md:hidden mb-4">
+          <div className="flex items-center justify-between">
+            <h1 className="text-2xl font-bold">{t('history.title')}</h1>
+            {history.length > 0 && (
+              <Button 
+                variant="destructive" 
+                size="sm" 
+                onClick={handleClearAll}
+                className="h-10 touch-manipulation"
+              >
+                <Trash2 className="h-4 w-4 mr-1" />
+                Clear
+              </Button>
+            )}
           </div>
         </div>
 
@@ -81,13 +107,13 @@ const History = () => {
               <p className="text-muted-foreground mb-4">
                 {t('history.startAnalyzing')}
               </p>
-              <Button onClick={() => navigate('/')}>
+              <Button onClick={() => navigate('/')} className="h-12 touch-manipulation">
                 {t('navigation.diseaseAnalyzer')}
               </Button>
             </CardContent>
           </Card>
         ) : (
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-3 md:gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
             {history.map((item) => (
               <Card key={item.id} className="overflow-hidden">
                 <div className="aspect-video relative">
@@ -97,17 +123,17 @@ const History = () => {
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <CardHeader>
-                  <CardTitle className="text-lg flex items-center gap-2">
-                    {item.crop && <Badge variant="outline">🌾 {item.crop}</Badge>}
-                    {item.disease}
+                <CardHeader className="pb-2 pt-3">
+                  <CardTitle className="text-base flex items-center gap-2 flex-wrap">
+                    {item.crop && <Badge variant="outline" className="text-xs">🌾 {item.crop}</Badge>}
+                    <span className="truncate">{item.disease}</span>
                   </CardTitle>
-                  <CardDescription className="flex items-center gap-2">
+                  <CardDescription className="flex items-center gap-2 text-xs">
                     <Clock className="h-3 w-3" />
                     {new Date(item.timestamp).toLocaleString()}
                   </CardDescription>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="pt-0 pb-3">
                   <div className="flex items-center justify-between mb-2">
                     <Badge variant={
                       item.type === 'bacterial' ? 'default' :
@@ -124,7 +150,7 @@ const History = () => {
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="w-full mt-2"
+                    className="w-full mt-2 h-10 touch-manipulation"
                     onClick={() => handleDelete(item.id)}
                   >
                     <Trash2 className="h-4 w-4 mr-2" />
@@ -136,6 +162,9 @@ const History = () => {
           </div>
         )}
       </div>
+      
+      {/* Bottom Navigation for Mobile */}
+      <BottomNavigation />
     </div>
   );
 };
