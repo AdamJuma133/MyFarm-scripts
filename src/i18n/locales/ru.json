@@ -95,5 +95,21 @@
       "waterConservation": "Техники Экономии Воды",
       "waterConservationDesc": "Практические методы снижения использования воды при сохранении урожайности."
     }
+  },
+  "offline": {
+    "offline": "Офлайн",
+    "cached": "Кешировано",
+    "youAreOffline": "Вы офлайн",
+    "backOnline": "Снова онлайн",
+    "cachedDataAvailable": "Кешированные данные доступны",
+    "offlineMode": "Офлайн режим",
+    "syncPending": "Ожидает синхронизации",
+    "lastSynced": "Последняя синхронизация",
+    "syncNow": "Синхронизировать сейчас",
+    "clearCache": "Очистить кеш",
+    "cacheSize": "Размер кеша",
+    "offlineFeatures": "Офлайн функции",
+    "viewCachedData": "Просмотр кешированной библиотеки болезней и истории сканирований",
+    "analyzeOfflineUnavailable": "Анализ ИИ требует подключения к интернету"
   }
 }

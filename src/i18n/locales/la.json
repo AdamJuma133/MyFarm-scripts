@@ -95,5 +95,21 @@
       "waterConservation": "Technicae Conservationis Aquae",
       "waterConservationDesc": "Methodi practicae ad usum aquae reducendum cum proventibus culturarum conservandis."
     }
+  },
+  "offline": {
+    "offline": "Sine Connexione",
+    "cached": "In Memoria",
+    "youAreOffline": "Sine connexione es",
+    "backOnline": "Iterum connexus",
+    "cachedDataAvailable": "Data in memoria praesto sunt",
+    "offlineMode": "Modus Sine Connexione",
+    "syncPending": "Synchronizatio exspectata",
+    "lastSynced": "Ultima synchronizatio",
+    "syncNow": "Nunc Synchroniza",
+    "clearCache": "Memoriam Purga",
+    "cacheSize": "Magnitudo Memoriae",
+    "offlineFeatures": "Functiones Sine Connexione",
+    "viewCachedData": "Vide bibliothecam morborum et historiam in memoria",
+    "analyzeOfflineUnavailable": "Analysis AI connexionem interreti requirit"
   }
 }

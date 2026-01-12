@@ -95,5 +95,21 @@
       "waterConservation": "Técnicas de Conservação da Água",
       "waterConservationDesc": "Métodos práticos para reduzir o uso de água mantendo a produtividade das culturas."
     }
+  },
+  "offline": {
+    "offline": "Offline",
+    "cached": "Em cache",
+    "youAreOffline": "Você está offline",
+    "backOnline": "De volta online",
+    "cachedDataAvailable": "Dados em cache disponíveis",
+    "offlineMode": "Modo Offline",
+    "syncPending": "Sincronização pendente",
+    "lastSynced": "Última sincronização",
+    "syncNow": "Sincronizar Agora",
+    "clearCache": "Limpar Cache",
+    "cacheSize": "Tamanho do Cache",
+    "offlineFeatures": "Recursos Offline",
+    "viewCachedData": "Ver biblioteca de doenças e histórico em cache",
+    "analyzeOfflineUnavailable": "Análise de IA requer conexão com internet"
   }
 }

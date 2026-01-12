@@ -5,10 +5,11 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { FileUpload } from '@/components/ui/file-upload';
-import { Loader2, Scan, AlertTriangle, CheckCircle, XCircle } from 'lucide-react';
+import { Loader2, Scan, AlertTriangle, CheckCircle, XCircle, WifiOff } from 'lucide-react';
 import { diseases, Disease } from '@/data/diseases';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+import { useOffline } from '@/hooks/use-offline';
 
 interface AnalysisResult {
   disease: Disease | null;
@@ -21,6 +22,7 @@ interface AnalysisResult {
 
 export function DiseaseAnalyzer() {
   const { t } = useTranslation();
+  const { isOnline } = useOffline();
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(null);
@@ -219,13 +221,24 @@ export function DiseaseAnalyzer() {
           />
           
           {selectedFile && !isAnalyzing && !analysisResult && (
-            <Button 
-              onClick={() => analyzeImage(selectedFile)}
-              className="w-full h-12 md:h-10 text-base touch-manipulation"
-            >
-              <Scan className="h-5 w-5 mr-2" />
-              {t('analyzer.analyzeCrop')}
-            </Button>
+            <>
+              {!isOnline && (
+                <Alert className="bg-amber-50 dark:bg-amber-950/30 border-amber-200 dark:border-amber-800">
+                  <WifiOff className="h-5 w-5 text-amber-600" />
+                  <AlertDescription className="ml-2 text-amber-700 dark:text-amber-300">
+                    {t('offline.analyzeOfflineUnavailable', 'AI analysis requires internet connection')}
+                  </AlertDescription>
+                </Alert>
+              )}
+              <Button 
+                onClick={() => analyzeImage(selectedFile)}
+                className="w-full h-12 md:h-10 text-base touch-manipulation"
+                disabled={!isOnline}
+              >
+                <Scan className="h-5 w-5 mr-2" />
+                {t('analyzer.analyzeCrop')}
+              </Button>
+            </>
           )}
 
           {isAnalyzing && (
