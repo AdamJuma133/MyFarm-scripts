@@ -8,7 +8,12 @@
   "navigation": {
     "diseaseAnalyzer": "Kichanganuzi cha Magonjwa",
     "diseaseLibrary": "Maktaba ya Magonjwa",
-    "history": "Historia"
+    "history": "Historia",
+    "scan": "Chunguza",
+    "advice": "Ushauri",
+    "outbreaks": "Milipuko",
+    "workshops": "Jifunze",
+    "settings": "Mipangilio"
   },
   "analyzer": {
     "title": "Uchanganuzi wa Magonjwa ya Mazao kwa AI",
@@ -59,5 +64,36 @@
   },
   "language": {
     "select": "Lugha"
+  },
+  "workshops": {
+    "title": "Kituo cha Kujifunza",
+    "subtitle": "Mafunzo ya video na warsha za moja kwa moja kuboresha ujuzi wako wa kilimo",
+    "videoLibrary": "Maktaba ya Video",
+    "upcomingEvents": "Matukio Yajayo",
+    "register": "Jiandikishe",
+    "wantToHost": "Unataka kuandaa warsha?",
+    "hostDescription": "Shiriki ujuzi wako wa kilimo na wakulima duniani kote.",
+    "contactUs": "Wasiliana Nasi",
+    "categories": {
+      "all": "Yote",
+      "diseases": "Magonjwa",
+      "planting": "Kupanda",
+      "soil": "Udongo",
+      "irrigation": "Umwagiliaji",
+      "climateSmart": "Kilimo-Bora kwa Hali ya Hewa",
+      "pestManagement": "Udhibiti wa Wadudu",
+      "organicCertification": "Kikaboni",
+      "waterConservation": "Uhifadhi wa Maji"
+    },
+    "events": {
+      "climateSmartWorkshop": "Warsha ya Kilimo-Bora kwa Hali ya Hewa",
+      "climateSmartDesc": "Jifunze mbinu za kurekebisha mazoea yako ya kilimo kwa mabadiliko ya hali ya hewa.",
+      "pestManagementQA": "Kikao cha Maswali na Majibu ya Udhibiti wa Wadudu",
+      "pestManagementDesc": "Maswali na majibu ya moja kwa moja na wataalamu wa kilimo kuhusu udhibiti wa wadudu.",
+      "organicWebinar": "Webinari ya Cheti cha Kikaboni",
+      "organicDesc": "Kila kitu unachohitaji kujua kuhusu kupata cheti cha kikaboni kwa shamba lako.",
+      "waterConservation": "Mbinu za Uhifadhi wa Maji",
+      "waterConservationDesc": "Njia za vitendo za kupunguza matumizi ya maji huku ukidumisha mavuno ya mazao."
+    }
   }
 }

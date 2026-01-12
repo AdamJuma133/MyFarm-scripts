@@ -8,7 +8,12 @@
   "navigation": {
     "diseaseAnalyzer": "病害分析器",
     "diseaseLibrary": "病害库",
-    "history": "历史记录"
+    "history": "历史记录",
+    "scan": "扫描",
+    "advice": "建议",
+    "outbreaks": "疫情",
+    "workshops": "学习",
+    "settings": "设置"
   },
   "analyzer": {
     "title": "AI 作物病害分析",
@@ -59,5 +64,36 @@
   },
   "language": {
     "select": "语言"
+  },
+  "workshops": {
+    "title": "学习中心",
+    "subtitle": "视频教程和在线研讨会，提升您的农业技能",
+    "videoLibrary": "视频库",
+    "upcomingEvents": "即将举行的活动",
+    "register": "注册",
+    "wantToHost": "想要举办研讨会？",
+    "hostDescription": "与世界各地的农民分享您的农业专业知识。",
+    "contactUs": "联系我们",
+    "categories": {
+      "all": "全部",
+      "diseases": "病害",
+      "planting": "种植",
+      "soil": "土壤",
+      "irrigation": "灌溉",
+      "climateSmart": "气候智能农业",
+      "pestManagement": "病虫害管理",
+      "organicCertification": "有机认证",
+      "waterConservation": "节水技术"
+    },
+    "events": {
+      "climateSmartWorkshop": "气候智能农业研讨会",
+      "climateSmartDesc": "学习适应气候变化的农业实践技术。",
+      "pestManagementQA": "病虫害管理问答环节",
+      "pestManagementDesc": "与农业专家进行综合病虫害管理的在线问答。",
+      "organicWebinar": "有机认证网络研讨会",
+      "organicDesc": "了解农场有机认证所需的一切。",
+      "waterConservation": "节水技术",
+      "waterConservationDesc": "在保持作物产量的同时减少用水的实用方法。"
+    }
   }
 }

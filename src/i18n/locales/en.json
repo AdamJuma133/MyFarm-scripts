@@ -8,7 +8,12 @@
   "navigation": {
     "diseaseAnalyzer": "Disease Analyzer",
     "diseaseLibrary": "Disease Library",
-    "history": "History"
+    "history": "History",
+    "scan": "Scan",
+    "advice": "Advice",
+    "outbreaks": "Outbreaks",
+    "workshops": "Learn",
+    "settings": "Settings"
   },
   "analyzer": {
     "title": "AI Crop Disease Analysis",
@@ -59,5 +64,36 @@
   },
   "language": {
     "select": "Language"
+  },
+  "workshops": {
+    "title": "Learning Hub",
+    "subtitle": "Video tutorials and live workshops to improve your farming skills",
+    "videoLibrary": "Video Library",
+    "upcomingEvents": "Upcoming Events",
+    "register": "Register",
+    "wantToHost": "Want to host a workshop?",
+    "hostDescription": "Share your agricultural expertise with farmers around the world.",
+    "contactUs": "Contact Us",
+    "categories": {
+      "all": "All",
+      "diseases": "Diseases",
+      "planting": "Planting",
+      "soil": "Soil",
+      "irrigation": "Irrigation",
+      "climateSmart": "Climate-Smart",
+      "pestManagement": "Pest Management",
+      "organicCertification": "Organic",
+      "waterConservation": "Water Conservation"
+    },
+    "events": {
+      "climateSmartWorkshop": "Climate-Smart Agriculture Workshop",
+      "climateSmartDesc": "Learn techniques to adapt your farming practices to changing climate conditions.",
+      "pestManagementQA": "Pest Management Q&A Session",
+      "pestManagementDesc": "Live Q&A with agricultural experts on integrated pest management.",
+      "organicWebinar": "Organic Certification Webinar",
+      "organicDesc": "Everything you need to know about getting your farm organically certified.",
+      "waterConservation": "Water Conservation Techniques",
+      "waterConservationDesc": "Practical methods to reduce water usage while maintaining crop yields."
+    }
   }
 }

@@ -155,15 +155,15 @@ const upcomingEvents: UpcomingEvent[] = [
 ];
 
 const categories = [
-  { id: 'all', label: 'All', icon: BookOpen },
-  { id: 'Diseases', label: 'Diseases', icon: Bug },
-  { id: 'Planting', label: 'Planting', icon: Sprout },
-  { id: 'Soil', label: 'Soil', icon: Sun },
-  { id: 'Irrigation', label: 'Irrigation', icon: Droplets },
-  { id: 'Climate-Smart', label: 'Climate-Smart', icon: Sun },
-  { id: 'Pest Management', label: 'Pest Management', icon: Bug },
-  { id: 'Organic Certification', label: 'Organic', icon: Sprout },
-  { id: 'Water Conservation', label: 'Water Conservation', icon: Droplets }
+  { id: 'all', labelKey: 'workshops.categories.all', icon: BookOpen },
+  { id: 'Diseases', labelKey: 'workshops.categories.diseases', icon: Bug },
+  { id: 'Planting', labelKey: 'workshops.categories.planting', icon: Sprout },
+  { id: 'Soil', labelKey: 'workshops.categories.soil', icon: Sun },
+  { id: 'Irrigation', labelKey: 'workshops.categories.irrigation', icon: Droplets },
+  { id: 'Climate-Smart', labelKey: 'workshops.categories.climateSmart', icon: Sun },
+  { id: 'Pest Management', labelKey: 'workshops.categories.pestManagement', icon: Bug },
+  { id: 'Organic Certification', labelKey: 'workshops.categories.organicCertification', icon: Sprout },
+  { id: 'Water Conservation', labelKey: 'workshops.categories.waterConservation', icon: Droplets }
 ];
 
 export default function Workshops() {
@@ -194,28 +194,30 @@ export default function Workshops() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background flex flex-col pb-20 md:pb-0">
       <Navigation />
-      <main className="container mx-auto px-4 py-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-foreground flex items-center gap-3">
-            <Video className="h-8 w-8 text-primary" />
+      <main className="container mx-auto px-3 md:px-4 py-4 md:py-8 flex-1">
+        <div className="mb-6 md:mb-8">
+          <h1 className="text-2xl md:text-3xl font-bold text-foreground flex items-center gap-2 md:gap-3">
+            <Video className="h-6 w-6 md:h-8 md:w-8 text-primary" />
             {t('workshops.title', 'Learning Hub')}
           </h1>
-          <p className="text-muted-foreground mt-2">
+          <p className="text-muted-foreground mt-1 md:mt-2 text-sm md:text-base">
             {t('workshops.subtitle', 'Video tutorials and live workshops to improve your farming skills')}
           </p>
         </div>
 
-        <Tabs defaultValue="videos" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-2 max-w-md">
-            <TabsTrigger value="videos" className="flex items-center gap-2">
+        <Tabs defaultValue="videos" className="space-y-4 md:space-y-6">
+          <TabsList className="grid w-full grid-cols-2 max-w-md touch-manipulation">
+            <TabsTrigger value="videos" className="flex items-center gap-2 min-h-[44px]">
               <Play className="h-4 w-4" />
-              {t('workshops.videoLibrary', 'Video Library')}
+              <span className="hidden sm:inline">{t('workshops.videoLibrary', 'Video Library')}</span>
+              <span className="sm:hidden">Videos</span>
             </TabsTrigger>
-            <TabsTrigger value="events" className="flex items-center gap-2">
+            <TabsTrigger value="events" className="flex items-center gap-2 min-h-[44px]">
               <Calendar className="h-4 w-4" />
-              {t('workshops.upcomingEvents', 'Upcoming Events')}
+              <span className="hidden sm:inline">{t('workshops.upcomingEvents', 'Upcoming Events')}</span>
+              <span className="sm:hidden">Events</span>
             </TabsTrigger>
           </TabsList>
 
@@ -250,7 +252,7 @@ export default function Workshops() {
             )}
 
             {/* Category Filter */}
-            <div className="flex gap-2 flex-wrap">
+            <div className="flex gap-2 flex-wrap overflow-x-auto pb-2 -mx-3 px-3 md:mx-0 md:px-0 mobile-scroll">
               {categories.map((cat) => {
                 const Icon = cat.icon;
                 return (
@@ -259,10 +261,10 @@ export default function Workshops() {
                     variant={selectedCategory === cat.id ? 'default' : 'outline'}
                     size="sm"
                     onClick={() => setSelectedCategory(cat.id)}
-                    className="flex items-center gap-2"
+                    className="flex items-center gap-2 shrink-0 min-h-[44px] touch-manipulation"
                   >
                     <Icon className="h-4 w-4" />
-                    {cat.label}
+                    {t(cat.labelKey)}
                   </Button>
                 );
               })}

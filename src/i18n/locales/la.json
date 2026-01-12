@@ -8,7 +8,12 @@
   "navigation": {
     "diseaseAnalyzer": "Analyzer Morborum",
     "diseaseLibrary": "Bibliotheca Morborum",
-    "history": "Historia"
+    "history": "Historia",
+    "scan": "Scrutare",
+    "advice": "Consilium",
+    "outbreaks": "Eruptiones",
+    "workshops": "Disce",
+    "settings": "Optiones"
   },
   "analyzer": {
     "title": "AI Analysatio Morborum Culturarum",
@@ -59,5 +64,36 @@
   },
   "language": {
     "select": "Lingua"
+  },
+  "workshops": {
+    "title": "Centrum Discendi",
+    "subtitle": "Tutoria video et colloquia viva ad artes agriculturales meliorandas",
+    "videoLibrary": "Bibliotheca Videorum",
+    "upcomingEvents": "Eventa Futura",
+    "register": "Inscribe",
+    "wantToHost": "Vis colloquium habere?",
+    "hostDescription": "Divide peritiam tuam agriculturalem cum agricolis orbis terrarum.",
+    "contactUs": "Nos Contacta",
+    "categories": {
+      "all": "Omnia",
+      "diseases": "Morbi",
+      "planting": "Plantatio",
+      "soil": "Solum",
+      "irrigation": "Irrigatio",
+      "climateSmart": "Clima-Prudens",
+      "pestManagement": "Gestio Pestium",
+      "organicCertification": "Organica",
+      "waterConservation": "Conservatio Aquae"
+    },
+    "events": {
+      "climateSmartWorkshop": "Colloquium Agriculturae Clima-Prudentis",
+      "climateSmartDesc": "Disce technicas ad practiones agriculturales mutationibus climatis adaptandas.",
+      "pestManagementQA": "Sessio Q&A Gestionis Pestium",
+      "pestManagementDesc": "Q&A viva cum peritis agriculturalibus de gestione integrata pestium.",
+      "organicWebinar": "Webinarium Certificationis Organicae",
+      "organicDesc": "Omnia quae scire debes de certificatione organica villae tuae.",
+      "waterConservation": "Technicae Conservationis Aquae",
+      "waterConservationDesc": "Methodi practicae ad usum aquae reducendum cum proventibus culturarum conservandis."
+    }
   }
 }

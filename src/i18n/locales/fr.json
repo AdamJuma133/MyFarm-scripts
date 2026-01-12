@@ -8,7 +8,12 @@
   "navigation": {
     "diseaseAnalyzer": "Analyseur de Maladies",
     "diseaseLibrary": "Bibliothèque des Maladies",
-    "history": "Historique"
+    "history": "Historique",
+    "scan": "Scanner",
+    "advice": "Conseils",
+    "outbreaks": "Épidémies",
+    "workshops": "Apprendre",
+    "settings": "Paramètres"
   },
   "analyzer": {
     "title": "Analyse des Maladies des Cultures par IA",
@@ -59,5 +64,36 @@
   },
   "language": {
     "select": "Langue"
+  },
+  "workshops": {
+    "title": "Centre d'Apprentissage",
+    "subtitle": "Tutoriels vidéo et ateliers en direct pour améliorer vos compétences agricoles",
+    "videoLibrary": "Vidéothèque",
+    "upcomingEvents": "Événements à Venir",
+    "register": "S'inscrire",
+    "wantToHost": "Vous voulez animer un atelier?",
+    "hostDescription": "Partagez votre expertise agricole avec les agriculteurs du monde entier.",
+    "contactUs": "Contactez-nous",
+    "categories": {
+      "all": "Tout",
+      "diseases": "Maladies",
+      "planting": "Plantation",
+      "soil": "Sol",
+      "irrigation": "Irrigation",
+      "climateSmart": "Agriculture Intelligente face au Climat",
+      "pestManagement": "Gestion des Ravageurs",
+      "organicCertification": "Bio",
+      "waterConservation": "Conservation de l'Eau"
+    },
+    "events": {
+      "climateSmartWorkshop": "Atelier Agriculture Intelligente face au Climat",
+      "climateSmartDesc": "Apprenez des techniques pour adapter vos pratiques agricoles aux changements climatiques.",
+      "pestManagementQA": "Session Q&R Gestion des Ravageurs",
+      "pestManagementDesc": "Q&R en direct avec des experts agricoles sur la gestion intégrée des ravageurs.",
+      "organicWebinar": "Webinaire Certification Bio",
+      "organicDesc": "Tout ce que vous devez savoir pour obtenir la certification bio de votre ferme.",
+      "waterConservation": "Techniques de Conservation de l'Eau",
+      "waterConservationDesc": "Méthodes pratiques pour réduire la consommation d'eau tout en maintenant les rendements."
+    }
   }
 }

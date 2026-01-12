@@ -8,7 +8,12 @@
   "navigation": {
     "diseaseAnalyzer": "محلل الأمراض",
     "diseaseLibrary": "مكتبة الأمراض",
-    "history": "السجل"
+    "history": "السجل",
+    "scan": "مسح",
+    "advice": "نصائح",
+    "outbreaks": "تفشي",
+    "workshops": "تعلم",
+    "settings": "الإعدادات"
   },
   "analyzer": {
     "title": "تحليل أمراض المحاصيل بالذكاء الاصطناعي",
@@ -59,5 +64,36 @@
   },
   "language": {
     "select": "اللغة"
+  },
+  "workshops": {
+    "title": "مركز التعلم",
+    "subtitle": "دروس فيديو وورش عمل مباشرة لتحسين مهاراتك الزراعية",
+    "videoLibrary": "مكتبة الفيديو",
+    "upcomingEvents": "الفعاليات القادمة",
+    "register": "التسجيل",
+    "wantToHost": "هل تريد استضافة ورشة عمل؟",
+    "hostDescription": "شارك خبرتك الزراعية مع المزارعين حول العالم.",
+    "contactUs": "اتصل بنا",
+    "categories": {
+      "all": "الكل",
+      "diseases": "الأمراض",
+      "planting": "الزراعة",
+      "soil": "التربة",
+      "irrigation": "الري",
+      "climateSmart": "الزراعة الذكية مناخياً",
+      "pestManagement": "إدارة الآفات",
+      "organicCertification": "عضوي",
+      "waterConservation": "الحفاظ على المياه"
+    },
+    "events": {
+      "climateSmartWorkshop": "ورشة عمل الزراعة الذكية مناخياً",
+      "climateSmartDesc": "تعلم تقنيات لتكييف ممارساتك الزراعية مع تغير المناخ.",
+      "pestManagementQA": "جلسة أسئلة وأجوبة إدارة الآفات",
+      "pestManagementDesc": "أسئلة وأجوبة مباشرة مع خبراء زراعيين حول الإدارة المتكاملة للآفات.",
+      "organicWebinar": "ندوة الشهادة العضوية",
+      "organicDesc": "كل ما تحتاج معرفته للحصول على شهادة عضوية لمزرعتك.",
+      "waterConservation": "تقنيات الحفاظ على المياه",
+      "waterConservationDesc": "طرق عملية لتقليل استخدام المياه مع الحفاظ على إنتاجية المحاصيل."
+    }
   }
 }
