@@ -95,5 +95,21 @@
       "waterConservation": "Water Conservation Techniques",
       "waterConservationDesc": "Practical methods to reduce water usage while maintaining crop yields."
     }
+  },
+  "offline": {
+    "offline": "Offline",
+    "cached": "Cached",
+    "youAreOffline": "You are offline",
+    "backOnline": "Back online",
+    "cachedDataAvailable": "Cached data available",
+    "offlineMode": "Offline Mode",
+    "syncPending": "Sync pending",
+    "lastSynced": "Last synced",
+    "syncNow": "Sync Now",
+    "clearCache": "Clear Cache",
+    "cacheSize": "Cache Size",
+    "offlineFeatures": "Offline Features",
+    "viewCachedData": "View cached disease library and scan history",
+    "analyzeOfflineUnavailable": "AI analysis requires internet connection"
   }
 }

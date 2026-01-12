@@ -95,5 +95,21 @@
       "waterConservation": "Su Tasarrufu Teknikleri",
       "waterConservationDesc": "Ürün verimini korurken su kullanımını azaltmak için pratik yöntemler."
     }
+  },
+  "offline": {
+    "offline": "Çevrimdışı",
+    "cached": "Önbelleğe alındı",
+    "youAreOffline": "Çevrimdışısınız",
+    "backOnline": "Tekrar çevrimiçi",
+    "cachedDataAvailable": "Önbelleğe alınmış veriler mevcut",
+    "offlineMode": "Çevrimdışı Mod",
+    "syncPending": "Senkronizasyon bekliyor",
+    "lastSynced": "Son senkronizasyon",
+    "syncNow": "Şimdi Senkronize Et",
+    "clearCache": "Önbelleği Temizle",
+    "cacheSize": "Önbellek Boyutu",
+    "offlineFeatures": "Çevrimdışı Özellikler",
+    "viewCachedData": "Önbelleğe alınmış hastalık kütüphanesini ve tarama geçmişini görüntüle",
+    "analyzeOfflineUnavailable": "AI analizi internet bağlantısı gerektirir"
   }
 }

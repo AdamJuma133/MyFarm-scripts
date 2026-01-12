@@ -17,10 +17,16 @@ import {
   Download,
   Globe,
   Sprout,
-  Save
+  Save,
+  Wifi,
+  WifiOff,
+  HardDrive,
+  RefreshCw
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { LanguageSelector } from '@/components/language-selector';
+import { useOffline, getCacheSize, clearAllCache } from '@/hooks/use-offline';
+import { getStorageEstimate } from '@/lib/offline-storage';
 
 interface UserProfile {
   farmName: string;
@@ -47,6 +53,26 @@ export default function Settings() {
   const { t } = useTranslation();
   const [profile, setProfile] = useState<UserProfile>(defaultProfile);
   const [newCrop, setNewCrop] = useState('');
+  const [cacheSize, setCacheSize] = useState<string>('0 KB');
+  const { isOnline, isOfflineReady } = useOffline();
+
+  useEffect(() => {
+    // Calculate cache size
+    const updateCacheSize = async () => {
+      const localStorageSize = getCacheSize();
+      const estimate = await getStorageEstimate();
+      const totalBytes = localStorageSize + (estimate?.used || 0);
+      
+      if (totalBytes < 1024) {
+        setCacheSize(`${totalBytes} B`);
+      } else if (totalBytes < 1024 * 1024) {
+        setCacheSize(`${(totalBytes / 1024).toFixed(1)} KB`);
+      } else {
+        setCacheSize(`${(totalBytes / (1024 * 1024)).toFixed(1)} MB`);
+      }
+    };
+    updateCacheSize();
+  }, []);
 
   useEffect(() => {
     const saved = localStorage.getItem('myfarm-profile');
@@ -93,6 +119,14 @@ export default function Settings() {
     a.click();
     URL.revokeObjectURL(url);
     toast.success(t('settings.exported', 'Data exported successfully!'));
+  };
+
+  const handleClearCache = () => {
+    if (confirm(t('settings.confirmClearCache', 'Are you sure you want to clear all cached data?'))) {
+      clearAllCache();
+      setCacheSize('0 KB');
+      toast.success(t('settings.cacheCleared', 'Cache cleared successfully!'));
+    }
   };
 
   return (
@@ -240,6 +274,62 @@ export default function Settings() {
                   onCheckedChange={(checked) => setProfile({ ...profile, notifications: checked })}
                 />
               </div>
+            </CardContent>
+          </Card>
+
+          {/* Offline & Cache */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                {isOnline ? (
+                  <Wifi className="h-5 w-5 text-green-500" />
+                ) : (
+                  <WifiOff className="h-5 w-5 text-amber-500" />
+                )}
+                {t('offline.offlineMode', 'Offline Mode')}
+              </CardTitle>
+              <CardDescription>
+                {isOnline 
+                  ? t('settings.onlineDesc', 'You are connected to the internet')
+                  : t('settings.offlineDesc', 'You are offline. Cached data is available.')}
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <HardDrive className="h-5 w-5 text-muted-foreground" />
+                  <div>
+                    <Label>{t('offline.cacheSize', 'Cache Size')}</Label>
+                    <p className="text-sm text-muted-foreground">{cacheSize}</p>
+                  </div>
+                </div>
+                <Badge variant={isOfflineReady ? 'success' : 'secondary'}>
+                  {isOfflineReady ? t('offline.cached', 'Cached') : t('settings.notCached', 'Not cached')}
+                </Badge>
+              </div>
+
+              <Separator />
+
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <RefreshCw className="h-5 w-5 text-muted-foreground" />
+                  <div>
+                    <Label>{t('offline.offlineFeatures', 'Offline Features')}</Label>
+                    <p className="text-sm text-muted-foreground">
+                      {t('offline.viewCachedData', 'View cached disease library and scan history')}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <Button 
+                variant="outline" 
+                onClick={handleClearCache} 
+                className="w-full justify-start text-amber-600 hover:text-amber-700"
+              >
+                <Trash2 className="mr-2 h-4 w-4" />
+                {t('offline.clearCache', 'Clear Cache')}
+              </Button>
             </CardContent>
           </Card>
 

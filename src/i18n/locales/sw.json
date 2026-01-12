@@ -95,5 +95,21 @@
       "waterConservation": "Mbinu za Uhifadhi wa Maji",
       "waterConservationDesc": "Njia za vitendo za kupunguza matumizi ya maji huku ukidumisha mavuno ya mazao."
     }
+  },
+  "offline": {
+    "offline": "Nje ya mtandao",
+    "cached": "Imehifadhiwa",
+    "youAreOffline": "Uko nje ya mtandao",
+    "backOnline": "Umerudi mtandaoni",
+    "cachedDataAvailable": "Data iliyohifadhiwa inapatikana",
+    "offlineMode": "Hali ya Nje ya Mtandao",
+    "syncPending": "Upatanisho unasubiri",
+    "lastSynced": "Ilipatanishwa mwisho",
+    "syncNow": "Patanisha Sasa",
+    "clearCache": "Futa Kache",
+    "cacheSize": "Ukubwa wa Kache",
+    "offlineFeatures": "Vipengele vya Nje ya Mtandao",
+    "viewCachedData": "Tazama maktaba ya magonjwa na historia iliyohifadhiwa",
+    "analyzeOfflineUnavailable": "Uchambuzi wa AI unahitaji muunganisho wa intaneti"
   }
 }

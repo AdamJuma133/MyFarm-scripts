@@ -95,5 +95,21 @@
       "waterConservation": "节水技术",
       "waterConservationDesc": "在保持作物产量的同时减少用水的实用方法。"
     }
+  },
+  "offline": {
+    "offline": "离线",
+    "cached": "已缓存",
+    "youAreOffline": "您当前离线",
+    "backOnline": "已恢复在线",
+    "cachedDataAvailable": "缓存数据可用",
+    "offlineMode": "离线模式",
+    "syncPending": "等待同步",
+    "lastSynced": "上次同步",
+    "syncNow": "立即同步",
+    "clearCache": "清除缓存",
+    "cacheSize": "缓存大小",
+    "offlineFeatures": "离线功能",
+    "viewCachedData": "查看缓存的病害库和扫描历史",
+    "analyzeOfflineUnavailable": "AI分析需要网络连接"
   }
 }

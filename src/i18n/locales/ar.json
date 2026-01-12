@@ -95,5 +95,21 @@
       "waterConservation": "تقنيات الحفاظ على المياه",
       "waterConservationDesc": "طرق عملية لتقليل استخدام المياه مع الحفاظ على إنتاجية المحاصيل."
     }
+  },
+  "offline": {
+    "offline": "غير متصل",
+    "cached": "مخزن مؤقتاً",
+    "youAreOffline": "أنت غير متصل بالإنترنت",
+    "backOnline": "عدت للاتصال",
+    "cachedDataAvailable": "البيانات المخزنة متاحة",
+    "offlineMode": "وضع عدم الاتصال",
+    "syncPending": "في انتظار المزامنة",
+    "lastSynced": "آخر مزامنة",
+    "syncNow": "مزامنة الآن",
+    "clearCache": "مسح التخزين المؤقت",
+    "cacheSize": "حجم التخزين المؤقت",
+    "offlineFeatures": "ميزات عدم الاتصال",
+    "viewCachedData": "عرض مكتبة الأمراض وسجل الفحص المخزن",
+    "analyzeOfflineUnavailable": "تحليل الذكاء الاصطناعي يتطلب اتصال بالإنترنت"
   }
 }
