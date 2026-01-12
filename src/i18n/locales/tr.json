@@ -8,7 +8,12 @@
   "navigation": {
     "diseaseAnalyzer": "Hastalık Analizörü",
     "diseaseLibrary": "Hastalık Kütüphanesi",
-    "history": "Geçmiş"
+    "history": "Geçmiş",
+    "scan": "Tara",
+    "advice": "Tavsiye",
+    "outbreaks": "Salgınlar",
+    "workshops": "Öğren",
+    "settings": "Ayarlar"
   },
   "analyzer": {
     "title": "AI Ürün Hastalık Analizi",
@@ -59,5 +64,36 @@
   },
   "language": {
     "select": "Dil"
+  },
+  "workshops": {
+    "title": "Öğrenme Merkezi",
+    "subtitle": "Tarım becerilerinizi geliştirmek için video eğitimleri ve canlı atölyeler",
+    "videoLibrary": "Video Kütüphanesi",
+    "upcomingEvents": "Yaklaşan Etkinlikler",
+    "register": "Kayıt Ol",
+    "wantToHost": "Bir atölye düzenlemek ister misiniz?",
+    "hostDescription": "Tarım uzmanlığınızı dünya çapındaki çiftçilerle paylaşın.",
+    "contactUs": "Bize Ulaşın",
+    "categories": {
+      "all": "Tümü",
+      "diseases": "Hastalıklar",
+      "planting": "Ekim",
+      "soil": "Toprak",
+      "irrigation": "Sulama",
+      "climateSmart": "İklim-Akıllı Tarım",
+      "pestManagement": "Zararlı Yönetimi",
+      "organicCertification": "Organik",
+      "waterConservation": "Su Tasarrufu"
+    },
+    "events": {
+      "climateSmartWorkshop": "İklim-Akıllı Tarım Atölyesi",
+      "climateSmartDesc": "Tarım uygulamalarınızı değişen iklim koşullarına adapte etme tekniklerini öğrenin.",
+      "pestManagementQA": "Zararlı Yönetimi Soru-Cevap Oturumu",
+      "pestManagementDesc": "Entegre zararlı yönetimi hakkında tarım uzmanlarıyla canlı soru-cevap.",
+      "organicWebinar": "Organik Sertifikasyon Web Semineri",
+      "organicDesc": "Çiftliğiniz için organik sertifikasyon almak hakkında bilmeniz gereken her şey.",
+      "waterConservation": "Su Tasarrufu Teknikleri",
+      "waterConservationDesc": "Ürün verimini korurken su kullanımını azaltmak için pratik yöntemler."
+    }
   }
 }

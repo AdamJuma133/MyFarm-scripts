@@ -8,7 +8,12 @@
   "navigation": {
     "diseaseAnalyzer": "Analisador de Doenças",
     "diseaseLibrary": "Biblioteca de Doenças",
-    "history": "Histórico"
+    "history": "Histórico",
+    "scan": "Digitalizar",
+    "advice": "Conselhos",
+    "outbreaks": "Surtos",
+    "workshops": "Aprender",
+    "settings": "Configurações"
   },
   "analyzer": {
     "title": "Análise de Doenças de Culturas com IA",
@@ -59,5 +64,36 @@
   },
   "language": {
     "select": "Idioma"
+  },
+  "workshops": {
+    "title": "Centro de Aprendizado",
+    "subtitle": "Tutoriais em vídeo e workshops ao vivo para melhorar suas habilidades agrícolas",
+    "videoLibrary": "Biblioteca de Vídeos",
+    "upcomingEvents": "Próximos Eventos",
+    "register": "Registrar",
+    "wantToHost": "Quer organizar um workshop?",
+    "hostDescription": "Compartilhe sua experiência agrícola com agricultores ao redor do mundo.",
+    "contactUs": "Contate-nos",
+    "categories": {
+      "all": "Todos",
+      "diseases": "Doenças",
+      "planting": "Plantio",
+      "soil": "Solo",
+      "irrigation": "Irrigação",
+      "climateSmart": "Agricultura Climaticamente Inteligente",
+      "pestManagement": "Manejo de Pragas",
+      "organicCertification": "Orgânico",
+      "waterConservation": "Conservação da Água"
+    },
+    "events": {
+      "climateSmartWorkshop": "Workshop de Agricultura Climaticamente Inteligente",
+      "climateSmartDesc": "Aprenda técnicas para adaptar suas práticas agrícolas às mudanças climáticas.",
+      "pestManagementQA": "Sessão de Perguntas e Respostas sobre Manejo de Pragas",
+      "pestManagementDesc": "Perguntas e respostas ao vivo com especialistas agrícolas sobre manejo integrado de pragas.",
+      "organicWebinar": "Webinar de Certificação Orgânica",
+      "organicDesc": "Tudo o que você precisa saber para obter a certificação orgânica da sua fazenda.",
+      "waterConservation": "Técnicas de Conservação da Água",
+      "waterConservationDesc": "Métodos práticos para reduzir o uso de água mantendo a produtividade das culturas."
+    }
   }
 }

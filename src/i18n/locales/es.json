@@ -8,7 +8,12 @@
   "navigation": {
     "diseaseAnalyzer": "Analizador de Enfermedades",
     "diseaseLibrary": "Biblioteca de Enfermedades",
-    "history": "Historial"
+    "history": "Historial",
+    "scan": "Escanear",
+    "advice": "Consejos",
+    "outbreaks": "Brotes",
+    "workshops": "Aprender",
+    "settings": "Configuración"
   },
   "analyzer": {
     "title": "Análisis de Enfermedades de Cultivos con IA",
@@ -59,5 +64,36 @@
   },
   "language": {
     "select": "Idioma"
+  },
+  "workshops": {
+    "title": "Centro de Aprendizaje",
+    "subtitle": "Tutoriales en video y talleres en vivo para mejorar tus habilidades agrícolas",
+    "videoLibrary": "Biblioteca de Videos",
+    "upcomingEvents": "Próximos Eventos",
+    "register": "Registrarse",
+    "wantToHost": "¿Quieres organizar un taller?",
+    "hostDescription": "Comparte tu experiencia agrícola con agricultores de todo el mundo.",
+    "contactUs": "Contáctanos",
+    "categories": {
+      "all": "Todos",
+      "diseases": "Enfermedades",
+      "planting": "Siembra",
+      "soil": "Suelo",
+      "irrigation": "Riego",
+      "climateSmart": "Agricultura Climáticamente Inteligente",
+      "pestManagement": "Manejo de Plagas",
+      "organicCertification": "Orgánico",
+      "waterConservation": "Conservación del Agua"
+    },
+    "events": {
+      "climateSmartWorkshop": "Taller de Agricultura Climáticamente Inteligente",
+      "climateSmartDesc": "Aprende técnicas para adaptar tus prácticas agrícolas a las condiciones climáticas cambiantes.",
+      "pestManagementQA": "Sesión de Preguntas y Respuestas sobre Manejo de Plagas",
+      "pestManagementDesc": "Preguntas y respuestas en vivo con expertos agrícolas sobre manejo integrado de plagas.",
+      "organicWebinar": "Webinar de Certificación Orgánica",
+      "organicDesc": "Todo lo que necesitas saber para obtener la certificación orgánica de tu granja.",
+      "waterConservation": "Técnicas de Conservación del Agua",
+      "waterConservationDesc": "Métodos prácticos para reducir el uso del agua manteniendo los rendimientos de los cultivos."
+    }
   }
 }
