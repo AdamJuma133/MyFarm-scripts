@@ -110,6 +110,23 @@
     "cacheSize": "Ukubwa wa Kache",
     "offlineFeatures": "Vipengele vya Nje ya Mtandao",
     "viewCachedData": "Tazama maktaba ya magonjwa na historia iliyohifadhiwa",
-    "analyzeOfflineUnavailable": "Uchambuzi wa AI unahitaji muunganisho wa intaneti"
+    "analyzeOfflineUnavailable": "Uchambuzi wa AI unahitaji muunganisho wa intaneti",
+    "scanQueued": "Skani imewekwa kwenye foleni kupatanishwa mtandaoni",
+    "syncComplete": "Imepatanisha skani {count}",
+    "pendingScans": "Skani zinazosubiri",
+    "syncing": "Inapatanisha..."
+  },
+  "pwa": {
+    "installTitle": "Sakinisha MyFarm",
+    "installSubtitle": "Pata uzoefu kamili wa programu",
+    "benefit1": "Inafanya kazi nje ya mtandao na data iliyohifadhiwa",
+    "benefit2": "Muda wa kupakia haraka zaidi",
+    "benefit3": "Upatikanaji rahisi kutoka skrini ya nyumbani",
+    "installButton": "Sakinisha Programu",
+    "maybeLater": "Labda baadaye",
+    "iosInstructions": "Kusakinisha kwenye iOS:",
+    "iosStep1": "Gonga kitufe cha Shiriki katika Safari",
+    "iosStep2": "Sogeza chini na ubofye \"Ongeza kwenye Skrini ya Nyumbani\"",
+    "iosStep3": "Gonga \"Ongeza\" kuthibitisha"
   }
 }

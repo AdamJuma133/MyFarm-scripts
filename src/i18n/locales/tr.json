@@ -110,6 +110,23 @@
     "cacheSize": "Önbellek Boyutu",
     "offlineFeatures": "Çevrimdışı Özellikler",
     "viewCachedData": "Önbelleğe alınmış hastalık kütüphanesini ve tarama geçmişini görüntüle",
-    "analyzeOfflineUnavailable": "AI analizi internet bağlantısı gerektirir"
+    "analyzeOfflineUnavailable": "AI analizi internet bağlantısı gerektirir",
+    "scanQueued": "Tarama çevrimiçi olunca senkronize edilecek şekilde sıraya alındı",
+    "syncComplete": "{count} tarama senkronize edildi",
+    "pendingScans": "Bekleyen taramalar",
+    "syncing": "Senkronize ediliyor..."
+  },
+  "pwa": {
+    "installTitle": "MyFarm'ı Yükle",
+    "installSubtitle": "Tam uygulama deneyimini yaşayın",
+    "benefit1": "Önbelleğe alınmış verilerle çevrimdışı çalışır",
+    "benefit2": "Daha hızlı yükleme süreleri",
+    "benefit3": "Ana ekrandan kolay erişim",
+    "installButton": "Uygulamayı Yükle",
+    "maybeLater": "Belki daha sonra",
+    "iosInstructions": "iOS'ta yüklemek için:",
+    "iosStep1": "Safari'de Paylaş düğmesine dokunun",
+    "iosStep2": "Aşağı kaydırın ve \"Ana Ekrana Ekle\"ye dokunun",
+    "iosStep3": "Onaylamak için \"Ekle\"ye dokunun"
   }
 }

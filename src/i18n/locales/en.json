@@ -110,6 +110,23 @@
     "cacheSize": "Cache Size",
     "offlineFeatures": "Offline Features",
     "viewCachedData": "View cached disease library and scan history",
-    "analyzeOfflineUnavailable": "AI analysis requires internet connection"
+    "analyzeOfflineUnavailable": "AI analysis requires internet connection",
+    "scanQueued": "Scan queued for sync when online",
+    "syncComplete": "Synced {count} scan(s)",
+    "pendingScans": "Pending scans",
+    "syncing": "Syncing..."
+  },
+  "pwa": {
+    "installTitle": "Install MyFarm",
+    "installSubtitle": "Get the full app experience",
+    "benefit1": "Works offline with cached data",
+    "benefit2": "Faster loading times",
+    "benefit3": "Easy access from home screen",
+    "installButton": "Install App",
+    "maybeLater": "Maybe later",
+    "iosInstructions": "To install on iOS:",
+    "iosStep1": "Tap the Share button in Safari",
+    "iosStep2": "Scroll down and tap \"Add to Home Screen\"",
+    "iosStep3": "Tap \"Add\" to confirm"
   }
 }

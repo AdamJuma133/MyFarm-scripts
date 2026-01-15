@@ -110,6 +110,23 @@
     "cacheSize": "Tamanho do Cache",
     "offlineFeatures": "Recursos Offline",
     "viewCachedData": "Ver biblioteca de doenças e histórico em cache",
-    "analyzeOfflineUnavailable": "Análise de IA requer conexão com internet"
+    "analyzeOfflineUnavailable": "Análise de IA requer conexão com internet",
+    "scanQueued": "Scan na fila para sincronização quando online",
+    "syncComplete": "{count} scan(s) sincronizado(s)",
+    "pendingScans": "Scans pendentes",
+    "syncing": "Sincronizando..."
+  },
+  "pwa": {
+    "installTitle": "Instalar MyFarm",
+    "installSubtitle": "Tenha a experiência completa do app",
+    "benefit1": "Funciona offline com dados em cache",
+    "benefit2": "Tempos de carregamento mais rápidos",
+    "benefit3": "Acesso fácil pela tela inicial",
+    "installButton": "Instalar App",
+    "maybeLater": "Talvez depois",
+    "iosInstructions": "Para instalar no iOS:",
+    "iosStep1": "Toque no botão Compartilhar no Safari",
+    "iosStep2": "Role para baixo e toque em \"Adicionar à Tela de Início\"",
+    "iosStep3": "Toque em \"Adicionar\" para confirmar"
   }
 }

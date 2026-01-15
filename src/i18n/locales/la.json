@@ -110,6 +110,23 @@
     "cacheSize": "Magnitudo Memoriae",
     "offlineFeatures": "Functiones Sine Connexione",
     "viewCachedData": "Vide bibliothecam morborum et historiam in memoria",
-    "analyzeOfflineUnavailable": "Analysis AI connexionem interreti requirit"
+    "analyzeOfflineUnavailable": "Analysis AI connexionem interreti requirit",
+    "scanQueued": "Scrutatio in ordine ad synchronizationem",
+    "syncComplete": "{count} scrutationes synchronizatae",
+    "pendingScans": "Scrutationes exspectantes",
+    "syncing": "Synchronizans..."
+  },
+  "pwa": {
+    "installTitle": "Installa MyFarm",
+    "installSubtitle": "Obtine experientiam plenam",
+    "benefit1": "Operatur sine connexione cum datis in memoria",
+    "benefit2": "Tempora celerius onerandi",
+    "benefit3": "Accessus facilis ab domo scriniorum",
+    "installButton": "Installa Applicationem",
+    "maybeLater": "Fortasse postea",
+    "iosInstructions": "Ad installandum in iOS:",
+    "iosStep1": "Tange bullam Communicare in Safari",
+    "iosStep2": "Volve infra et tange \"Adde ad Scriniolum Domus\"",
+    "iosStep3": "Tange \"Adde\" ad confirmandum"
   }
 }
