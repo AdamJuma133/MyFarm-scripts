@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { OfflineIndicator } from "@/components/offline-indicator";
+import { PWAInstallPrompt } from "@/components/pwa-install-prompt";
 import Index from "./pages/Index";
 import History from "./pages/History";
 import Advice from "./pages/Advice";
@@ -31,6 +32,7 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <OfflineIndicator />
+      <PWAInstallPrompt />
       <Toaster />
       <Sonner />
       <BrowserRouter>

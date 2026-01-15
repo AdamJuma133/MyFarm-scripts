@@ -110,6 +110,23 @@
     "cacheSize": "缓存大小",
     "offlineFeatures": "离线功能",
     "viewCachedData": "查看缓存的病害库和扫描历史",
-    "analyzeOfflineUnavailable": "AI分析需要网络连接"
+    "analyzeOfflineUnavailable": "AI分析需要网络连接",
+    "scanQueued": "扫描已排队等待在线时同步",
+    "syncComplete": "已同步 {count} 个扫描",
+    "pendingScans": "待处理扫描",
+    "syncing": "同步中..."
+  },
+  "pwa": {
+    "installTitle": "安装 MyFarm",
+    "installSubtitle": "获得完整的应用体验",
+    "benefit1": "离线时使用缓存数据",
+    "benefit2": "更快的加载速度",
+    "benefit3": "从主屏幕轻松访问",
+    "installButton": "安装应用",
+    "maybeLater": "以后再说",
+    "iosInstructions": "在 iOS 上安装：",
+    "iosStep1": "点击 Safari 中的分享按钮",
+    "iosStep2": "向下滚动并点击"添加到主屏幕"",
+    "iosStep3": "点击"添加"确认"
   }
 }
