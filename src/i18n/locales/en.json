@@ -50,7 +50,38 @@
     "delete": "Delete",
     "confidence": "Confidence",
     "noHistory": "No scan history yet",
-    "startAnalyzing": "Start analyzing crops to see your history here."
+    "startAnalyzing": "Start analyzing crops to see your history here.",
+    "errorLoading": "Failed to load scan history",
+    "deleted": "Scan deleted",
+    "errorDeleting": "Failed to delete scan",
+    "confirmClear": "Are you sure you want to clear all scan history?",
+    "cleared": "History cleared",
+    "errorClearing": "Failed to clear history"
+  },
+  "profile": {
+    "title": "Profile",
+    "accountInfo": "Account Information",
+    "accountInfoDesc": "Your account details",
+    "fullName": "Full Name",
+    "fullNamePlaceholder": "Enter your full name",
+    "farmDetails": "Farm Details",
+    "farmDetailsDesc": "Tell us about your farm",
+    "farmName": "Farm Name",
+    "farmNamePlaceholder": "Enter your farm name",
+    "farmLocation": "Farm Location",
+    "farmLocationPlaceholder": "City, Region, Country",
+    "farmSize": "Farm Size",
+    "farmSizePlaceholder": "e.g., 50 acres, 20 hectares",
+    "primaryCrops": "Primary Crops",
+    "addCropPlaceholder": "Add a crop...",
+    "saved": "Profile saved successfully",
+    "saving": "Saving...",
+    "saveChanges": "Save Changes",
+    "errorLoading": "Failed to load profile",
+    "errorSaving": "Failed to save profile"
+  },
+  "common": {
+    "back": "Back"
   },
   "severity": {
     "low": "low",

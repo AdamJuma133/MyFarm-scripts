@@ -114,40 +114,28 @@ export function DiseaseAnalyzer() {
       
       setAnalysisResult(result);
       
-      // Save to history with detected crop
-      const historyReader = new FileReader();
-      historyReader.onload = (e) => {
-        const historyItem = {
-          id: Date.now().toString(),
-          timestamp: Date.now(),
-          imageName: file.name,
-          imageUrl: e.target?.result as string,
-          disease: isHealthy ? 'Healthy' : (selectedDisease?.name || aiResult.diseaseName || 'Unknown Disease'),
-          type: isHealthy ? 'healthy' : (selectedDisease?.type || aiResult.diseaseType || 'unknown'),
-          confidence: `${Math.round(result.confidence * 100)}%`,
-          crop: detectedCrop
-        };
-        
-        try {
-          const existingHistory = localStorage.getItem('myfarm-scan-history');
-          let history = [];
-          
-          if (existingHistory) {
-            const parsed = JSON.parse(existingHistory);
-            if (Array.isArray(parsed)) {
-              history = parsed;
-            }
+      // Save to database if user is authenticated
+      if (session?.user) {
+        const historyReader = new FileReader();
+        historyReader.onload = async (e) => {
+          try {
+            await supabase.from('scan_history').insert({
+              user_id: session.user.id,
+              image_url: e.target?.result as string,
+              image_name: file.name,
+              disease_name: isHealthy ? 'Healthy' : (selectedDisease?.name || aiResult.diseaseName || 'Unknown Disease'),
+              disease_name_scientific: null,
+              confidence: Math.round(result.confidence * 100),
+              scan_type: isHealthy ? 'healthy' : (selectedDisease?.type || aiResult.diseaseType || 'unknown'),
+              crop_type: detectedCrop,
+              treatment_recommendations: selectedDisease?.treatment || null,
+            });
+          } catch (error) {
+            console.error('Failed to save scan to database:', error);
           }
-          
-          history.unshift(historyItem);
-          localStorage.setItem('myfarm-scan-history', JSON.stringify(history));
-        } catch (error) {
-          console.error('Failed to parse scan history:', error);
-          localStorage.removeItem('myfarm-scan-history');
-          localStorage.setItem('myfarm-scan-history', JSON.stringify([historyItem]));
-        }
-      };
-      historyReader.readAsDataURL(file);
+        };
+        historyReader.readAsDataURL(file);
+      }
       
       if (isHealthy) {
         toast.success(t('toast.healthy', { crop: detectedCrop }));

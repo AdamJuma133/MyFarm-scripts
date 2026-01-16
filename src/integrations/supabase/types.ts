@@ -14,7 +14,84 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      profiles: {
+        Row: {
+          created_at: string
+          farm_location: string | null
+          farm_name: string | null
+          farm_size: string | null
+          full_name: string | null
+          id: string
+          primary_crops: string[] | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          farm_location?: string | null
+          farm_name?: string | null
+          farm_size?: string | null
+          full_name?: string | null
+          id?: string
+          primary_crops?: string[] | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          farm_location?: string | null
+          farm_name?: string | null
+          farm_size?: string | null
+          full_name?: string | null
+          id?: string
+          primary_crops?: string[] | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      scan_history: {
+        Row: {
+          confidence: number | null
+          created_at: string
+          crop_type: string | null
+          disease_name: string
+          disease_name_scientific: string | null
+          id: string
+          image_name: string | null
+          image_url: string | null
+          scan_type: string | null
+          treatment_recommendations: string[] | null
+          user_id: string
+        }
+        Insert: {
+          confidence?: number | null
+          created_at?: string
+          crop_type?: string | null
+          disease_name: string
+          disease_name_scientific?: string | null
+          id?: string
+          image_name?: string | null
+          image_url?: string | null
+          scan_type?: string | null
+          treatment_recommendations?: string[] | null
+          user_id: string
+        }
+        Update: {
+          confidence?: number | null
+          created_at?: string
+          crop_type?: string | null
+          disease_name?: string
+          disease_name_scientific?: string | null
+          id?: string
+          image_name?: string | null
+          image_url?: string | null
+          scan_type?: string | null
+          treatment_recommendations?: string[] | null
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
