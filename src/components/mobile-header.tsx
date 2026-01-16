@@ -1,9 +1,9 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { Sprout, Settings } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Sprout } from 'lucide-react';
 import { LanguageSelector } from './language-selector';
+import { UserMenu } from './user-menu';
 
 export function MobileHeader() {
   const navigate = useNavigate();
@@ -23,15 +23,8 @@ export function MobileHeader() {
         </button>
         
         <div className="flex items-center gap-1">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => navigate('/settings')}
-            className="h-11 w-11 touch-manipulation"
-          >
-            <Settings className="h-5 w-5" />
-          </Button>
           <LanguageSelector />
+          <UserMenu />
         </div>
       </div>
     </header>

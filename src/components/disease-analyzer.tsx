@@ -10,6 +10,7 @@ import { diseases, Disease } from '@/data/diseases';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { useOffline } from '@/hooks/use-offline';
+import { useAuth } from '@/contexts/AuthContext';
 
 interface AnalysisResult {
   disease: Disease | null;
@@ -23,6 +24,7 @@ interface AnalysisResult {
 export function DiseaseAnalyzer() {
   const { t } = useTranslation();
   const { isOnline } = useOffline();
+  const { session } = useAuth();
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(null);

@@ -128,5 +128,16 @@
     "iosStep1": "点击 Safari 中的分享按钮",
     "iosStep2": "向下滚动并点击「添加到主屏幕」",
     "iosStep3": "点击「添加」确认"
+  },
+  "auth": {
+    "signIn": "登录",
+    "signUp": "注册",
+    "signOut": "退出",
+    "email": "邮箱",
+    "password": "密码",
+    "confirmPassword": "确认密码",
+    "signingIn": "正在登录...",
+    "creatingAccount": "正在创建账户...",
+    "subtitle": "登录以使用 AI 分析您的作物"
   }
 }

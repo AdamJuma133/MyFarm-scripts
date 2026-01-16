@@ -128,5 +128,16 @@
     "iosStep1": "Toca el botón Compartir en Safari",
     "iosStep2": "Desplázate y toca \"Añadir a pantalla de inicio\"",
     "iosStep3": "Toca \"Añadir\" para confirmar"
+  },
+  "auth": {
+    "signIn": "Iniciar Sesión",
+    "signUp": "Registrarse",
+    "signOut": "Cerrar Sesión",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "confirmPassword": "Confirmar contraseña",
+    "signingIn": "Iniciando sesión...",
+    "creatingAccount": "Creando cuenta...",
+    "subtitle": "Inicia sesión para analizar tus cultivos con IA"
   }
 }

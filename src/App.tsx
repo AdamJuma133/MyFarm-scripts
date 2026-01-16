@@ -3,9 +3,12 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { AuthProvider } from "@/contexts/AuthContext";
+import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { OfflineIndicator } from "@/components/offline-indicator";
 import { PWAInstallPrompt } from "@/components/pwa-install-prompt";
 import Index from "./pages/Index";
+import Auth from "./pages/Auth";
 import History from "./pages/History";
 import Advice from "./pages/Advice";
 import Welcome from "./pages/Welcome";
@@ -30,25 +33,52 @@ const queryClient = new QueryClient({
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <OfflineIndicator />
-      <PWAInstallPrompt />
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/welcome" element={<Welcome />} />
-          <Route path="/history" element={<History />} />
-          <Route path="/advice" element={<Advice />} />
-          <Route path="/settings" element={<Settings />} />
-          <Route path="/outbreaks" element={<OutbreakMap />} />
-          <Route path="/workshops" element={<Workshops />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
+    <AuthProvider>
+      <TooltipProvider>
+        <OfflineIndicator />
+        <PWAInstallPrompt />
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/auth" element={<Auth />} />
+            <Route path="/welcome" element={<Welcome />} />
+            <Route path="/" element={
+              <ProtectedRoute>
+                <Index />
+              </ProtectedRoute>
+            } />
+            <Route path="/history" element={
+              <ProtectedRoute>
+                <History />
+              </ProtectedRoute>
+            } />
+            <Route path="/advice" element={
+              <ProtectedRoute>
+                <Advice />
+              </ProtectedRoute>
+            } />
+            <Route path="/settings" element={
+              <ProtectedRoute>
+                <Settings />
+              </ProtectedRoute>
+            } />
+            <Route path="/outbreaks" element={
+              <ProtectedRoute>
+                <OutbreakMap />
+              </ProtectedRoute>
+            } />
+            <Route path="/workshops" element={
+              <ProtectedRoute>
+                <Workshops />
+              </ProtectedRoute>
+            } />
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
+    </AuthProvider>
   </QueryClientProvider>
 );
 
