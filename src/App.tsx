@@ -10,6 +10,7 @@ import { PWAInstallPrompt } from "@/components/pwa-install-prompt";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import History from "./pages/History";
+import Profile from "./pages/Profile";
 import Advice from "./pages/Advice";
 import Welcome from "./pages/Welcome";
 import Settings from "./pages/Settings";
@@ -51,6 +52,11 @@ const App = () => (
             <Route path="/history" element={
               <ProtectedRoute>
                 <History />
+              </ProtectedRoute>
+            } />
+            <Route path="/profile" element={
+              <ProtectedRoute>
+                <Profile />
               </ProtectedRoute>
             } />
             <Route path="/advice" element={

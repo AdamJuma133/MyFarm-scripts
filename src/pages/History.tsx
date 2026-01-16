@@ -3,55 +3,105 @@ import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Clock, Trash2, ArrowLeft } from 'lucide-react';
+import { Clock, Trash2, ArrowLeft, Loader2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { LanguageSelector } from '@/components/language-selector';
 import { MobileHeader } from '@/components/mobile-header';
 import { BottomNavigation } from '@/components/bottom-navigation';
+import { useAuth } from '@/contexts/AuthContext';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
 
 interface ScanHistory {
   id: string;
-  timestamp: number;
-  imageName: string;
-  imageUrl: string;
-  disease: string;
-  type: string;
-  confidence: string;
-  crop?: string;
+  created_at: string;
+  image_name: string | null;
+  image_url: string | null;
+  disease_name: string;
+  disease_name_scientific: string | null;
+  scan_type: string | null;
+  confidence: number | null;
+  crop_type: string | null;
 }
 
 const History = () => {
   const { t } = useTranslation();
+  const { user } = useAuth();
   const [history, setHistory] = useState<ScanHistory[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [deleting, setDeleting] = useState<string | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (user) {
+      fetchHistory();
+    }
+  }, [user]);
+
+  const fetchHistory = async () => {
     try {
-      const savedHistory = localStorage.getItem('myfarm-scan-history');
-      if (savedHistory) {
-        const parsed = JSON.parse(savedHistory);
-        if (Array.isArray(parsed)) {
-          setHistory(parsed);
-        }
-      }
+      const { data, error } = await supabase
+        .from('scan_history')
+        .select('*')
+        .eq('user_id', user?.id)
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      setHistory(data || []);
     } catch (error) {
-      console.error('Failed to parse scan history:', error);
-      localStorage.removeItem('myfarm-scan-history');
+      console.error('Error fetching scan history:', error);
+      toast.error(t('history.errorLoading'));
+    } finally {
+      setLoading(false);
     }
-  }, []);
-
-  const handleDelete = (id: string) => {
-    const updatedHistory = history.filter(item => item.id !== id);
-    setHistory(updatedHistory);
-    localStorage.setItem('myfarm-scan-history', JSON.stringify(updatedHistory));
   };
 
-  const handleClearAll = () => {
-    if (window.confirm('Are you sure you want to clear all scan history?')) {
+  const handleDelete = async (id: string) => {
+    setDeleting(id);
+    try {
+      const { error } = await supabase
+        .from('scan_history')
+        .delete()
+        .eq('id', id);
+
+      if (error) throw error;
+
+      setHistory(history.filter(item => item.id !== id));
+      toast.success(t('history.deleted'));
+    } catch (error) {
+      console.error('Error deleting scan:', error);
+      toast.error(t('history.errorDeleting'));
+    } finally {
+      setDeleting(null);
+    }
+  };
+
+  const handleClearAll = async () => {
+    if (!window.confirm(t('history.confirmClear'))) return;
+
+    try {
+      const { error } = await supabase
+        .from('scan_history')
+        .delete()
+        .eq('user_id', user?.id);
+
+      if (error) throw error;
+
       setHistory([]);
-      localStorage.removeItem('myfarm-scan-history');
+      toast.success(t('history.cleared'));
+    } catch (error) {
+      console.error('Error clearing history:', error);
+      toast.error(t('history.errorClearing'));
     }
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-secondary flex items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-secondary pb-20 md:pb-0">
@@ -116,44 +166,54 @@ const History = () => {
           <div className="grid gap-3 md:gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
             {history.map((item) => (
               <Card key={item.id} className="overflow-hidden">
-                <div className="aspect-video relative">
-                  <img
-                    src={item.imageUrl}
-                    alt={item.imageName}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
+                {item.image_url && (
+                  <div className="aspect-video relative">
+                    <img
+                      src={item.image_url}
+                      alt={item.image_name || 'Scan image'}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                )}
                 <CardHeader className="pb-2 pt-3">
                   <CardTitle className="text-base flex items-center gap-2 flex-wrap">
-                    {item.crop && <Badge variant="outline" className="text-xs">🌾 {item.crop}</Badge>}
-                    <span className="truncate">{item.disease}</span>
+                    {item.crop_type && <Badge variant="outline" className="text-xs">🌾 {item.crop_type}</Badge>}
+                    <span className="truncate">{item.disease_name}</span>
                   </CardTitle>
                   <CardDescription className="flex items-center gap-2 text-xs">
                     <Clock className="h-3 w-3" />
-                    {new Date(item.timestamp).toLocaleString()}
+                    {new Date(item.created_at).toLocaleString()}
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="pt-0 pb-3">
                   <div className="flex items-center justify-between mb-2">
                     <Badge variant={
-                      item.type === 'bacterial' ? 'default' :
-                      item.type === 'viral' ? 'secondary' :
-                      item.type === 'fungal' ? 'destructive' :
+                      item.scan_type === 'bacterial' ? 'default' :
+                      item.scan_type === 'viral' ? 'secondary' :
+                      item.scan_type === 'fungal' ? 'destructive' :
+                      item.scan_type === 'healthy' ? 'outline' :
                       'outline'
                     }>
-                      {item.type}
+                      {item.scan_type || 'unknown'}
                     </Badge>
-                    <span className="text-sm text-muted-foreground">
-                      {item.confidence}
-                    </span>
+                    {item.confidence && (
+                      <span className="text-sm text-muted-foreground">
+                        {Math.round(item.confidence)}%
+                      </span>
+                    )}
                   </div>
                   <Button
                     variant="ghost"
                     size="sm"
                     className="w-full mt-2 h-10 touch-manipulation"
                     onClick={() => handleDelete(item.id)}
+                    disabled={deleting === item.id}
                   >
-                    <Trash2 className="h-4 w-4 mr-2" />
+                    {deleting === item.id ? (
+                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    ) : (
+                      <Trash2 className="h-4 w-4 mr-2" />
+                    )}
                     {t('history.delete')}
                   </Button>
                 </CardContent>

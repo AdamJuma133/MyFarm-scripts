@@ -55,6 +55,10 @@ export function UserMenu() {
           </div>
         </div>
         <DropdownMenuSeparator />
+        <DropdownMenuItem onClick={() => navigate('/profile')} className="touch-manipulation">
+          <User className="mr-2 h-4 w-4" />
+          {t('profile.title', 'Profile')}
+        </DropdownMenuItem>
         <DropdownMenuItem onClick={() => navigate('/settings')} className="touch-manipulation">
           <Settings className="mr-2 h-4 w-4" />
           {t('navigation.settings', 'Settings')}
