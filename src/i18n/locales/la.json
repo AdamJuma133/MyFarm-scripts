@@ -128,5 +128,16 @@
     "iosStep1": "Tange bullam Communicare in Safari",
     "iosStep2": "Volve infra et tange \"Adde ad Scriniolum Domus\"",
     "iosStep3": "Tange \"Adde\" ad confirmandum"
+  },
+  "auth": {
+    "signIn": "Inire",
+    "signUp": "Subscribere",
+    "signOut": "Exire",
+    "email": "Inscriptio electronica",
+    "password": "Tessera",
+    "confirmPassword": "Confirma tesseram",
+    "signingIn": "Intrans...",
+    "creatingAccount": "Creans rationem...",
+    "subtitle": "Inire ut segetes tuas cum AI analyzes"
   }
 }

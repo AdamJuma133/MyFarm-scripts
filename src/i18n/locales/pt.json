@@ -128,5 +128,16 @@
     "iosStep1": "Toque no botão Compartilhar no Safari",
     "iosStep2": "Role para baixo e toque em \"Adicionar à Tela de Início\"",
     "iosStep3": "Toque em \"Adicionar\" para confirmar"
+  },
+  "auth": {
+    "signIn": "Entrar",
+    "signUp": "Cadastrar",
+    "signOut": "Sair",
+    "email": "Email",
+    "password": "Senha",
+    "confirmPassword": "Confirmar senha",
+    "signingIn": "Entrando...",
+    "creatingAccount": "Criando conta...",
+    "subtitle": "Entre para analisar suas culturas com IA"
   }
 }

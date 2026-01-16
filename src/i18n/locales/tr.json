@@ -128,5 +128,16 @@
     "iosStep1": "Safari'de Paylaş düğmesine dokunun",
     "iosStep2": "Aşağı kaydırın ve \"Ana Ekrana Ekle\"ye dokunun",
     "iosStep3": "Onaylamak için \"Ekle\"ye dokunun"
+  },
+  "auth": {
+    "signIn": "Giriş Yap",
+    "signUp": "Kayıt Ol",
+    "signOut": "Çıkış Yap",
+    "email": "E-posta",
+    "password": "Şifre",
+    "confirmPassword": "Şifreyi onayla",
+    "signingIn": "Giriş yapılıyor...",
+    "creatingAccount": "Hesap oluşturuluyor...",
+    "subtitle": "Yapay zeka ile ürünlerinizi analiz etmek için giriş yapın"
   }
 }

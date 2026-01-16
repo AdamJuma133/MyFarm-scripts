@@ -128,5 +128,16 @@
     "iosStep1": "Tap the Share button in Safari",
     "iosStep2": "Scroll down and tap \"Add to Home Screen\"",
     "iosStep3": "Tap \"Add\" to confirm"
+  },
+  "auth": {
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "signOut": "Sign Out",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "signingIn": "Signing in...",
+    "creatingAccount": "Creating account...",
+    "subtitle": "Sign in to analyze your crops with AI"
   }
 }

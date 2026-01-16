@@ -128,5 +128,16 @@
     "iosStep1": "Gonga kitufe cha Shiriki katika Safari",
     "iosStep2": "Sogeza chini na ubofye \"Ongeza kwenye Skrini ya Nyumbani\"",
     "iosStep3": "Gonga \"Ongeza\" kuthibitisha"
+  },
+  "auth": {
+    "signIn": "Ingia",
+    "signUp": "Jisajili",
+    "signOut": "Toka",
+    "email": "Barua pepe",
+    "password": "Nenosiri",
+    "confirmPassword": "Thibitisha nenosiri",
+    "signingIn": "Inaingia...",
+    "creatingAccount": "Inaunda akaunti...",
+    "subtitle": "Ingia ili kuchanganua mazao yako na AI"
   }
 }
