@@ -1,21 +1,24 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Scan, Book, Lightbulb, MapPin, Video, History, Settings } from 'lucide-react';
+import { Scan, LayoutDashboard, Lightbulb, MapPin, History } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { PendingScansBadge } from '@/components/pending-scans-badge';
+import { useBackgroundSync } from '@/hooks/use-background-sync';
 
 interface NavItem {
   path: string;
   icon: React.ElementType;
   labelKey: string;
   fallback: string;
+  showBadge?: boolean;
 }
 
 const navItems: NavItem[] = [
-  { path: '/', icon: Scan, labelKey: 'navigation.scan', fallback: 'Scan' },
+  { path: '/', icon: Scan, labelKey: 'navigation.scan', fallback: 'Scan', showBadge: true },
+  { path: '/dashboard', icon: LayoutDashboard, labelKey: 'navigation.dashboard', fallback: 'Dashboard' },
   { path: '/advice', icon: Lightbulb, labelKey: 'navigation.advice', fallback: 'Advice' },
   { path: '/outbreaks', icon: MapPin, labelKey: 'navigation.outbreaks', fallback: 'Map' },
-  { path: '/workshops', icon: Video, labelKey: 'navigation.workshops', fallback: 'Learn' },
   { path: '/history', icon: History, labelKey: 'navigation.history', fallback: 'History' },
 ];
 
@@ -23,6 +26,7 @@ export function BottomNavigation() {
   const navigate = useNavigate();
   const location = useLocation();
   const { t } = useTranslation();
+  const { pendingCount } = useBackgroundSync();
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -38,14 +42,17 @@ export function BottomNavigation() {
               key={item.path}
               onClick={() => navigate(item.path)}
               className={cn(
-                "flex flex-col items-center justify-center min-h-[56px] min-w-[56px] px-3 py-2 touch-manipulation",
+                "relative flex flex-col items-center justify-center min-h-[56px] min-w-[56px] px-3 py-2 touch-manipulation",
                 "transition-colors duration-200",
                 active 
                   ? "text-primary" 
                   : "text-muted-foreground hover:text-foreground active:text-primary"
               )}
             >
-              <Icon className={cn("h-6 w-6 mb-1", active && "scale-110")} />
+              <div className="relative">
+                <Icon className={cn("h-6 w-6 mb-1", active && "scale-110")} />
+                {item.showBadge && <PendingScansBadge count={pendingCount} />}
+              </div>
               <span className={cn(
                 "text-xs font-medium",
                 active && "font-semibold"

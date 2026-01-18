@@ -1,17 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Search, Book, AlertTriangle, CheckCircle, XCircle } from 'lucide-react';
-import { diseases, Disease, getDiseasesByType } from '@/data/diseases';
+import { Search, Book, AlertTriangle, CheckCircle, XCircle, Download, WifiOff, Loader2 } from 'lucide-react';
+import { Disease, getDiseasesByType } from '@/data/diseases';
+import { useOfflineDiseases } from '@/hooks/use-offline-diseases';
+import { useOffline } from '@/hooks/use-offline';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 
 export function DiseaseLibrary() {
   const { t } = useTranslation();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedDisease, setSelectedDisease] = useState<Disease | null>(null);
+  const { diseases, isLoading, isCached, cacheDiseasesNow } = useOfflineDiseases();
+  const { isOnline } = useOffline();
+  const [caching, setCaching] = useState(false);
+
+  const handleCacheForOffline = async () => {
+    setCaching(true);
+    await cacheDiseasesNow();
+    setCaching(false);
+  };
 
   const filteredDiseases = diseases.filter(disease =>
     disease.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -199,10 +211,52 @@ export function DiseaseLibrary() {
 
   return (
     <div className="space-y-4 md:space-y-6">
-      <div className="flex items-center gap-3">
-        <Book className="h-6 w-6" />
-        <h2 className="text-xl md:text-2xl font-bold">{t('library.title')}</h2>
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <Book className="h-6 w-6" />
+          <h2 className="text-xl md:text-2xl font-bold">{t('library.title')}</h2>
+          {isCached && (
+            <Badge variant="outline" className="hidden sm:flex">
+              <WifiOff className="h-3 w-3 mr-1" />
+              {t('offline.cached', 'Cached')}
+            </Badge>
+          )}
+        </div>
+        
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={handleCacheForOffline}
+          disabled={caching || isCached}
+          className="h-10 touch-manipulation"
+        >
+          {caching ? (
+            <>
+              <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+              {t('offline.caching', 'Caching...')}
+            </>
+          ) : isCached ? (
+            <>
+              <CheckCircle className="h-4 w-4 mr-2" />
+              {t('offline.cached', 'Cached')}
+            </>
+          ) : (
+            <>
+              <Download className="h-4 w-4 mr-2" />
+              {t('offline.saveOffline', 'Save Offline')}
+            </>
+          )}
+        </Button>
       </div>
+
+      {!isOnline && !isCached && (
+        <Alert className="bg-amber-50 dark:bg-amber-950/30 border-amber-200 dark:border-amber-800">
+          <WifiOff className="h-5 w-5 text-amber-600" />
+          <AlertDescription className="ml-2 text-amber-700 dark:text-amber-300">
+            {t('offline.libraryNotCached', 'Disease library not cached. Connect to internet to view all diseases.')}
+          </AlertDescription>
+        </Alert>
+      )}
 
       <Card>
         <CardHeader className="pb-3 md:pb-6">
