@@ -11,6 +11,7 @@ import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import History from "./pages/History";
 import Profile from "./pages/Profile";
+import Dashboard from "./pages/Dashboard";
 import Advice from "./pages/Advice";
 import Welcome from "./pages/Welcome";
 import Settings from "./pages/Settings";
@@ -47,6 +48,11 @@ const App = () => (
             <Route path="/" element={
               <ProtectedRoute>
                 <Index />
+              </ProtectedRoute>
+            } />
+            <Route path="/dashboard" element={
+              <ProtectedRoute>
+                <Dashboard />
               </ProtectedRoute>
             } />
             <Route path="/history" element={

@@ -9,6 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import { ArrowLeft, User, MapPin, Loader2, Save, Plus, X } from 'lucide-react';
 import { MobileHeader } from '@/components/mobile-header';
 import { BottomNavigation } from '@/components/bottom-navigation';
+import { AvatarUpload } from '@/components/avatar-upload';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
@@ -21,6 +22,7 @@ interface Profile {
   farm_location: string | null;
   farm_size: string | null;
   primary_crops: string[] | null;
+  avatar_url: string | null;
 }
 
 const Profile = () => {
@@ -38,6 +40,7 @@ const Profile = () => {
   const [farmLocation, setFarmLocation] = useState('');
   const [farmSize, setFarmSize] = useState('');
   const [primaryCrops, setPrimaryCrops] = useState<string[]>([]);
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
 
   useEffect(() => {
     if (user) {
@@ -62,6 +65,7 @@ const Profile = () => {
         setFarmLocation(data.farm_location || '');
         setFarmSize(data.farm_size || '');
         setPrimaryCrops(data.primary_crops || []);
+        setAvatarUrl(data.avatar_url || null);
       }
     } catch (error) {
       console.error('Error fetching profile:', error);
@@ -140,6 +144,19 @@ const Profile = () => {
         </div>
 
         <div className="space-y-6">
+          {/* Avatar Upload */}
+          <Card>
+            <CardContent className="pt-6">
+              <AvatarUpload
+                userId={user?.id || ''}
+                currentAvatarUrl={avatarUrl}
+                userName={fullName}
+                onAvatarChange={setAvatarUrl}
+                size="lg"
+              />
+            </CardContent>
+          </Card>
+
           {/* Account Info */}
           <Card>
             <CardHeader>

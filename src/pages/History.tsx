@@ -3,11 +3,12 @@ import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Clock, Trash2, ArrowLeft, Loader2 } from 'lucide-react';
+import { Clock, Trash2, ArrowLeft, Loader2, Share2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { LanguageSelector } from '@/components/language-selector';
 import { MobileHeader } from '@/components/mobile-header';
 import { BottomNavigation } from '@/components/bottom-navigation';
+import { ShareScanDialog } from '@/components/share-scan-dialog';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
@@ -22,6 +23,7 @@ interface ScanHistory {
   scan_type: string | null;
   confidence: number | null;
   crop_type: string | null;
+  treatment_recommendations: string[] | null;
 }
 
 const History = () => {
@@ -202,20 +204,32 @@ const History = () => {
                       </span>
                     )}
                   </div>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="w-full mt-2 h-10 touch-manipulation"
-                    onClick={() => handleDelete(item.id)}
-                    disabled={deleting === item.id}
-                  >
-                    {deleting === item.id ? (
-                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                    ) : (
-                      <Trash2 className="h-4 w-4 mr-2" />
-                    )}
-                    {t('history.delete')}
-                  </Button>
+                  <div className="flex gap-2">
+                    <ShareScanDialog scan={item}>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="flex-1 h-10 touch-manipulation"
+                      >
+                        <Share2 className="h-4 w-4 mr-2" />
+                        {t('share.share', 'Share')}
+                      </Button>
+                    </ShareScanDialog>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="flex-1 h-10 touch-manipulation text-destructive hover:text-destructive"
+                      onClick={() => handleDelete(item.id)}
+                      disabled={deleting === item.id}
+                    >
+                      {deleting === item.id ? (
+                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                      ) : (
+                        <Trash2 className="h-4 w-4 mr-2" />
+                      )}
+                      {t('history.delete')}
+                    </Button>
+                  </div>
                 </CardContent>
               </Card>
             ))}
