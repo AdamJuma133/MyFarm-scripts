@@ -139,8 +139,53 @@ export type Database = {
           },
         ]
       }
+      notifications: {
+        Row: {
+          created_at: string
+          id: string
+          is_read: boolean
+          link: string | null
+          message: string
+          related_post_id: string | null
+          title: string
+          type: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_read?: boolean
+          link?: string | null
+          message: string
+          related_post_id?: string | null
+          title: string
+          type?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_read?: boolean
+          link?: string | null
+          message?: string
+          related_post_id?: string | null
+          title?: string
+          type?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "notifications_related_post_id_fkey"
+            columns: ["related_post_id"]
+            isOneToOne: false
+            referencedRelation: "forum_posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
+          accepted_answers: number
           avatar_url: string | null
           created_at: string
           farm_location: string | null
@@ -149,10 +194,13 @@ export type Database = {
           full_name: string | null
           id: string
           primary_crops: string[] | null
+          reputation_score: number
+          total_replies: number
           updated_at: string
           user_id: string
         }
         Insert: {
+          accepted_answers?: number
           avatar_url?: string | null
           created_at?: string
           farm_location?: string | null
@@ -161,10 +209,13 @@ export type Database = {
           full_name?: string | null
           id?: string
           primary_crops?: string[] | null
+          reputation_score?: number
+          total_replies?: number
           updated_at?: string
           user_id: string
         }
         Update: {
+          accepted_answers?: number
           avatar_url?: string | null
           created_at?: string
           farm_location?: string | null
@@ -173,6 +224,8 @@ export type Database = {
           full_name?: string | null
           id?: string
           primary_crops?: string[] | null
+          reputation_score?: number
+          total_replies?: number
           updated_at?: string
           user_id?: string
         }
