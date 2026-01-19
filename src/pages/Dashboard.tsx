@@ -16,8 +16,10 @@ import {
   XCircle,
   ArrowLeft,
   Loader2,
-  Calendar
+  Calendar,
+  Users
 } from 'lucide-react';
+import { WeatherWidget } from '@/components/weather-widget';
 import { MobileHeader } from '@/components/mobile-header';
 import { BottomNavigation } from '@/components/bottom-navigation';
 import { useAuth } from '@/contexts/AuthContext';
@@ -234,33 +236,43 @@ const Dashboard = () => {
           </Card>
         </div>
 
-        {/* Farm Health Score */}
-        <Card className="mb-6">
-          <CardHeader className="pb-2">
-            <CardTitle className="flex items-center gap-2">
-              <Leaf className="h-5 w-5" />
-              {t('dashboard.farmHealth', 'Farm Health Score')}
-            </CardTitle>
-            <CardDescription>{t('dashboard.farmHealthDesc', 'Based on your scan results')}</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="flex items-center gap-4">
-              <div className="flex-1">
-                <Progress value={getHealthScore()} className="h-4" />
+        {/* Weather and Farm Health Grid */}
+        <div className="grid md:grid-cols-2 gap-4 mb-6">
+          {/* Weather Widget */}
+          <WeatherWidget />
+
+          {/* Farm Health Score */}
+          <Card>
+            <CardHeader className="pb-2">
+              <CardTitle className="flex items-center gap-2">
+                <Leaf className="h-5 w-5" />
+                {t('dashboard.farmHealth', 'Farm Health Score')}
+              </CardTitle>
+              <CardDescription>{t('dashboard.farmHealthDesc', 'Based on your scan results')}</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="flex items-center gap-4 mb-4">
+                <div className="flex-1">
+                  <Progress value={getHealthScore()} className="h-4" />
+                </div>
+                <span className={`text-2xl font-bold ${getHealthScore() >= 70 ? 'text-success' : getHealthScore() >= 40 ? 'text-warning' : 'text-destructive'}`}>
+                  {getHealthScore()}%
+                </span>
               </div>
-              <span className={`text-2xl font-bold ${getHealthScore() >= 70 ? 'text-success' : getHealthScore() >= 40 ? 'text-warning' : 'text-destructive'}`}>
-                {getHealthScore()}%
-              </span>
-            </div>
-            <p className="text-sm text-muted-foreground mt-2">
-              {getHealthScore() >= 70 
-                ? t('dashboard.healthGood', 'Your crops are in good health!')
-                : getHealthScore() >= 40
-                ? t('dashboard.healthFair', 'Some crops need attention')
-                : t('dashboard.healthPoor', 'Multiple disease issues detected')}
-            </p>
-          </CardContent>
-        </Card>
+              <p className="text-sm text-muted-foreground mb-4">
+                {getHealthScore() >= 70 
+                  ? t('dashboard.healthGood', 'Your crops are in good health!')
+                  : getHealthScore() >= 40
+                  ? t('dashboard.healthFair', 'Some crops need attention')
+                  : t('dashboard.healthPoor', 'Multiple disease issues detected')}
+              </p>
+              <Button variant="outline" className="w-full" onClick={() => navigate('/forum')}>
+                <Users className="h-4 w-4 mr-2" />
+                {t('dashboard.joinCommunity', 'Join Community Forum')}
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
 
         <div className="grid md:grid-cols-2 gap-4 mb-6">
           {/* Weekly Activity Chart */}

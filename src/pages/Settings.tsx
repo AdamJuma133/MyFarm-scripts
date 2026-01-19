@@ -21,12 +21,16 @@ import {
   Wifi,
   WifiOff,
   HardDrive,
-  RefreshCw
+  RefreshCw,
+  Sun,
+  Moon,
+  Monitor
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { LanguageSelector } from '@/components/language-selector';
 import { useOffline, getCacheSize, clearAllCache } from '@/hooks/use-offline';
 import { getStorageEstimate } from '@/lib/offline-storage';
+import { useTheme } from '@/hooks/use-theme';
 
 interface UserProfile {
   farmName: string;
@@ -55,6 +59,7 @@ export default function Settings() {
   const [newCrop, setNewCrop] = useState('');
   const [cacheSize, setCacheSize] = useState<string>('0 KB');
   const { isOnline, isOfflineReady } = useOffline();
+  const { theme, setTheme, resolvedTheme } = useTheme();
 
   useEffect(() => {
     // Calculate cache size
@@ -255,6 +260,53 @@ export default function Settings() {
                   </div>
                 </div>
                 <LanguageSelector />
+              </div>
+
+              <Separator />
+
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  {resolvedTheme === 'dark' ? (
+                    <Moon className="h-5 w-5 text-muted-foreground" />
+                  ) : (
+                    <Sun className="h-5 w-5 text-muted-foreground" />
+                  )}
+                  <div>
+                    <Label>{t('settings.theme', 'Theme')}</Label>
+                    <p className="text-sm text-muted-foreground">
+                      {t('settings.themeDesc', 'Choose your preferred appearance')}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex gap-1">
+                  <Button
+                    variant={theme === 'light' ? 'default' : 'outline'}
+                    size="sm"
+                    onClick={() => setTheme('light')}
+                    className="h-8 w-8 p-0"
+                    title={t('settings.lightMode', 'Light')}
+                  >
+                    <Sun className="h-4 w-4" />
+                  </Button>
+                  <Button
+                    variant={theme === 'dark' ? 'default' : 'outline'}
+                    size="sm"
+                    onClick={() => setTheme('dark')}
+                    className="h-8 w-8 p-0"
+                    title={t('settings.darkMode', 'Dark')}
+                  >
+                    <Moon className="h-4 w-4" />
+                  </Button>
+                  <Button
+                    variant={theme === 'system' ? 'default' : 'outline'}
+                    size="sm"
+                    onClick={() => setTheme('system')}
+                    className="h-8 w-8 p-0"
+                    title={t('settings.systemTheme', 'System')}
+                  >
+                    <Monitor className="h-4 w-4" />
+                  </Button>
+                </div>
               </div>
 
               <Separator />
