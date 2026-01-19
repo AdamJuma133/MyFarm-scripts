@@ -209,5 +209,54 @@
     "signingIn": "Signing in...",
     "creatingAccount": "Creating account...",
     "subtitle": "Sign in to analyze your crops with AI"
+  },
+  "weather": {
+    "title": "Weather Forecast",
+    "error": "Unable to load weather",
+    "farmingTips": "Farming Recommendations"
+  },
+  "forum": {
+    "title": "Community Forum",
+    "subtitle": "Ask questions and share experiences",
+    "questions": "Questions",
+    "solved": "Solved",
+    "search": "Search questions...",
+    "ask": "Ask",
+    "askQuestion": "Ask a Question",
+    "questionTitle": "Title",
+    "titlePlaceholder": "What do you need help with?",
+    "category": "Category",
+    "cropType": "Crop (optional)",
+    "cropPlaceholder": "e.g., Tomato, Corn, Rice",
+    "details": "Details",
+    "detailsPlaceholder": "Describe your question in detail...",
+    "postQuestion": "Post Question",
+    "postCreated": "Question posted successfully!",
+    "postError": "Failed to post question",
+    "all": "All",
+    "noResults": "No questions matching your search",
+    "noPosts": "No questions yet. Be the first to ask!",
+    "askFirst": "Ask the First Question",
+    "anonymous": "Anonymous",
+    "justNow": "Just now",
+    "hoursAgo": "{{count}}h ago",
+    "daysAgo": "{{count}}d ago",
+    "replies": "replies",
+    "answers": "Answers",
+    "writeReply": "Write your answer...",
+    "postReply": "Post Answer",
+    "replyPosted": "Reply posted!",
+    "replyError": "Failed to post reply",
+    "accepted": "Accepted"
+  },
+  "settings": {
+    "theme": "Theme",
+    "themeDesc": "Choose your preferred appearance",
+    "lightMode": "Light",
+    "darkMode": "Dark",
+    "systemTheme": "System"
+  },
+  "dashboard": {
+    "joinCommunity": "Join Community Forum"
   }
 }

@@ -17,6 +17,7 @@ import Welcome from "./pages/Welcome";
 import Settings from "./pages/Settings";
 import OutbreakMap from "./pages/OutbreakMap";
 import Workshops from "./pages/Workshops";
+import Forum from "./pages/Forum";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient({
@@ -83,6 +84,11 @@ const App = () => (
             <Route path="/workshops" element={
               <ProtectedRoute>
                 <Workshops />
+              </ProtectedRoute>
+            } />
+            <Route path="/forum" element={
+              <ProtectedRoute>
+                <Forum />
               </ProtectedRoute>
             } />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
