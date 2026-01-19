@@ -258,5 +258,26 @@
   },
   "dashboard": {
     "joinCommunity": "Join Community Forum"
+  },
+  "notifications": {
+    "title": "Notifications",
+    "empty": "No notifications yet",
+    "markAllRead": "Mark all read",
+    "justNow": "Just now",
+    "minutesAgo": "{{count}}m ago",
+    "hoursAgo": "{{count}}h ago",
+    "daysAgo": "{{count}}d ago"
+  },
+  "prices": {
+    "title": "Market Prices",
+    "yourCrop": "Your crop",
+    "disclaimer": "Simulated prices for demonstration"
+  },
+  "badges": {
+    "reputation": "Reputation",
+    "acceptedAnswers": "Accepted answers",
+    "totalReplies": "Total replies",
+    "points": "points",
+    "accepted": "accepted"
   }
 }

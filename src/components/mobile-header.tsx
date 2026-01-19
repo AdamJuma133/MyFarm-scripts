@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Sprout } from 'lucide-react';
 import { LanguageSelector } from './language-selector';
 import { UserMenu } from './user-menu';
+import { NotificationsDropdown } from './notifications-dropdown';
 
 export function MobileHeader() {
   const navigate = useNavigate();
@@ -23,6 +24,7 @@ export function MobileHeader() {
         </button>
         
         <div className="flex items-center gap-1">
+          <NotificationsDropdown />
           <LanguageSelector />
           <UserMenu />
         </div>

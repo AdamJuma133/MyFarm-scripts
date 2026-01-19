@@ -20,6 +20,7 @@ import {
   Users
 } from 'lucide-react';
 import { WeatherWidget } from '@/components/weather-widget';
+import { CropPricesWidget } from '@/components/crop-prices-widget';
 import { MobileHeader } from '@/components/mobile-header';
 import { BottomNavigation } from '@/components/bottom-navigation';
 import { useAuth } from '@/contexts/AuthContext';
@@ -347,6 +348,11 @@ const Dashboard = () => {
               </div>
             </CardContent>
           </Card>
+        </div>
+
+        {/* Crop Prices Widget */}
+        <div className="mb-6">
+          <CropPricesWidget />
         </div>
 
         {/* Recent Activity */}

@@ -27,6 +27,7 @@ import {
 } from 'lucide-react';
 import { MobileHeader } from '@/components/mobile-header';
 import { BottomNavigation } from '@/components/bottom-navigation';
+import { ExpertBadge } from '@/components/expert-badge';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
@@ -45,6 +46,9 @@ interface ForumPost {
   author?: {
     full_name: string | null;
     avatar_url: string | null;
+    reputation_score?: number;
+    accepted_answers?: number;
+    total_replies?: number;
   };
 }
 
@@ -59,6 +63,9 @@ interface ForumReply {
   author?: {
     full_name: string | null;
     avatar_url: string | null;
+    reputation_score?: number;
+    accepted_answers?: number;
+    total_replies?: number;
   };
 }
 
@@ -112,7 +119,7 @@ const Forum = () => {
         (data || []).map(async (post) => {
           const { data: profile } = await supabase
             .from('profiles')
-            .select('full_name, avatar_url')
+            .select('full_name, avatar_url, reputation_score, accepted_answers, total_replies')
             .eq('user_id', post.user_id)
             .single();
           return { ...post, author: profile };
@@ -141,7 +148,7 @@ const Forum = () => {
         (data || []).map(async (reply) => {
           const { data: profile } = await supabase
             .from('profiles')
-            .select('full_name, avatar_url')
+            .select('full_name, avatar_url, reputation_score, accepted_answers, total_replies')
             .eq('user_id', reply.user_id)
             .single();
           return { ...reply, author: profile };
@@ -303,10 +310,17 @@ const Forum = () => {
                 </Avatar>
                 <div className="flex-1">
                   <CardTitle className="text-lg">{selectedPost.title}</CardTitle>
-                  <div className="flex items-center gap-2 mt-1">
+                  <div className="flex items-center gap-2 mt-1 flex-wrap">
                     <span className="text-sm text-muted-foreground">
                       {selectedPost.author?.full_name || t('forum.anonymous', 'Anonymous')}
                     </span>
+                    {selectedPost.author && (
+                      <ExpertBadge
+                        reputationScore={selectedPost.author.reputation_score || 0}
+                        acceptedAnswers={selectedPost.author.accepted_answers || 0}
+                        totalReplies={selectedPost.author.total_replies || 0}
+                      />
+                    )}
                     <span className="text-xs text-muted-foreground">•</span>
                     <span className="text-xs text-muted-foreground">
                       {formatDate(selectedPost.created_at)}
@@ -360,10 +374,17 @@ const Forum = () => {
                       </AvatarFallback>
                     </Avatar>
                     <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-2">
+                      <div className="flex items-center gap-2 mb-2 flex-wrap">
                         <span className="text-sm font-medium">
                           {reply.author?.full_name || t('forum.anonymous', 'Anonymous')}
                         </span>
+                        {reply.author && (
+                          <ExpertBadge
+                            reputationScore={reply.author.reputation_score || 0}
+                            acceptedAnswers={reply.author.accepted_answers || 0}
+                            totalReplies={reply.author.total_replies || 0}
+                          />
+                        )}
                         <span className="text-xs text-muted-foreground">
                           {formatDate(reply.created_at)}
                         </span>
@@ -614,9 +635,19 @@ const Forum = () => {
                       <p className="text-sm text-muted-foreground line-clamp-2 mb-2">
                         {post.content}
                       </p>
-                      <div className="flex items-center gap-3 text-xs text-muted-foreground">
-                        <span>{post.author?.full_name || t('forum.anonymous', 'Anonymous')}</span>
+                      <div className="flex items-center gap-3 text-xs text-muted-foreground flex-wrap">
+                        <span className="flex items-center gap-1">
+                          {post.author?.full_name || t('forum.anonymous', 'Anonymous')}
+                          {post.author && post.author.reputation_score && post.author.reputation_score >= 20 && (
+                            <ExpertBadge
+                              reputationScore={post.author.reputation_score || 0}
+                              acceptedAnswers={post.author.accepted_answers || 0}
+                              totalReplies={post.author.total_replies || 0}
+                            />
+                          )}
+                        </span>
                         <span>•</span>
+                        <span>{formatDate(post.created_at)}</span>
                         <span>{formatDate(post.created_at)}</span>
                         <span className="flex items-center gap-1">
                           <ThumbsUp className="h-3 w-3" />
