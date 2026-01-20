@@ -24,7 +24,12 @@ import {
   Loader2,
   Users,
   TrendingUp,
-  Trophy
+  Trophy,
+  Pin,
+  PinOff,
+  Trash2,
+  X,
+  Shield
 } from 'lucide-react';
 import { MobileHeader } from '@/components/mobile-header';
 import { BottomNavigation } from '@/components/bottom-navigation';
@@ -43,6 +48,7 @@ interface ForumPost {
   likes_count: number;
   replies_count: number;
   is_solved: boolean;
+  is_pinned: boolean;
   created_at: string;
   author?: {
     full_name: string | null;
@@ -95,11 +101,25 @@ const Forum = () => {
   const [submittingPost, setSubmittingPost] = useState(false);
   const [userLikes, setUserLikes] = useState<Set<string>>(new Set());
   const [acceptingReply, setAcceptingReply] = useState<string | null>(null);
+  const [userProfile, setUserProfile] = useState<{ reputation_score: number } | null>(null);
+  const [pinningPost, setPinningPost] = useState<string | null>(null);
+  const [deletingItem, setDeletingItem] = useState<string | null>(null);
 
   useEffect(() => {
     fetchPosts();
     fetchUserLikes();
+    fetchUserProfile();
   }, [user]);
+
+  const fetchUserProfile = async () => {
+    if (!user) return;
+    const { data } = await supabase
+      .from('profiles')
+      .select('reputation_score')
+      .eq('user_id', user.id)
+      .maybeSingle();
+    setUserProfile(data);
+  };
 
   useEffect(() => {
     if (selectedPost) {
@@ -300,12 +320,130 @@ const Forum = () => {
     }
   };
 
+  const handleUnacceptAnswer = async (replyId: string) => {
+    if (!user || !selectedPost) return;
+
+    setAcceptingReply(replyId);
+    try {
+      // Remove accepted status from reply
+      const { error: replyError } = await supabase
+        .from('forum_replies')
+        .update({ is_accepted: false })
+        .eq('id', replyId);
+
+      if (replyError) throw replyError;
+
+      // Mark post as unsolved
+      const { error: postError } = await supabase
+        .from('forum_posts')
+        .update({ is_solved: false })
+        .eq('id', selectedPost.id);
+
+      if (postError) throw postError;
+
+      // Update local state
+      setReplies(replies.map(r => r.id === replyId ? { ...r, is_accepted: false } : r));
+      setSelectedPost({ ...selectedPost, is_solved: false });
+      toast.success(t('forum.answerUnaccepted', 'Answer unaccepted'));
+    } catch (error) {
+      console.error('Error unaccepting answer:', error);
+      toast.error(t('forum.unacceptError', 'Failed to unaccept answer'));
+    } finally {
+      setAcceptingReply(null);
+    }
+  };
+
+  const canPinPosts = userProfile && userProfile.reputation_score >= 50;
+  const canModerate = userProfile && userProfile.reputation_score >= 100;
+
+  const handlePinPost = async (postId: string, isPinned: boolean) => {
+    if (!canPinPosts) return;
+
+    setPinningPost(postId);
+    try {
+      const { error } = await supabase
+        .from('forum_posts')
+        .update({ is_pinned: !isPinned })
+        .eq('id', postId);
+
+      if (error) throw error;
+
+      setPosts(posts.map(p => p.id === postId ? { ...p, is_pinned: !isPinned } : p));
+      if (selectedPost?.id === postId) {
+        setSelectedPost({ ...selectedPost, is_pinned: !isPinned });
+      }
+      toast.success(isPinned ? t('forum.unpinned', 'Post unpinned') : t('forum.pinned', 'Post pinned'));
+    } catch (error) {
+      console.error('Error pinning post:', error);
+      toast.error(t('forum.pinError', 'Failed to pin post'));
+    } finally {
+      setPinningPost(null);
+    }
+  };
+
+  const handleDeletePost = async (postId: string) => {
+    if (!canModerate && posts.find(p => p.id === postId)?.user_id !== user?.id) return;
+
+    if (!confirm(t('forum.confirmDelete', 'Are you sure you want to delete this?'))) return;
+
+    setDeletingItem(postId);
+    try {
+      const { error } = await supabase
+        .from('forum_posts')
+        .delete()
+        .eq('id', postId);
+
+      if (error) throw error;
+
+      setPosts(posts.filter(p => p.id !== postId));
+      if (selectedPost?.id === postId) {
+        setSelectedPost(null);
+      }
+      toast.success(t('forum.postDeleted', 'Post deleted'));
+    } catch (error) {
+      console.error('Error deleting post:', error);
+      toast.error(t('forum.deleteError', 'Failed to delete'));
+    } finally {
+      setDeletingItem(null);
+    }
+  };
+
+  const handleDeleteReply = async (replyId: string) => {
+    const reply = replies.find(r => r.id === replyId);
+    if (!canModerate && reply?.user_id !== user?.id) return;
+
+    if (!confirm(t('forum.confirmDelete', 'Are you sure you want to delete this?'))) return;
+
+    setDeletingItem(replyId);
+    try {
+      const { error } = await supabase
+        .from('forum_replies')
+        .delete()
+        .eq('id', replyId);
+
+      if (error) throw error;
+
+      setReplies(replies.filter(r => r.id !== replyId));
+      toast.success(t('forum.replyDeleted', 'Reply deleted'));
+    } catch (error) {
+      console.error('Error deleting reply:', error);
+      toast.error(t('forum.deleteError', 'Failed to delete'));
+    } finally {
+      setDeletingItem(null);
+    }
+  };
+
   const filteredPosts = posts.filter((post) => {
     const matchesSearch = 
       post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       post.content.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesCategory = selectedCategory === 'all' || post.category === selectedCategory;
     return matchesSearch && matchesCategory;
+  }).sort((a, b) => {
+    // Pinned posts first
+    if (a.is_pinned && !b.is_pinned) return -1;
+    if (!a.is_pinned && b.is_pinned) return 1;
+    return 0;
   });
 
   const formatDate = (dateStr: string) => {
@@ -363,6 +501,12 @@ const Forum = () => {
                     <Badge variant="outline" className="text-xs">
                       {CATEGORIES.find(c => c.value === selectedPost.category)?.label || selectedPost.category}
                     </Badge>
+                    {selectedPost.is_pinned && (
+                      <Badge variant="secondary" className="text-xs">
+                        <Pin className="h-3 w-3 mr-1" />
+                        Pinned
+                      </Badge>
+                    )}
                     {selectedPost.is_solved && (
                       <Badge variant="default" className="text-xs bg-success">
                         <CheckCircle className="h-3 w-3 mr-1" />
@@ -375,20 +519,59 @@ const Forum = () => {
             </CardHeader>
             <CardContent>
               <p className="whitespace-pre-wrap">{selectedPost.content}</p>
-              <div className="flex items-center gap-4 mt-4 pt-4 border-t">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => handleLikePost(selectedPost.id)}
-                  className={userLikes.has(`post_${selectedPost.id}`) ? 'text-primary' : ''}
-                >
-                  <ThumbsUp className="h-4 w-4 mr-1" />
-                  {selectedPost.likes_count}
-                </Button>
-                <span className="text-sm text-muted-foreground">
-                  <MessageCircle className="h-4 w-4 inline mr-1" />
-                  {selectedPost.replies_count} {t('forum.replies', 'replies')}
-                </span>
+              <div className="flex items-center justify-between gap-4 mt-4 pt-4 border-t flex-wrap">
+                <div className="flex items-center gap-2">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => handleLikePost(selectedPost.id)}
+                    className={userLikes.has(`post_${selectedPost.id}`) ? 'text-primary' : ''}
+                  >
+                    <ThumbsUp className="h-4 w-4 mr-1" />
+                    {selectedPost.likes_count}
+                  </Button>
+                  <span className="text-sm text-muted-foreground">
+                    <MessageCircle className="h-4 w-4 inline mr-1" />
+                    {selectedPost.replies_count} {t('forum.replies', 'replies')}
+                  </span>
+                </div>
+                
+                {/* Moderator Actions */}
+                <div className="flex items-center gap-1">
+                  {canPinPosts && (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => handlePinPost(selectedPost.id, selectedPost.is_pinned)}
+                      disabled={pinningPost === selectedPost.id}
+                      title={selectedPost.is_pinned ? t('forum.unpinPost', 'Unpin Post') : t('forum.pinPost', 'Pin Post')}
+                    >
+                      {pinningPost === selectedPost.id ? (
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                      ) : selectedPost.is_pinned ? (
+                        <PinOff className="h-4 w-4" />
+                      ) : (
+                        <Pin className="h-4 w-4" />
+                      )}
+                    </Button>
+                  )}
+                  {(canModerate || selectedPost.user_id === user?.id) && (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => handleDeletePost(selectedPost.id)}
+                      disabled={deletingItem === selectedPost.id}
+                      className="text-destructive hover:text-destructive"
+                      title={t('forum.deletePost', 'Delete Post')}
+                    >
+                      {deletingItem === selectedPost.id ? (
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                      ) : (
+                        <Trash2 className="h-4 w-4" />
+                      )}
+                    </Button>
+                  )}
+                </div>
               </div>
             </CardContent>
           </Card>
@@ -432,23 +615,61 @@ const Forum = () => {
                       </div>
                       <p className="text-sm whitespace-pre-wrap">{reply.content}</p>
                       
-                      {/* Accept Answer Button - Only show to post author */}
-                      {user && selectedPost.user_id === user.id && !selectedPost.is_solved && !reply.is_accepted && (
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          className="mt-3 text-success border-success hover:bg-success hover:text-success-foreground"
-                          onClick={() => handleAcceptAnswer(reply.id)}
-                          disabled={acceptingReply === reply.id}
-                        >
-                          {acceptingReply === reply.id ? (
-                            <Loader2 className="h-3 w-3 animate-spin mr-1" />
-                          ) : (
-                            <CheckCircle className="h-3 w-3 mr-1" />
-                          )}
-                          {t('forum.acceptAnswer', 'Accept as Solution')}
-                        </Button>
-                      )}
+                      {/* Action Buttons */}
+                      <div className="flex items-center gap-2 mt-3 flex-wrap">
+                        {/* Accept Answer Button - Only show to post author when post is not solved */}
+                        {user && selectedPost.user_id === user.id && !reply.is_accepted && (
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="text-success border-success hover:bg-success hover:text-success-foreground"
+                            onClick={() => handleAcceptAnswer(reply.id)}
+                            disabled={acceptingReply === reply.id}
+                          >
+                            {acceptingReply === reply.id ? (
+                              <Loader2 className="h-3 w-3 animate-spin mr-1" />
+                            ) : (
+                              <CheckCircle className="h-3 w-3 mr-1" />
+                            )}
+                            {t('forum.acceptAnswer', 'Accept as Solution')}
+                          </Button>
+                        )}
+                        
+                        {/* Un-accept Answer Button - Only show to post author on accepted answer */}
+                        {user && selectedPost.user_id === user.id && reply.is_accepted && (
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="text-amber-600 border-amber-600 hover:bg-amber-600 hover:text-white"
+                            onClick={() => handleUnacceptAnswer(reply.id)}
+                            disabled={acceptingReply === reply.id}
+                          >
+                            {acceptingReply === reply.id ? (
+                              <Loader2 className="h-3 w-3 animate-spin mr-1" />
+                            ) : (
+                              <X className="h-3 w-3 mr-1" />
+                            )}
+                            {t('forum.unacceptAnswer', 'Unaccept Answer')}
+                          </Button>
+                        )}
+                        
+                        {/* Delete Reply Button */}
+                        {(canModerate || reply.user_id === user?.id) && (
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => handleDeleteReply(reply.id)}
+                            disabled={deletingItem === reply.id}
+                            className="text-destructive hover:text-destructive"
+                          >
+                            {deletingItem === reply.id ? (
+                              <Loader2 className="h-3 w-3 animate-spin" />
+                            ) : (
+                              <Trash2 className="h-3 w-3" />
+                            )}
+                          </Button>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </CardContent>
@@ -676,7 +897,7 @@ const Forum = () => {
             {filteredPosts.map((post) => (
               <Card
                 key={post.id}
-                className="cursor-pointer hover:shadow-md transition-shadow"
+                className={`cursor-pointer hover:shadow-md transition-shadow ${post.is_pinned ? 'border-primary/50 bg-primary/5' : ''}`}
                 onClick={() => setSelectedPost(post)}
               >
                 <CardContent className="p-4">
@@ -689,6 +910,9 @@ const Forum = () => {
                     </Avatar>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-1">
+                        {post.is_pinned && (
+                          <Pin className="h-4 w-4 text-primary flex-shrink-0" />
+                        )}
                         <h3 className="font-semibold truncate">{post.title}</h3>
                         {post.is_solved && (
                           <Badge variant="default" className="bg-success flex-shrink-0">
@@ -711,7 +935,6 @@ const Forum = () => {
                           )}
                         </span>
                         <span>•</span>
-                        <span>{formatDate(post.created_at)}</span>
                         <span>{formatDate(post.created_at)}</span>
                         <span className="flex items-center gap-1">
                           <ThumbsUp className="h-3 w-3" />

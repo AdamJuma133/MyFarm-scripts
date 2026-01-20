@@ -33,6 +33,7 @@ export function getBadgeInfo(level: BadgeLevel) {
         icon: Crown,
         color: 'bg-yellow-500 text-yellow-950',
         description: 'Top contributor with exceptional expertise',
+        privileges: 'Can pin posts & moderate content',
       };
     case 'expert':
       return {
@@ -40,6 +41,7 @@ export function getBadgeInfo(level: BadgeLevel) {
         icon: Shield,
         color: 'bg-purple-500 text-purple-950',
         description: 'Highly knowledgeable community member',
+        privileges: 'Can pin posts to help others',
       };
     case 'helper':
       return {
@@ -47,6 +49,7 @@ export function getBadgeInfo(level: BadgeLevel) {
         icon: Star,
         color: 'bg-primary text-primary-foreground',
         description: 'Active helper in the community',
+        privileges: '30 more points to unlock pin posts',
       };
     case 'contributor':
       return {
@@ -54,6 +57,7 @@ export function getBadgeInfo(level: BadgeLevel) {
         icon: Sparkles,
         color: 'bg-blue-500 text-blue-950',
         description: 'Regular community contributor',
+        privileges: '45 more points to unlock pin posts',
       };
     default:
       return {
@@ -61,6 +65,7 @@ export function getBadgeInfo(level: BadgeLevel) {
         icon: Award,
         color: 'bg-muted text-muted-foreground',
         description: 'New to the community',
+        privileges: 'Keep helping to earn privileges!',
       };
   }
 }
@@ -112,6 +117,7 @@ export function ExpertBadge({
           <p className="text-xs mt-1">
             {reputationScore} {t('badges.points', 'points')} • {acceptedAnswers} {t('badges.accepted', 'accepted')}
           </p>
+          <p className="text-xs text-primary mt-1">{info.privileges}</p>
         </div>
       </TooltipContent>
     </Tooltip>
