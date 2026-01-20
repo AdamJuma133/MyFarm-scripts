@@ -23,7 +23,8 @@ import {
   Send,
   Loader2,
   Users,
-  TrendingUp
+  TrendingUp,
+  Trophy
 } from 'lucide-react';
 import { MobileHeader } from '@/components/mobile-header';
 import { BottomNavigation } from '@/components/bottom-navigation';
@@ -93,6 +94,7 @@ const Forum = () => {
   const [newPost, setNewPost] = useState({ title: '', content: '', category: 'general', crop_type: '' });
   const [submittingPost, setSubmittingPost] = useState(false);
   const [userLikes, setUserLikes] = useState<Set<string>>(new Set());
+  const [acceptingReply, setAcceptingReply] = useState<string | null>(null);
 
   useEffect(() => {
     fetchPosts();
@@ -265,6 +267,39 @@ const Forum = () => {
     }
   };
 
+  const handleAcceptAnswer = async (replyId: string) => {
+    if (!user || !selectedPost) return;
+
+    setAcceptingReply(replyId);
+    try {
+      // Update the reply as accepted
+      const { error: replyError } = await supabase
+        .from('forum_replies')
+        .update({ is_accepted: true })
+        .eq('id', replyId);
+
+      if (replyError) throw replyError;
+
+      // Update the post as solved
+      const { error: postError } = await supabase
+        .from('forum_posts')
+        .update({ is_solved: true })
+        .eq('id', selectedPost.id);
+
+      if (postError) throw postError;
+
+      // Update local state
+      setReplies(replies.map(r => r.id === replyId ? { ...r, is_accepted: true } : r));
+      setSelectedPost({ ...selectedPost, is_solved: true });
+      toast.success(t('forum.answerAccepted', 'Answer accepted!'));
+    } catch (error) {
+      console.error('Error accepting answer:', error);
+      toast.error(t('forum.acceptError', 'Failed to accept answer'));
+    } finally {
+      setAcceptingReply(null);
+    }
+  };
+
   const filteredPosts = posts.filter((post) => {
     const matchesSearch = 
       post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -364,7 +399,7 @@ const Forum = () => {
               {t('forum.answers', 'Answers')} ({replies.length})
             </h3>
             {replies.map((reply) => (
-              <Card key={reply.id} className={reply.is_accepted ? 'border-success' : ''}>
+              <Card key={reply.id} className={reply.is_accepted ? 'border-success bg-success/5' : ''}>
                 <CardContent className="pt-4">
                   <div className="flex items-start gap-3">
                     <Avatar className="h-8 w-8">
@@ -396,6 +431,24 @@ const Forum = () => {
                         )}
                       </div>
                       <p className="text-sm whitespace-pre-wrap">{reply.content}</p>
+                      
+                      {/* Accept Answer Button - Only show to post author */}
+                      {user && selectedPost.user_id === user.id && !selectedPost.is_solved && !reply.is_accepted && (
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="mt-3 text-success border-success hover:bg-success hover:text-success-foreground"
+                          onClick={() => handleAcceptAnswer(reply.id)}
+                          disabled={acceptingReply === reply.id}
+                        >
+                          {acceptingReply === reply.id ? (
+                            <Loader2 className="h-3 w-3 animate-spin mr-1" />
+                          ) : (
+                            <CheckCircle className="h-3 w-3 mr-1" />
+                          )}
+                          {t('forum.acceptAnswer', 'Accept as Solution')}
+                        </Button>
+                      )}
                     </div>
                   </div>
                 </CardContent>
@@ -462,22 +515,33 @@ const Forum = () => {
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-2 gap-3 mb-4">
+        <div className="grid grid-cols-3 gap-2 mb-4">
           <Card>
-            <CardContent className="p-4 flex items-center gap-3">
-              <MessageSquare className="h-8 w-8 text-primary" />
+            <CardContent className="p-3 flex items-center gap-2">
+              <MessageSquare className="h-6 w-6 text-primary" />
               <div>
-                <p className="text-2xl font-bold">{posts.length}</p>
+                <p className="text-xl font-bold">{posts.length}</p>
                 <p className="text-xs text-muted-foreground">{t('forum.questions', 'Questions')}</p>
               </div>
             </CardContent>
           </Card>
           <Card>
-            <CardContent className="p-4 flex items-center gap-3">
-              <TrendingUp className="h-8 w-8 text-success" />
+            <CardContent className="p-3 flex items-center gap-2">
+              <TrendingUp className="h-6 w-6 text-success" />
               <div>
-                <p className="text-2xl font-bold">{posts.filter(p => p.is_solved).length}</p>
+                <p className="text-xl font-bold">{posts.filter(p => p.is_solved).length}</p>
                 <p className="text-xs text-muted-foreground">{t('forum.solved', 'Solved')}</p>
+              </div>
+            </CardContent>
+          </Card>
+          <Card 
+            className="cursor-pointer hover:shadow-md transition-shadow"
+            onClick={() => navigate('/leaderboard')}
+          >
+            <CardContent className="p-3 flex items-center gap-2">
+              <Trophy className="h-6 w-6 text-amber-500" />
+              <div>
+                <p className="text-xs font-medium text-primary">{t('forum.viewLeaderboard', 'View Leaderboard')}</p>
               </div>
             </CardContent>
           </Card>

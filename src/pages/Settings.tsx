@@ -24,13 +24,16 @@ import {
   RefreshCw,
   Sun,
   Moon,
-  Monitor
+  Monitor,
+  Mail
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { LanguageSelector } from '@/components/language-selector';
 import { useOffline, getCacheSize, clearAllCache } from '@/hooks/use-offline';
 import { getStorageEstimate } from '@/lib/offline-storage';
 import { useTheme } from '@/hooks/use-theme';
+import { useAuth } from '@/contexts/AuthContext';
+import { supabase } from '@/integrations/supabase/client';
 
 interface UserProfile {
   farmName: string;
@@ -55,9 +58,11 @@ const popularCrops = [
 
 export default function Settings() {
   const { t } = useTranslation();
+  const { user } = useAuth();
   const [profile, setProfile] = useState<UserProfile>(defaultProfile);
   const [newCrop, setNewCrop] = useState('');
   const [cacheSize, setCacheSize] = useState<string>('0 KB');
+  const [emailDigestEnabled, setEmailDigestEnabled] = useState(true);
   const { isOnline, isOfflineReady } = useOffline();
   const { theme, setTheme, resolvedTheme } = useTheme();
 
@@ -88,11 +93,44 @@ export default function Settings() {
         setProfile(defaultProfile);
       }
     }
-  }, []);
+    
+    // Fetch email digest preference from database
+    const fetchEmailDigest = async () => {
+      if (!user) return;
+      const { data } = await supabase
+        .from('profiles')
+        .select('email_digest_enabled')
+        .eq('user_id', user.id)
+        .maybeSingle();
+      if (data) {
+        setEmailDigestEnabled(data.email_digest_enabled ?? true);
+      }
+    };
+    fetchEmailDigest();
+  }, [user]);
 
-  const saveProfile = () => {
+  const saveProfile = async () => {
     localStorage.setItem('myfarm-profile', JSON.stringify(profile));
+    
+    // Save email digest preference to database
+    if (user) {
+      await supabase
+        .from('profiles')
+        .update({ email_digest_enabled: emailDigestEnabled })
+        .eq('user_id', user.id);
+    }
+    
     toast.success(t('settings.saved', 'Settings saved successfully!'));
+  };
+
+  const toggleEmailDigest = async (enabled: boolean) => {
+    setEmailDigestEnabled(enabled);
+    if (user) {
+      await supabase
+        .from('profiles')
+        .update({ email_digest_enabled: enabled })
+        .eq('user_id', user.id);
+    }
   };
 
   const addCrop = (crop: string) => {
@@ -307,6 +345,24 @@ export default function Settings() {
                     <Monitor className="h-4 w-4" />
                   </Button>
                 </div>
+              </div>
+
+              <Separator />
+
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <Mail className="h-5 w-5 text-muted-foreground" />
+                  <div>
+                    <Label>{t('settings.emailDigest', 'Weekly Email Digest')}</Label>
+                    <p className="text-sm text-muted-foreground">
+                      {t('settings.emailDigestDesc', 'Receive weekly updates about forum activity matching your crops')}
+                    </p>
+                  </div>
+                </div>
+                <Switch
+                  checked={emailDigestEnabled}
+                  onCheckedChange={toggleEmailDigest}
+                />
               </div>
 
               <Separator />

@@ -247,14 +247,29 @@
     "postReply": "Post Answer",
     "replyPosted": "Reply posted!",
     "replyError": "Failed to post reply",
-    "accepted": "Accepted"
+    "accepted": "Accepted",
+    "acceptAnswer": "Accept as Solution",
+    "answerAccepted": "Answer accepted!",
+    "acceptError": "Failed to accept answer",
+    "viewLeaderboard": "View Leaderboard"
+  },
+  "leaderboard": {
+    "title": "Leaderboard",
+    "subtitle": "Top community contributors",
+    "reputation": "Reputation",
+    "accepted": "Accepted",
+    "replies": "Replies",
+    "empty": "No contributors yet. Be the first to help others!",
+    "goToForum": "Go to Forum"
   },
   "settings": {
     "theme": "Theme",
     "themeDesc": "Choose your preferred appearance",
     "lightMode": "Light",
     "darkMode": "Dark",
-    "systemTheme": "System"
+    "systemTheme": "System",
+    "emailDigest": "Weekly Email Digest",
+    "emailDigestDesc": "Receive weekly updates about forum activity matching your crops"
   },
   "dashboard": {
     "joinCommunity": "Join Community Forum"

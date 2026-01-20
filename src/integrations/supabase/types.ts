@@ -188,6 +188,7 @@ export type Database = {
           accepted_answers: number
           avatar_url: string | null
           created_at: string
+          email_digest_enabled: boolean
           farm_location: string | null
           farm_name: string | null
           farm_size: string | null
@@ -203,6 +204,7 @@ export type Database = {
           accepted_answers?: number
           avatar_url?: string | null
           created_at?: string
+          email_digest_enabled?: boolean
           farm_location?: string | null
           farm_name?: string | null
           farm_size?: string | null
@@ -218,6 +220,7 @@ export type Database = {
           accepted_answers?: number
           avatar_url?: string | null
           created_at?: string
+          email_digest_enabled?: boolean
           farm_location?: string | null
           farm_name?: string | null
           farm_size?: string | null
@@ -278,7 +281,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      is_post_author: {
+        Args: { _post_id: string; _user_id: string }
+        Returns: boolean
+      }
     }
     Enums: {
       [_ in never]: never
