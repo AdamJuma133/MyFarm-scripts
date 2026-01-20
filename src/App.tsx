@@ -18,6 +18,7 @@ import Settings from "./pages/Settings";
 import OutbreakMap from "./pages/OutbreakMap";
 import Workshops from "./pages/Workshops";
 import Forum from "./pages/Forum";
+import Leaderboard from "./pages/Leaderboard";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient({
@@ -91,6 +92,12 @@ const App = () => (
                 <Forum />
               </ProtectedRoute>
             } />
+            <Route path="/leaderboard" element={
+              <ProtectedRoute>
+                <Leaderboard />
+              </ProtectedRoute>
+            } />
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
