@@ -29,11 +29,13 @@ import {
   PinOff,
   Trash2,
   X,
-  Shield
+  Shield,
+  Flag
 } from 'lucide-react';
 import { MobileHeader } from '@/components/mobile-header';
 import { BottomNavigation } from '@/components/bottom-navigation';
 import { ExpertBadge } from '@/components/expert-badge';
+import { ReportDialog } from '@/components/report-dialog';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
@@ -104,6 +106,7 @@ const Forum = () => {
   const [userProfile, setUserProfile] = useState<{ reputation_score: number } | null>(null);
   const [pinningPost, setPinningPost] = useState<string | null>(null);
   const [deletingItem, setDeletingItem] = useState<string | null>(null);
+  const [reportTarget, setReportTarget] = useState<{ type: 'post' | 'reply'; id: string; title?: string } | null>(null);
 
   useEffect(() => {
     fetchPosts();
@@ -357,7 +360,7 @@ const Forum = () => {
   const canModerate = userProfile && userProfile.reputation_score >= 100;
 
   const handlePinPost = async (postId: string, isPinned: boolean) => {
-    if (!canPinPosts) return;
+    if (!canPinPosts || !user) return;
 
     setPinningPost(postId);
     try {
@@ -367,6 +370,14 @@ const Forum = () => {
         .eq('id', postId);
 
       if (error) throw error;
+
+      // Log the moderation action
+      await supabase.from('moderation_logs').insert({
+        moderator_id: user.id,
+        action_type: isPinned ? 'unpin' : 'pin',
+        target_type: 'post',
+        target_id: postId,
+      });
 
       setPosts(posts.map(p => p.id === postId ? { ...p, is_pinned: !isPinned } : p));
       if (selectedPost?.id === postId) {
@@ -382,7 +393,8 @@ const Forum = () => {
   };
 
   const handleDeletePost = async (postId: string) => {
-    if (!canModerate && posts.find(p => p.id === postId)?.user_id !== user?.id) return;
+    const post = posts.find(p => p.id === postId);
+    if (!user || (!canModerate && post?.user_id !== user.id)) return;
 
     if (!confirm(t('forum.confirmDelete', 'Are you sure you want to delete this?'))) return;
 
@@ -394,6 +406,17 @@ const Forum = () => {
         .eq('id', postId);
 
       if (error) throw error;
+
+      // Log the moderation action if moderator (not own post)
+      if (canModerate && post?.user_id !== user.id) {
+        await supabase.from('moderation_logs').insert({
+          moderator_id: user.id,
+          action_type: 'delete_post',
+          target_type: 'post',
+          target_id: postId,
+          target_user_id: post?.user_id,
+        });
+      }
 
       setPosts(posts.filter(p => p.id !== postId));
       if (selectedPost?.id === postId) {
@@ -410,7 +433,7 @@ const Forum = () => {
 
   const handleDeleteReply = async (replyId: string) => {
     const reply = replies.find(r => r.id === replyId);
-    if (!canModerate && reply?.user_id !== user?.id) return;
+    if (!user || (!canModerate && reply?.user_id !== user.id)) return;
 
     if (!confirm(t('forum.confirmDelete', 'Are you sure you want to delete this?'))) return;
 
@@ -422,6 +445,17 @@ const Forum = () => {
         .eq('id', replyId);
 
       if (error) throw error;
+
+      // Log the moderation action if moderator (not own reply)
+      if (canModerate && reply?.user_id !== user.id) {
+        await supabase.from('moderation_logs').insert({
+          moderator_id: user.id,
+          action_type: 'delete_reply',
+          target_type: 'reply',
+          target_id: replyId,
+          target_user_id: reply?.user_id,
+        });
+      }
 
       setReplies(replies.filter(r => r.id !== replyId));
       toast.success(t('forum.replyDeleted', 'Reply deleted'));
@@ -536,8 +570,22 @@ const Forum = () => {
                   </span>
                 </div>
                 
-                {/* Moderator Actions */}
+                {/* Actions */}
                 <div className="flex items-center gap-1">
+                  {/* Report Button */}
+                  {user && selectedPost.user_id !== user.id && (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setReportTarget({ type: 'post', id: selectedPost.id, title: selectedPost.title });
+                      }}
+                      title={t('forum.reportPost', 'Report Post')}
+                    >
+                      <Flag className="h-4 w-4" />
+                    </Button>
+                  )}
                   {canPinPosts && (
                     <Button
                       variant="ghost"
@@ -650,6 +698,17 @@ const Forum = () => {
                               <X className="h-3 w-3 mr-1" />
                             )}
                             {t('forum.unacceptAnswer', 'Unaccept Answer')}
+                          </Button>
+                        )}
+                        
+                        {/* Report Reply Button */}
+                        {user && reply.user_id !== user.id && (
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => setReportTarget({ type: 'reply', id: reply.id })}
+                          >
+                            <Flag className="h-3 w-3" />
                           </Button>
                         )}
                         
@@ -955,6 +1014,15 @@ const Forum = () => {
       </div>
 
       <BottomNavigation />
+
+      {/* Report Dialog */}
+      <ReportDialog
+        open={!!reportTarget}
+        onOpenChange={(open) => !open && setReportTarget(null)}
+        targetType={reportTarget?.type || 'post'}
+        targetId={reportTarget?.id || ''}
+        targetTitle={reportTarget?.title}
+      />
     </div>
   );
 };

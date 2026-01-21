@@ -310,5 +310,44 @@
     "totalReplies": "Total replies",
     "points": "points",
     "accepted": "accepted"
+  },
+  "report": {
+    "title": "Report Content",
+    "description": "Help us understand what's wrong with this content.",
+    "reason": "Why are you reporting this?",
+    "details": "Additional details (optional)",
+    "detailsPlaceholder": "Provide more context about this report...",
+    "submit": "Submit Report",
+    "submitted": "Report submitted. Thank you for helping keep our community safe.",
+    "error": "Failed to submit report",
+    "reasons": {
+      "spam": "Spam or advertising",
+      "harassment": "Harassment or abuse",
+      "misinformation": "Misinformation or harmful advice",
+      "inappropriate": "Inappropriate content",
+      "other": "Other"
+    }
+  },
+  "moderation": {
+    "logTitle": "Moderation Log",
+    "reportsTitle": "Reports Queue",
+    "noLogs": "No moderation actions yet",
+    "noReports": "No reports to review",
+    "review": "Review",
+    "takeAction": "Take Action",
+    "dismiss": "Dismiss",
+    "resolutionNote": "Add a resolution note (optional)...",
+    "reportResolved": "Report resolved",
+    "reportDismissed": "Report dismissed",
+    "reportedBy": "Reported by",
+    "actions": {
+      "pin": "Pinned post",
+      "unpin": "Unpinned post",
+      "deletePost": "Deleted post",
+      "deleteReply": "Deleted reply",
+      "roleChange": "Changed role",
+      "resolveReport": "Resolved report",
+      "dismissReport": "Dismissed report"
+    }
   }
 }
