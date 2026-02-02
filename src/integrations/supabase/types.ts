@@ -270,6 +270,32 @@ export type Database = {
         }
         Relationships: []
       }
+      reply_acceptance_history: {
+        Row: {
+          first_accepted_at: string
+          id: string
+          reply_id: string
+        }
+        Insert: {
+          first_accepted_at?: string
+          id?: string
+          reply_id: string
+        }
+        Update: {
+          first_accepted_at?: string
+          id?: string
+          reply_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reply_acceptance_history_reply_id_fkey"
+            columns: ["reply_id"]
+            isOneToOne: true
+            referencedRelation: "forum_replies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       reports: {
         Row: {
           created_at: string
