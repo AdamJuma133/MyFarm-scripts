@@ -1,5 +1,16 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { z } from "https://esm.sh/zod@3.22.4";
+
+// Schema for validating AI response
+const AIResponseSchema = z.object({
+  cropType: z.string().min(1).max(100),
+  isHealthy: z.boolean(),
+  diseaseName: z.string().max(200).optional().nullable(),
+  diseaseType: z.enum(['bacterial', 'viral', 'fungal', 'nutritional']).optional().nullable(),
+  confidence: z.number().min(0).max(1),
+  observations: z.string().max(500).optional()
+});
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -227,10 +238,20 @@ Return a JSON object with:
     // Extract the tool call result
     const toolCall = data.choices?.[0]?.message?.tool_calls?.[0];
     if (toolCall?.function?.arguments) {
-      const result = JSON.parse(toolCall.function.arguments);
+      const parsed = JSON.parse(toolCall.function.arguments);
+      
+      // Validate AI response against schema
+      const validationResult = AIResponseSchema.safeParse(parsed);
+      if (!validationResult.success) {
+        console.error("AI response validation failed:", validationResult.error.message);
+        return new Response(
+          JSON.stringify({ error: "Invalid analysis result format" }),
+          { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
       
       return new Response(
-        JSON.stringify(result),
+        JSON.stringify(validationResult.data),
         { headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
