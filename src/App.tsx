@@ -19,6 +19,7 @@ import OutbreakMap from "./pages/OutbreakMap";
 import Workshops from "./pages/Workshops";
 import Forum from "./pages/Forum";
 import Leaderboard from "./pages/Leaderboard";
+import Moderation from "./pages/Moderation";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient({
@@ -95,6 +96,11 @@ const App = () => (
             <Route path="/leaderboard" element={
               <ProtectedRoute>
                 <Leaderboard />
+              </ProtectedRoute>
+            } />
+            <Route path="/moderation" element={
+              <ProtectedRoute>
+                <Moderation />
               </ProtectedRoute>
             } />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
