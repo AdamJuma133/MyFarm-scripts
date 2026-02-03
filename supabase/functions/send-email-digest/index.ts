@@ -208,13 +208,16 @@ Deno.serve(async (req) => {
       }
     }
 
+    // Log detailed results server-side only for debugging
     console.log(`Processed ${digests.length} digests, sent ${digestResults.filter(r => r.status === 'email_sent').length} emails`);
 
+    // Return only aggregate stats - never expose user emails in response
     return new Response(
       JSON.stringify({
         success: true,
-        message: `Processed ${digestResults.length} email digests`,
-        results: digestResults,
+        totalDigests: digestResults.length,
+        emailsSent: digestResults.filter(r => r.status === 'email_sent').length,
+        notificationsCreated: digestResults.filter(r => r.status === 'notification_created' || r.status === 'fallback_notification').length,
       }),
       {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
