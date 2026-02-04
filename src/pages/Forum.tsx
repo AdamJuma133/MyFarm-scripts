@@ -19,7 +19,6 @@ import {
   ThumbsUp, 
   MessageCircle,
   CheckCircle,
-  ArrowLeft,
   Send,
   Loader2,
   Users,
@@ -33,6 +32,7 @@ import {
   Flag
 } from 'lucide-react';
 import { MobileHeader } from '@/components/mobile-header';
+import { BackButton } from '@/components/back-button';
 import { BottomNavigation } from '@/components/bottom-navigation';
 import { ExpertBadge } from '@/components/expert-badge';
 import { ReportDialog } from '@/components/report-dialog';
@@ -501,10 +501,7 @@ const Forum = () => {
         </div>
 
         <div className="container mx-auto px-3 md:px-4 py-4 md:py-8 max-w-3xl">
-          <Button variant="ghost" onClick={() => setSelectedPost(null)} className="mb-4">
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            {t('common.back', 'Back')}
-          </Button>
+          <BackButton className="mb-4" />
 
           <Card className="mb-4">
             <CardHeader>
@@ -777,19 +774,19 @@ const Forum = () => {
       <div className="container mx-auto px-3 md:px-4 py-4 md:py-8">
         {/* Header */}
         <div className="hidden md:flex mb-6 items-center gap-4">
-          <Button variant="ghost" onClick={() => navigate('/')} className="h-11">
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            {t('common.back', 'Back')}
-          </Button>
+          <BackButton />
           <h1 className="text-3xl font-bold">{t('forum.title', 'Community Forum')}</h1>
         </div>
 
         <div className="md:hidden mb-4">
-          <h1 className="text-2xl font-bold flex items-center gap-2">
-            <Users className="h-6 w-6" />
-            {t('forum.title', 'Community Forum')}
-          </h1>
-          <p className="text-muted-foreground">
+          <div className="flex items-center gap-2 mb-1">
+            <BackButton />
+            <h1 className="text-2xl font-bold flex items-center gap-2">
+              <Users className="h-6 w-6" />
+              {t('forum.title', 'Community Forum')}
+            </h1>
+          </div>
+          <p className="text-muted-foreground ml-10">
             {t('forum.subtitle', 'Ask questions and share experiences')}
           </p>
         </div>

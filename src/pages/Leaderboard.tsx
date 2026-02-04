@@ -11,12 +11,12 @@ import {
   Trophy, 
   Medal, 
   Award, 
-  ArrowLeft,
   Star,
   MessageCircle,
   CheckCircle,
   Crown
 } from 'lucide-react';
+import { BackButton } from '@/components/back-button';
 import { MobileHeader } from '@/components/mobile-header';
 import { BottomNavigation } from '@/components/bottom-navigation';
 import { ExpertBadge } from '@/components/expert-badge';
@@ -98,10 +98,7 @@ const Leaderboard = () => {
       <div className="container mx-auto px-3 md:px-4 py-4 md:py-8 max-w-3xl">
         {/* Header */}
         <div className="flex items-center gap-4 mb-6">
-          <Button variant="ghost" onClick={() => navigate('/forum')} className="h-11">
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            {t('common.back', 'Back')}
-          </Button>
+          <BackButton fallbackPath="/forum" />
           <div>
             <h1 className="text-2xl md:text-3xl font-bold flex items-center gap-2">
               <Trophy className="h-7 w-7 text-primary" />

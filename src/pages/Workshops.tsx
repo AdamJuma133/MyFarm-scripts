@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Navigation } from '@/components/navigation';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { BackButton } from '@/components/back-button';
+import { MobileHeader } from '@/components/mobile-header';
+import { BottomNavigation } from '@/components/bottom-navigation';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -195,14 +197,21 @@ export default function Workshops() {
 
   return (
     <div className="min-h-screen bg-background flex flex-col pb-20 md:pb-0">
-      <Navigation />
+      {/* Mobile Header */}
+      <div className="md:hidden">
+        <MobileHeader />
+      </div>
+      
       <main className="container mx-auto px-3 md:px-4 py-4 md:py-8 flex-1">
         <div className="mb-6 md:mb-8">
-          <h1 className="text-2xl md:text-3xl font-bold text-foreground flex items-center gap-2 md:gap-3">
-            <Video className="h-6 w-6 md:h-8 md:w-8 text-primary" />
-            {t('workshops.title', 'Learning Hub')}
-          </h1>
-          <p className="text-muted-foreground mt-1 md:mt-2 text-sm md:text-base">
+          <div className="flex items-center gap-3 mb-1 md:mb-2">
+            <BackButton />
+            <h1 className="text-2xl md:text-3xl font-bold text-foreground flex items-center gap-2 md:gap-3">
+              <Video className="h-6 w-6 md:h-8 md:w-8 text-primary" />
+              {t('workshops.title', 'Learning Hub')}
+            </h1>
+          </div>
+          <p className="text-muted-foreground mt-1 md:mt-2 text-sm md:text-base ml-10">
             {t('workshops.subtitle', 'Video tutorials and live workshops to improve your farming skills')}
           </p>
         </div>
@@ -365,6 +374,9 @@ export default function Workshops() {
           </TabsContent>
         </Tabs>
       </main>
+      
+      {/* Bottom Navigation for Mobile */}
+      <BottomNavigation />
     </div>
   );
 }
