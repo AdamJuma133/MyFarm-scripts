@@ -3,7 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Clock, Trash2, ArrowLeft, Loader2, Share2 } from 'lucide-react';
+import { Clock, Trash2, Loader2, Share2 } from 'lucide-react';
+import { BackButton } from '@/components/back-button';
 import { useNavigate } from 'react-router-dom';
 import { LanguageSelector } from '@/components/language-selector';
 import { MobileHeader } from '@/components/mobile-header';
@@ -116,10 +117,7 @@ const History = () => {
         {/* Desktop header with back button */}
         <div className="hidden md:flex mb-6 items-center justify-between">
           <div className="flex items-center gap-4">
-            <Button variant="ghost" onClick={() => navigate('/')} className="h-11 touch-manipulation">
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Back
-            </Button>
+            <BackButton />
             <h1 className="text-3xl font-bold">{t('history.title')}</h1>
           </div>
           <div className="flex items-center gap-2">
@@ -136,7 +134,10 @@ const History = () => {
         {/* Mobile header */}
         <div className="md:hidden mb-4">
           <div className="flex items-center justify-between">
-            <h1 className="text-2xl font-bold">{t('history.title')}</h1>
+            <div className="flex items-center gap-2">
+              <BackButton />
+              <h1 className="text-2xl font-bold">{t('history.title')}</h1>
+            </div>
             {history.length > 0 && (
               <Button 
                 variant="destructive" 

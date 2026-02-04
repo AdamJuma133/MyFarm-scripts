@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { BackButton } from '@/components/back-button';
 import { useNavigate } from 'react-router-dom';
 import { MobileHeader } from '@/components/mobile-header';
 import { BottomNavigation } from '@/components/bottom-navigation';
@@ -15,7 +16,6 @@ import {
   AlertTriangle,
   CheckCircle,
   Clock,
-  ArrowLeft,
   Bug,
   Thermometer,
   CloudRain,
@@ -472,18 +472,17 @@ const Advice = () => {
       {/* Header */}
       <div className="bg-gradient-primary text-primary-foreground">
         <div className="container mx-auto px-3 md:px-4 py-6 md:py-8">
-          <Button
-            variant="ghost"
-            onClick={() => navigate('/')}
-            className="mb-3 md:mb-4 text-primary-foreground hover:bg-primary-foreground/20 h-11 touch-manipulation hidden md:flex"
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Home
-          </Button>
-          <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold mb-2 md:mb-3">
+          <div className="mb-3 md:mb-4 hidden md:block">
+            <BackButton className="text-primary-foreground hover:bg-primary-foreground/20" />
+          </div>
+          <div className="md:hidden mb-3 flex items-center gap-2">
+            <BackButton className="text-primary-foreground hover:bg-primary-foreground/20" />
+            <h1 className="text-xl font-bold">Agricultural Advice</h1>
+          </div>
+          <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold mb-2 md:mb-3 hidden md:block">
             AI-Powered Agricultural Advice
           </h1>
-          <p className="text-sm md:text-lg opacity-90 max-w-4xl">
+          <p className="text-sm md:text-lg opacity-90 max-w-4xl hidden md:block">
             Comprehensive farming guidance for disease detection & crop management
           </p>
         </div>

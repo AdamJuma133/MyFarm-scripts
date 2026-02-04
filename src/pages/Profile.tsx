@@ -6,7 +6,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
-import { ArrowLeft, User, MapPin, Loader2, Save, Plus, X } from 'lucide-react';
+import { User, MapPin, Loader2, Save, Plus, X } from 'lucide-react';
+import { BackButton } from '@/components/back-button';
 import { MobileHeader } from '@/components/mobile-header';
 import { BottomNavigation } from '@/components/bottom-navigation';
 import { AvatarUpload } from '@/components/avatar-upload';
@@ -131,15 +132,13 @@ const Profile = () => {
       <div className="container mx-auto px-3 md:px-4 py-4 md:py-8 max-w-2xl">
         {/* Desktop header with back button */}
         <div className="hidden md:flex mb-6 items-center gap-4">
-          <Button variant="ghost" onClick={() => navigate(-1)} className="h-11 touch-manipulation">
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            {t('common.back')}
-          </Button>
+          <BackButton />
           <h1 className="text-3xl font-bold">{t('profile.title')}</h1>
         </div>
 
         {/* Mobile header */}
-        <div className="md:hidden mb-4">
+        <div className="md:hidden mb-4 flex items-center gap-2">
+          <BackButton />
           <h1 className="text-2xl font-bold">{t('profile.title')}</h1>
         </div>
 

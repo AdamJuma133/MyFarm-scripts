@@ -14,9 +14,9 @@ import {
   Shield, 
   Flag, 
   History, 
-  AlertTriangle,
-  ArrowLeft
+  AlertTriangle
 } from 'lucide-react';
+import { BackButton } from '@/components/back-button';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 
@@ -110,10 +110,7 @@ export default function Moderation() {
               <p className="text-muted-foreground mb-4">
                 {t('moderation.accessDeniedMessage', 'You need moderator privileges or 100+ reputation to access this page.')}
               </p>
-              <Button onClick={() => navigate('/forum')}>
-                <ArrowLeft className="h-4 w-4 mr-2" />
-                {t('moderation.backToForum', 'Back to Forum')}
-              </Button>
+              <BackButton fallbackPath="/forum" />
             </CardContent>
           </Card>
         </main>
@@ -142,10 +139,7 @@ export default function Moderation() {
                 </p>
               </div>
             </div>
-            <Button variant="outline" onClick={() => navigate('/forum')}>
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              {t('moderation.backToForum', 'Back to Forum')}
-            </Button>
+            <BackButton fallbackPath="/forum" />
           </div>
 
           {/* Stats Cards */}
