@@ -10,10 +10,10 @@ import {
   Video, 
   ChevronRight, 
   ChevronLeft,
-  Sprout,
   Shield,
   Users
 } from 'lucide-react';
+import myfarmLogo from '@/assets/myfarm-logo.png';
 
 const features = [
   {
@@ -69,10 +69,9 @@ export default function Welcome() {
       <div className="w-full max-w-md">
         {currentStep === 0 ? (
           <div className="text-center space-y-8 animate-fade-in">
-            <div className="flex justify-center">
-              <div className="h-24 w-24 rounded-full bg-primary/20 flex items-center justify-center">
-                <Sprout className="h-12 w-12 text-primary" />
-              </div>
+            <div className="flex flex-col items-center gap-2">
+              <img src={myfarmLogo} alt="MyFarm Logo" className="h-24 w-24 rounded-full border-2 border-primary/20 object-cover" />
+              <span className="text-sm font-semibold text-primary">MyFarm</span>
             </div>
             
             <div className="space-y-4">
