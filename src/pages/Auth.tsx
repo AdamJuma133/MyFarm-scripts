@@ -11,7 +11,8 @@ import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Separator } from '@/components/ui/separator';
-import { Loader2, Leaf, Mail, Lock, AlertCircle } from 'lucide-react';
+import { Loader2, Mail, Lock, AlertCircle } from 'lucide-react';
+import myfarmLogo from '@/assets/myfarm-logo.png';
 
 // Validation schemas
 const emailSchema = z.string().email('Please enter a valid email address');
@@ -185,10 +186,9 @@ const Auth = () => {
     <div className="min-h-screen flex items-center justify-center bg-gradient-secondary p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
-          <div className="flex justify-center mb-4">
-            <div className="h-16 w-16 rounded-full bg-gradient-primary flex items-center justify-center">
-              <Leaf className="h-8 w-8 text-primary-foreground" />
-            </div>
+          <div className="flex flex-col items-center gap-1 mb-4">
+            <img src={myfarmLogo} alt="MyFarm Logo" className="h-16 w-16 rounded-full border-2 border-primary/20 object-cover" />
+            <span className="text-xs font-semibold text-primary">MyFarm</span>
           </div>
           <CardTitle className="text-2xl font-bold">
             {t('app.title', 'MyFarm')}
