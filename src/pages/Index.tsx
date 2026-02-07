@@ -27,7 +27,7 @@ const Index = () => {
         />
         <div className="relative container mx-auto px-4 py-8 md:py-12 text-center">
           <h1 className="text-3xl md:text-4xl lg:text-6xl font-bold mb-3 md:mb-4">
-            {t('app.title')}
+            MyFarm
           </h1>
           <p className="text-lg md:text-xl lg:text-2xl mb-4 md:mb-6 opacity-90">
             {t('app.subtitle')}

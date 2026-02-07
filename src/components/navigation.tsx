@@ -2,9 +2,10 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Scan, Book, Sprout, History, Lightbulb, MapPin, Video, Settings } from 'lucide-react';
+import { Scan, Book, History, Lightbulb, MapPin, Video, Settings } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { LanguageSelector } from './language-selector';
+import myfarmLogo from '@/assets/myfarm-logo.png';
 
 interface NavigationProps {
   activeTab?: 'analyzer' | 'library';
@@ -27,10 +28,12 @@ export function Navigation({ activeTab, onTabChange }: NavigationProps) {
             className="flex items-center gap-2 touch-manipulation"
             onClick={() => navigate('/')}
           >
-            <Sprout className="h-8 w-8 text-primary" />
-            <h1 className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-              {t('app.title')}
-            </h1>
+            <img src={myfarmLogo} alt="MyFarm Logo" className="h-10 w-10 rounded-full border border-border object-cover" />
+            <div className="flex flex-col items-start leading-tight">
+              <h1 className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">
+                MyFarm
+              </h1>
+            </div>
           </button>
           <div className="flex items-center gap-2">
             <Button
