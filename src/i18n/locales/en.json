@@ -1,40 +1,4 @@
 {
-  "moderation": {
-    "dashboard": "Moderation Dashboard",
-    "dashboardDescription": "Manage reports and view moderation activity",
-    "backToForum": "Back to Forum",
-    "accessDenied": "Access Denied",
-    "accessDeniedMessage": "You need moderator privileges or 100+ reputation to access this page.",
-    "pendingReports": "Pending Reports",
-    "activityLog": "Activity Log",
-    "recent": "Recent",
-    "reports": "Reports",
-    "logs": "Activity Log",
-    "logTitle": "Moderation Log",
-    "reportsTitle": "Reports Queue",
-    "noLogs": "No moderation actions yet",
-    "noReports": "No reports to review",
-    "unknown": "Unknown",
-    "reason": "Reason",
-    "reportedBy": "Reported by",
-    "resolutionNote": "Add a resolution note (optional)...",
-    "review": "Review",
-    "takeAction": "Take Action",
-    "dismiss": "Dismiss",
-    "note": "Note",
-    "reportResolved": "Report resolved",
-    "reportDismissed": "Report dismissed",
-    "error": "Failed to update report",
-    "actions": {
-      "pin": "Pinned post",
-      "unpin": "Unpinned post",
-      "deletePost": "Deleted post",
-      "deleteReply": "Deleted reply",
-      "roleChange": "Changed role",
-      "resolveReport": "Resolved report",
-      "dismissReport": "Dismissed report"
-    }
-  },
   "app": {
     "title": "MyFarm",
     "subtitle": "AI-Powered Crop Disease Identifier",
@@ -206,7 +170,8 @@
     "recentActivity": "Recent Activity",
     "noRecentActivity": "No recent activity",
     "startScanning": "Start Scanning",
-    "noData": "No scan data yet"
+    "noData": "No scan data yet",
+    "joinCommunity": "Join Community Forum"
   },
   "share": {
     "share": "Share",
@@ -323,9 +288,6 @@
     "emailDigest": "Weekly Email Digest",
     "emailDigestDesc": "Receive weekly updates about forum activity matching your crops"
   },
-  "dashboard": {
-    "joinCommunity": "Join Community Forum"
-  },
   "notifications": {
     "title": "Notifications",
     "empty": "No notifications yet",
@@ -365,17 +327,31 @@
     }
   },
   "moderation": {
+    "dashboard": "Moderation Dashboard",
+    "dashboardDescription": "Manage reports and view moderation activity",
+    "backToForum": "Back to Forum",
+    "accessDenied": "Access Denied",
+    "accessDeniedMessage": "You need moderator privileges or 100+ reputation to access this page.",
+    "pendingReports": "Pending Reports",
+    "activityLog": "Activity Log",
+    "recent": "Recent",
+    "reports": "Reports",
+    "logs": "Activity Log",
     "logTitle": "Moderation Log",
     "reportsTitle": "Reports Queue",
     "noLogs": "No moderation actions yet",
     "noReports": "No reports to review",
+    "unknown": "Unknown",
+    "reason": "Reason",
+    "reportedBy": "Reported by",
+    "resolutionNote": "Add a resolution note (optional)...",
     "review": "Review",
     "takeAction": "Take Action",
     "dismiss": "Dismiss",
-    "resolutionNote": "Add a resolution note (optional)...",
+    "note": "Note",
     "reportResolved": "Report resolved",
     "reportDismissed": "Report dismissed",
-    "reportedBy": "Reported by",
+    "error": "Failed to update report",
     "actions": {
       "pin": "Pinned post",
       "unpin": "Unpinned post",
