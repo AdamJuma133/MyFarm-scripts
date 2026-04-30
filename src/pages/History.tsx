@@ -135,25 +135,6 @@ const History = () => {
     }
   };
 
-  const handleClearAll = async () => {
-    if (!window.confirm(t('history.confirmClear'))) return;
-
-    try {
-      const { error } = await supabase
-        .from('scan_history')
-        .delete()
-        .eq('user_id', user?.id);
-
-      if (error) throw error;
-
-      setHistory([]);
-      toast.success(t('history.cleared'));
-    } catch (error) {
-      console.error('Error clearing history:', error);
-      toast.error(t('history.errorClearing'));
-    }
-  };
-
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-secondary flex items-center justify-center">
