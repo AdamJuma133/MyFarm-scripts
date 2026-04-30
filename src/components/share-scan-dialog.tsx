@@ -14,6 +14,8 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Share2, Copy, Download, Mail, MessageCircle, Loader2, Check } from 'lucide-react';
 import { toast } from 'sonner';
+import { Capacitor } from '@capacitor/core';
+import { Share } from '@capacitor/share';
 
 interface ScanData {
   id: string;
@@ -72,6 +74,22 @@ export function ShareScanDialog({ scan, children }: ShareScanDialogProps) {
   };
 
   const handleShareNative = async () => {
+    // Prefer Capacitor native share sheet on iOS/Android
+    if (Capacitor.isNativePlatform()) {
+      try {
+        await Share.share({
+          title: 'MyFarm Scan Report',
+          text: getScanSummary(),
+          dialogTitle: 'Share scan report',
+        });
+        return;
+      } catch (error) {
+        if ((error as Error).message?.toLowerCase().includes('cancel')) return;
+        toast.error(t('share.shareFailed', 'Failed to share'));
+        return;
+      }
+    }
+
     if (navigator.share) {
       try {
         await navigator.share({
