@@ -206,10 +206,10 @@ const History = () => {
           <div className="grid gap-3 md:gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
             {history.map((item) => (
               <Card key={item.id} className="overflow-hidden">
-                {item.image_url && (
+                {item.resolved_image_url && (
                   <div className="aspect-video relative">
                     <img
-                      src={item.image_url}
+                      src={item.resolved_image_url}
                       alt={item.image_name || 'Scan image'}
                       className="w-full h-full object-cover"
                     />
