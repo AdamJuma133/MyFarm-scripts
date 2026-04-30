@@ -89,6 +89,11 @@ const History = () => {
   const handleDelete = async (id: string) => {
     setDeleting(id);
     try {
+      const item = history.find((h) => h.id === id);
+      if (item?.storage_path) {
+        await supabase.storage.from('scan-images').remove([item.storage_path]);
+      }
+
       const { error } = await supabase
         .from('scan_history')
         .delete()
@@ -96,13 +101,37 @@ const History = () => {
 
       if (error) throw error;
 
-      setHistory(history.filter(item => item.id !== id));
+      setHistory(history.filter((h) => h.id !== id));
       toast.success(t('history.deleted'));
     } catch (error) {
       console.error('Error deleting scan:', error);
       toast.error(t('history.errorDeleting'));
     } finally {
       setDeleting(null);
+    }
+  };
+
+  const handleClearAll = async () => {
+    if (!window.confirm(t('history.confirmClear'))) return;
+
+    try {
+      const paths = history.map((h) => h.storage_path).filter((p): p is string => !!p);
+      if (paths.length > 0) {
+        await supabase.storage.from('scan-images').remove(paths);
+      }
+
+      const { error } = await supabase
+        .from('scan_history')
+        .delete()
+        .eq('user_id', user?.id);
+
+      if (error) throw error;
+
+      setHistory([]);
+      toast.success(t('history.cleared'));
+    } catch (error) {
+      console.error('Error clearing history:', error);
+      toast.error(t('history.errorClearing'));
     }
   };
 
