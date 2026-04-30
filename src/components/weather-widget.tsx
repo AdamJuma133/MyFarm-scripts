@@ -14,6 +14,8 @@ import {
   AlertTriangle,
   MapPin
 } from 'lucide-react';
+import { Capacitor } from '@capacitor/core';
+import { Geolocation } from '@capacitor/geolocation';
 
 interface WeatherData {
   temperature: number;
@@ -135,20 +137,28 @@ export function WeatherWidget() {
       setLoading(true);
       setError(null);
 
-      // Get user's location
+      // Get user's location — prefer native API on iOS/Android
       let lat = -1.2921; // Default to Nairobi, Kenya
       let lon = 36.8219;
 
-      if ('geolocation' in navigator) {
-        try {
+      try {
+        if (Capacitor.isNativePlatform()) {
+          const perm = await Geolocation.checkPermissions();
+          if (perm.location !== 'granted') {
+            await Geolocation.requestPermissions();
+          }
+          const position = await Geolocation.getCurrentPosition({ timeout: 8000 });
+          lat = position.coords.latitude;
+          lon = position.coords.longitude;
+        } else if ('geolocation' in navigator) {
           const position = await new Promise<GeolocationPosition>((resolve, reject) => {
             navigator.geolocation.getCurrentPosition(resolve, reject, { timeout: 5000 });
           });
           lat = position.coords.latitude;
           lon = position.coords.longitude;
-        } catch {
-          console.log('Using default location');
         }
+      } catch {
+        console.log('Using default location');
       }
 
       // Fetch weather from Open-Meteo (free, no API key required)

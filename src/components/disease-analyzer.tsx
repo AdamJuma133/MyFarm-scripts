@@ -11,6 +11,8 @@ import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { useOffline } from '@/hooks/use-offline';
 import { useAuth } from '@/contexts/AuthContext';
+import { Capacitor } from '@capacitor/core';
+import { Haptics, ImpactStyle } from '@capacitor/haptics';
 
 interface AnalysisResult {
   disease: Disease | null;
@@ -113,6 +115,11 @@ export function DiseaseAnalyzer() {
       };
       
       setAnalysisResult(result);
+
+      // Light haptic feedback on native platforms when a result is ready
+      if (Capacitor.isNativePlatform()) {
+        Haptics.impact({ style: isHealthy ? ImpactStyle.Light : ImpactStyle.Medium }).catch(() => {});
+      }
       
       // Save to database if user is authenticated
       if (session?.user) {
