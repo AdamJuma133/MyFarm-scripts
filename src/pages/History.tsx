@@ -52,7 +52,32 @@ const History = () => {
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      setHistory(data || []);
+
+      const items = (data || []) as ScanHistory[];
+
+      // Resolve signed URLs for items stored in the private bucket
+      const pathsToSign = items
+        .map((i) => i.storage_path)
+        .filter((p): p is string => !!p);
+
+      const signedMap = new Map<string, string>();
+      if (pathsToSign.length > 0) {
+        const { data: signed } = await supabase.storage
+          .from('scan-images')
+          .createSignedUrls(pathsToSign, 60 * 60); // 1 hour
+        signed?.forEach((s) => {
+          if (s.path && s.signedUrl) signedMap.set(s.path, s.signedUrl);
+        });
+      }
+
+      const withUrls = items.map((i) => ({
+        ...i,
+        resolved_image_url: i.storage_path
+          ? signedMap.get(i.storage_path) || null
+          : i.image_url,
+      }));
+
+      setHistory(withUrls);
     } catch (error) {
       console.error('Error fetching scan history:', error);
       toast.error(t('history.errorLoading'));
