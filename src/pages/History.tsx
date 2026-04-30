@@ -19,12 +19,14 @@ interface ScanHistory {
   created_at: string;
   image_name: string | null;
   image_url: string | null;
+  storage_path: string | null;
   disease_name: string;
   disease_name_scientific: string | null;
   scan_type: string | null;
   confidence: number | null;
   crop_type: string | null;
   treatment_recommendations: string[] | null;
+  resolved_image_url?: string | null;
 }
 
 const History = () => {
