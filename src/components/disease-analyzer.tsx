@@ -115,6 +115,11 @@ export function DiseaseAnalyzer() {
       };
       
       setAnalysisResult(result);
+
+      // Light haptic feedback on native platforms when a result is ready
+      if (Capacitor.isNativePlatform()) {
+        Haptics.impact({ style: isHealthy ? ImpactStyle.Light : ImpactStyle.Medium }).catch(() => {});
+      }
       
       // Save to database if user is authenticated
       if (session?.user) {
