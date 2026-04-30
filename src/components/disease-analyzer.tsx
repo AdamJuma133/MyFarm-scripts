@@ -116,25 +116,48 @@ export function DiseaseAnalyzer() {
       
       // Save to database if user is authenticated
       if (session?.user) {
-        const historyReader = new FileReader();
-        historyReader.onload = async (e) => {
-          try {
-            await supabase.from('scan_history').insert({
-              user_id: session.user.id,
-              image_url: e.target?.result as string,
-              image_name: file.name,
-              disease_name: isHealthy ? 'Healthy' : (selectedDisease?.name || aiResult.diseaseName || 'Unknown Disease'),
-              disease_name_scientific: null,
-              confidence: Math.round(result.confidence * 100),
-              scan_type: isHealthy ? 'healthy' : (selectedDisease?.type || aiResult.diseaseType || 'unknown'),
-              crop_type: detectedCrop,
-              treatment_recommendations: selectedDisease?.treatment || null,
-            });
-          } catch (error) {
-            console.error('Failed to save scan to database:', error);
-          }
+        const userId = session.user.id;
+        const baseRecord = {
+          user_id: userId,
+          image_name: file.name,
+          disease_name: isHealthy ? 'Healthy' : (selectedDisease?.name || aiResult.diseaseName || 'Unknown Disease'),
+          disease_name_scientific: null,
+          confidence: Math.round(result.confidence * 100),
+          scan_type: isHealthy ? 'healthy' : (selectedDisease?.type || aiResult.diseaseType || 'unknown'),
+          crop_type: detectedCrop,
+          treatment_recommendations: selectedDisease?.treatment || null,
         };
-        historyReader.readAsDataURL(file);
+
+        try {
+          if (isOnline) {
+            // Online: upload to private Supabase Storage bucket
+            const ext = (file.name.split('.').pop() || 'jpg').toLowerCase();
+            const storagePath = `${userId}/${crypto.randomUUID()}.${ext}`;
+
+            const { error: uploadError } = await supabase.storage
+              .from('scan-images')
+              .upload(storagePath, file, {
+                contentType: file.type || 'image/jpeg',
+                upsert: false,
+              });
+
+            if (uploadError) throw uploadError;
+
+            await supabase.from('scan_history').insert({
+              ...baseRecord,
+              storage_path: storagePath,
+              image_url: null,
+            });
+          } else {
+            // Offline fallback: keep base64 so the scan is still saved
+            await supabase.from('scan_history').insert({
+              ...baseRecord,
+              image_url: imageData,
+            });
+          }
+        } catch (saveError) {
+          console.error('Failed to save scan to database:', saveError);
+        }
       }
       
       if (isHealthy) {

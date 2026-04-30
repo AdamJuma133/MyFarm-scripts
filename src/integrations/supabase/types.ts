@@ -349,6 +349,7 @@ export type Database = {
           image_name: string | null
           image_url: string | null
           scan_type: string | null
+          storage_path: string | null
           treatment_recommendations: string[] | null
           user_id: string
         }
@@ -362,6 +363,7 @@ export type Database = {
           image_name?: string | null
           image_url?: string | null
           scan_type?: string | null
+          storage_path?: string | null
           treatment_recommendations?: string[] | null
           user_id: string
         }
@@ -375,6 +377,7 @@ export type Database = {
           image_name?: string | null
           image_url?: string | null
           scan_type?: string | null
+          storage_path?: string | null
           treatment_recommendations?: string[] | null
           user_id?: string
         }

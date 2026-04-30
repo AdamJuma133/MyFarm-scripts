@@ -19,12 +19,14 @@ interface ScanHistory {
   created_at: string;
   image_name: string | null;
   image_url: string | null;
+  storage_path: string | null;
   disease_name: string;
   disease_name_scientific: string | null;
   scan_type: string | null;
   confidence: number | null;
   crop_type: string | null;
   treatment_recommendations: string[] | null;
+  resolved_image_url?: string | null;
 }
 
 const History = () => {
@@ -50,7 +52,32 @@ const History = () => {
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      setHistory(data || []);
+
+      const items = (data || []) as ScanHistory[];
+
+      // Resolve signed URLs for items stored in the private bucket
+      const pathsToSign = items
+        .map((i) => i.storage_path)
+        .filter((p): p is string => !!p);
+
+      const signedMap = new Map<string, string>();
+      if (pathsToSign.length > 0) {
+        const { data: signed } = await supabase.storage
+          .from('scan-images')
+          .createSignedUrls(pathsToSign, 60 * 60); // 1 hour
+        signed?.forEach((s) => {
+          if (s.path && s.signedUrl) signedMap.set(s.path, s.signedUrl);
+        });
+      }
+
+      const withUrls = items.map((i) => ({
+        ...i,
+        resolved_image_url: i.storage_path
+          ? signedMap.get(i.storage_path) || null
+          : i.image_url,
+      }));
+
+      setHistory(withUrls);
     } catch (error) {
       console.error('Error fetching scan history:', error);
       toast.error(t('history.errorLoading'));
@@ -62,6 +89,11 @@ const History = () => {
   const handleDelete = async (id: string) => {
     setDeleting(id);
     try {
+      const item = history.find((h) => h.id === id);
+      if (item?.storage_path) {
+        await supabase.storage.from('scan-images').remove([item.storage_path]);
+      }
+
       const { error } = await supabase
         .from('scan_history')
         .delete()
@@ -69,7 +101,7 @@ const History = () => {
 
       if (error) throw error;
 
-      setHistory(history.filter(item => item.id !== id));
+      setHistory(history.filter((h) => h.id !== id));
       toast.success(t('history.deleted'));
     } catch (error) {
       console.error('Error deleting scan:', error);
@@ -83,6 +115,11 @@ const History = () => {
     if (!window.confirm(t('history.confirmClear'))) return;
 
     try {
+      const paths = history.map((h) => h.storage_path).filter((p): p is string => !!p);
+      if (paths.length > 0) {
+        await supabase.storage.from('scan-images').remove(paths);
+      }
+
       const { error } = await supabase
         .from('scan_history')
         .delete()
@@ -169,10 +206,10 @@ const History = () => {
           <div className="grid gap-3 md:gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
             {history.map((item) => (
               <Card key={item.id} className="overflow-hidden">
-                {item.image_url && (
+                {item.resolved_image_url && (
                   <div className="aspect-video relative">
                     <img
-                      src={item.image_url}
+                      src={item.resolved_image_url}
                       alt={item.image_name || 'Scan image'}
                       className="w-full h-full object-cover"
                     />
