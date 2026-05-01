@@ -40,13 +40,13 @@ const queryClient = new QueryClient({
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <AuthProvider>
-      <NativeBridge />
       <TooltipProvider>
         <OfflineIndicator />
         <PWAInstallPrompt />
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <NativeBridge />
           <Routes>
             <Route path="/auth" element={<Auth />} />
             <Route path="/welcome" element={<Welcome />} />

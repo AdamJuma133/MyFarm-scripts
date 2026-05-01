@@ -60,6 +60,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const signOut = async () => {
+    // Best-effort: remove this device's push token before clearing the session
+    // so the backend stops targeting an account that's no longer signed in here.
+    try {
+      const token = localStorage.getItem('myfarm_device_token');
+      if (token) {
+        await supabase.from('device_tokens').delete().eq('token', token);
+        localStorage.removeItem('myfarm_device_token');
+      }
+    } catch (err) {
+      console.warn('Device token cleanup failed:', err);
+    }
     await supabase.auth.signOut();
   };
 

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { 
   Cloud, 
@@ -121,47 +122,114 @@ const getFarmingRecommendations = (weather: WeatherData): FarmingRecommendation[
   return recommendations.slice(0, 3);
 };
 
+type LocationStatus = 'idle' | 'precise' | 'denied' | 'unavailable' | 'default';
+
+const DEFAULT_LAT = -1.2921; // Nairobi, Kenya
+const DEFAULT_LON = 36.8219;
+
 export function WeatherWidget() {
   const { t } = useTranslation();
   const [weather, setWeather] = useState<WeatherData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [location, setLocation] = useState<string>('');
+  const [locStatus, setLocStatus] = useState<LocationStatus>('idle');
+  const [showPermissionPrompt, setShowPermissionPrompt] = useState(false);
 
   useEffect(() => {
-    fetchWeather();
+    bootstrap();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const fetchWeather = async () => {
+  const bootstrap = async () => {
+    // On native, check the OS-level permission first so we can show an
+    // in-app rationale before triggering the system prompt.
+    if (Capacitor.isNativePlatform()) {
+      try {
+        const perm = await Geolocation.checkPermissions();
+        if (perm.location === 'granted') {
+          await fetchWeather();
+        } else {
+          setShowPermissionPrompt(true);
+          // Still load default-location forecast so the widget isn't empty.
+          await fetchWeather({ useDefault: true, status: 'default' });
+        }
+      } catch {
+        await fetchWeather({ useDefault: true, status: 'unavailable' });
+      }
+      return;
+    }
+    // Web: silently try; browsers gate prompts on user activation.
+    await fetchWeather();
+  };
+
+  const requestPermissionAndRefresh = async () => {
+    setShowPermissionPrompt(false);
+    if (Capacitor.isNativePlatform()) {
+      try {
+        const res = await Geolocation.requestPermissions();
+        if (res.location !== 'granted') {
+          setLocStatus('denied');
+          await fetchWeather({ useDefault: true, status: 'default' });
+          return;
+        }
+      } catch {
+        await fetchWeather({ useDefault: true, status: 'unavailable' });
+        return;
+      }
+    }
+    await fetchWeather();
+  };
+
+  const useDefaultLocation = async () => {
+    setShowPermissionPrompt(false);
+    await fetchWeather({ useDefault: true, status: 'default' });
+  };
+
+  const fetchWeather = async (opts?: { useDefault?: boolean; status?: LocationStatus }) => {
     try {
       setLoading(true);
       setError(null);
 
-      // Get user's location — prefer native API on iOS/Android
-      let lat = -1.2921; // Default to Nairobi, Kenya
-      let lon = 36.8219;
+      let lat = DEFAULT_LAT;
+      let lon = DEFAULT_LON;
+      let status: LocationStatus = opts?.status ?? 'default';
 
-      try {
-        if (Capacitor.isNativePlatform()) {
-          const perm = await Geolocation.checkPermissions();
-          if (perm.location !== 'granted') {
-            await Geolocation.requestPermissions();
+      if (!opts?.useDefault) {
+        try {
+          if (Capacitor.isNativePlatform()) {
+            const perm = await Geolocation.checkPermissions();
+            if (perm.location !== 'granted') {
+              const requested = await Geolocation.requestPermissions();
+              if (requested.location !== 'granted') {
+                status = 'denied';
+              }
+            }
+            if (perm.location === 'granted' || status !== 'denied') {
+              const position = await Geolocation.getCurrentPosition({ timeout: 8000 });
+              lat = position.coords.latitude;
+              lon = position.coords.longitude;
+              status = 'precise';
+            }
+          } else if ('geolocation' in navigator) {
+            const position = await new Promise<GeolocationPosition>((resolve, reject) => {
+              navigator.geolocation.getCurrentPosition(resolve, reject, { timeout: 5000 });
+            });
+            lat = position.coords.latitude;
+            lon = position.coords.longitude;
+            status = 'precise';
+          } else {
+            status = 'unavailable';
           }
-          const position = await Geolocation.getCurrentPosition({ timeout: 8000 });
-          lat = position.coords.latitude;
-          lon = position.coords.longitude;
-        } else if ('geolocation' in navigator) {
-          const position = await new Promise<GeolocationPosition>((resolve, reject) => {
-            navigator.geolocation.getCurrentPosition(resolve, reject, { timeout: 5000 });
-          });
-          lat = position.coords.latitude;
-          lon = position.coords.longitude;
+        } catch (e) {
+          const code = (e as GeolocationPositionError | undefined)?.code;
+          status = code === 1 ? 'denied' : 'unavailable';
+          console.log('Geolocation unavailable, using default location');
         }
-      } catch {
-        console.log('Using default location');
       }
 
-      // Fetch weather from Open-Meteo (free, no API key required)
+      setLocStatus(status);
+
       const response = await fetch(
         `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code,precipitation&daily=temperature_2m_max,temperature_2m_min,weather_code&timezone=auto&forecast_days=5`
       );
@@ -170,15 +238,15 @@ export function WeatherWidget() {
 
       const data = await response.json();
 
-      // Get location name via reverse geocoding
       try {
         const geoResponse = await fetch(
           `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m&timezone=auto`
         );
         const geoData = await geoResponse.json();
-        setLocation(geoData.timezone?.split('/').pop()?.replace('_', ' ') || 'Your Location');
+        const tz = geoData.timezone?.split('/').pop()?.replace('_', ' ');
+        setLocation(status === 'precise' ? (tz || 'Your Location') : `${tz || 'Nairobi'} (default)`);
       } catch {
-        setLocation('Your Location');
+        setLocation(status === 'precise' ? 'Your Location' : 'Default location');
       }
 
       setWeather({
@@ -258,6 +326,43 @@ export function WeatherWidget() {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
+        {/* Permission rationale prompt */}
+        {showPermissionPrompt && (
+          <div className="rounded-lg border border-primary/30 bg-primary/5 p-3 space-y-2">
+            <p className="text-sm font-medium flex items-center gap-2">
+              <MapPin className="h-4 w-4 text-primary" />
+              {t('weather.permission.title', 'Get weather for your farm')}
+            </p>
+            <p className="text-xs text-muted-foreground">
+              {t('weather.permission.body', 'Allow location access so we can show forecasts and farming tips tailored to your fields.')}
+            </p>
+            <div className="flex gap-2 pt-1">
+              <Button size="sm" onClick={requestPermissionAndRefresh}>
+                {t('weather.permission.allow', 'Use my location')}
+              </Button>
+              <Button size="sm" variant="outline" onClick={useDefaultLocation}>
+                {t('weather.permission.skip', 'Not now')}
+              </Button>
+            </div>
+          </div>
+        )}
+
+        {/* Fallback notice when running on default location */}
+        {!showPermissionPrompt && (locStatus === 'default' || locStatus === 'denied' || locStatus === 'unavailable') && (
+          <div className="flex items-center justify-between gap-2 rounded-lg bg-muted/40 px-3 py-2">
+            <p className="text-xs text-muted-foreground">
+              {locStatus === 'denied'
+                ? t('weather.fallback.denied', 'Location denied — showing a default region.')
+                : locStatus === 'unavailable'
+                ? t('weather.fallback.unavailable', 'Location unavailable — showing a default region.')
+                : t('weather.fallback.default', 'Showing weather for a default region.')}
+            </p>
+            <Button size="sm" variant="ghost" onClick={requestPermissionAndRefresh}>
+              {t('weather.fallback.enable', 'Enable')}
+            </Button>
+          </div>
+        )}
+
         {/* Current Weather */}
         <div className="flex items-center justify-between p-3 rounded-lg bg-muted/50">
           <div className="flex items-center gap-3">
