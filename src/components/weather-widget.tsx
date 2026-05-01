@@ -326,6 +326,43 @@ export function WeatherWidget() {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
+        {/* Permission rationale prompt */}
+        {showPermissionPrompt && (
+          <div className="rounded-lg border border-primary/30 bg-primary/5 p-3 space-y-2">
+            <p className="text-sm font-medium flex items-center gap-2">
+              <MapPin className="h-4 w-4 text-primary" />
+              {t('weather.permission.title', 'Get weather for your farm')}
+            </p>
+            <p className="text-xs text-muted-foreground">
+              {t('weather.permission.body', 'Allow location access so we can show forecasts and farming tips tailored to your fields.')}
+            </p>
+            <div className="flex gap-2 pt-1">
+              <Button size="sm" onClick={requestPermissionAndRefresh}>
+                {t('weather.permission.allow', 'Use my location')}
+              </Button>
+              <Button size="sm" variant="outline" onClick={useDefaultLocation}>
+                {t('weather.permission.skip', 'Not now')}
+              </Button>
+            </div>
+          </div>
+        )}
+
+        {/* Fallback notice when running on default location */}
+        {!showPermissionPrompt && (locStatus === 'default' || locStatus === 'denied' || locStatus === 'unavailable') && (
+          <div className="flex items-center justify-between gap-2 rounded-lg bg-muted/40 px-3 py-2">
+            <p className="text-xs text-muted-foreground">
+              {locStatus === 'denied'
+                ? t('weather.fallback.denied', 'Location denied — showing a default region.')
+                : locStatus === 'unavailable'
+                ? t('weather.fallback.unavailable', 'Location unavailable — showing a default region.')
+                : t('weather.fallback.default', 'Showing weather for a default region.')}
+            </p>
+            <Button size="sm" variant="ghost" onClick={requestPermissionAndRefresh}>
+              {t('weather.fallback.enable', 'Enable')}
+            </Button>
+          </div>
+        )}
+
         {/* Current Weather */}
         <div className="flex items-center justify-between p-3 rounded-lg bg-muted/50">
           <div className="flex items-center gap-3">
