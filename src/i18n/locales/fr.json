@@ -202,14 +202,15 @@
   },
   "auth": {
     "signIn": "Connexion",
-    "signUp": "Inscription",
     "signOut": "Déconnexion",
     "email": "Email",
     "password": "Mot de passe",
-    "confirmPassword": "Confirmer le mot de passe",
     "signingIn": "Connexion en cours...",
-    "creatingAccount": "Création du compte...",
-    "subtitle": "Connectez-vous pour analyser vos cultures avec l'IA"
+    "subtitle": "Connectez-vous pour analyser vos cultures avec l'IA",
+    "orContinueWith": "ou continuer avec",
+    "continueWithGoogle": "Continuer avec Google",
+    "continueWithApple": "Continuer avec Apple",
+    "accessNote": "Les comptes sont créés par votre administrateur MyFarm."
   },
   "weather": {
     "title": "Prévisions Météo",

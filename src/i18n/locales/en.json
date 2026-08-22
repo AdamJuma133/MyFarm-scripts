@@ -202,14 +202,15 @@
   },
   "auth": {
     "signIn": "Sign In",
-    "signUp": "Sign Up",
     "signOut": "Sign Out",
     "email": "Email",
     "password": "Password",
-    "confirmPassword": "Confirm Password",
     "signingIn": "Signing in...",
-    "creatingAccount": "Creating account...",
-    "subtitle": "Sign in to analyze your crops with AI"
+    "subtitle": "Sign in to analyze your crops with AI",
+    "orContinueWith": "or continue with",
+    "continueWithGoogle": "Continue with Google",
+    "continueWithApple": "Continue with Apple",
+    "accessNote": "Accounts are provisioned by your MyFarm administrator."
   },
   "weather": {
     "title": "Weather Forecast",

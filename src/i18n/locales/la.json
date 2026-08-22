@@ -202,14 +202,15 @@
   },
   "auth": {
     "signIn": "Inire",
-    "signUp": "Subscribere",
     "signOut": "Exire",
     "email": "Inscriptio electronica",
     "password": "Tessera",
-    "confirmPassword": "Confirma tesseram",
     "signingIn": "Intrans...",
-    "creatingAccount": "Creans rationem...",
-    "subtitle": "Inire ut segetes tuas cum AI analyzes"
+    "subtitle": "Inire ut segetes tuas cum AI analyzes",
+    "orContinueWith": "vel pergere cum",
+    "continueWithGoogle": "Perge cum Google",
+    "continueWithApple": "Perge cum Apple",
+    "accessNote": "Rationes ab administratore MyFarm creantur."
   },
   "weather": {
     "title": "Praedictio Tempestatis",

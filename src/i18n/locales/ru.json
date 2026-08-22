@@ -202,14 +202,15 @@
   },
   "auth": {
     "signIn": "Войти",
-    "signUp": "Регистрация",
     "signOut": "Выйти",
     "email": "Электронная почта",
     "password": "Пароль",
-    "confirmPassword": "Подтвердите пароль",
     "signingIn": "Вход...",
-    "creatingAccount": "Создание аккаунта...",
-    "subtitle": "Войдите, чтобы анализировать культуры с помощью ИИ"
+    "subtitle": "Войдите, чтобы анализировать культуры с помощью ИИ",
+    "orContinueWith": "или продолжить через",
+    "continueWithGoogle": "Продолжить с Google",
+    "continueWithApple": "Продолжить с Apple",
+    "accessNote": "Учётные записи создаёт администратор MyFarm."
   },
   "weather": {
     "title": "Прогноз Погоды",
