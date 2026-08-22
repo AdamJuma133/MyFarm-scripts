@@ -11,7 +11,14 @@ interface AuthContextType {
   signOut: () => Promise<void>;
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+// Keep a single context instance across HMR reloads / duplicate module copies,
+// otherwise the provider and useAuth can end up using different contexts.
+const globalRef = globalThis as unknown as {
+  __myfarm_auth_context?: React.Context<AuthContextType | undefined>;
+};
+const AuthContext =
+  globalRef.__myfarm_auth_context ??
+  (globalRef.__myfarm_auth_context = createContext<AuthContextType | undefined>(undefined));
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
