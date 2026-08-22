@@ -202,14 +202,15 @@
   },
   "auth": {
     "signIn": "تسجيل الدخول",
-    "signUp": "إنشاء حساب",
     "signOut": "تسجيل الخروج",
     "email": "البريد الإلكتروني",
     "password": "كلمة المرور",
-    "confirmPassword": "تأكيد كلمة المرور",
     "signingIn": "جاري تسجيل الدخول...",
-    "creatingAccount": "جاري إنشاء الحساب...",
-    "subtitle": "سجل الدخول لتحليل محاصيلك بالذكاء الاصطناعي"
+    "subtitle": "سجل الدخول لتحليل محاصيلك بالذكاء الاصطناعي",
+    "orContinueWith": "أو المتابعة باستخدام",
+    "continueWithGoogle": "المتابعة بحساب Google",
+    "continueWithApple": "المتابعة بحساب Apple",
+    "accessNote": "يتم إنشاء الحسابات من قِبل مسؤول MyFarm."
   },
   "weather": {
     "title": "توقعات الطقس",

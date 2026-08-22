@@ -202,14 +202,15 @@
   },
   "auth": {
     "signIn": "Iniciar Sesión",
-    "signUp": "Registrarse",
     "signOut": "Cerrar Sesión",
     "email": "Correo electrónico",
     "password": "Contraseña",
-    "confirmPassword": "Confirmar contraseña",
     "signingIn": "Iniciando sesión...",
-    "creatingAccount": "Creando cuenta...",
-    "subtitle": "Inicia sesión para analizar tus cultivos con IA"
+    "subtitle": "Inicia sesión para analizar tus cultivos con IA",
+    "orContinueWith": "o continuar con",
+    "continueWithGoogle": "Continuar con Google",
+    "continueWithApple": "Continuar con Apple",
+    "accessNote": "Las cuentas las crea el administrador de MyFarm."
   },
   "weather": {
     "title": "Pronóstico del Tiempo",

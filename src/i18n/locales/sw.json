@@ -202,14 +202,15 @@
   },
   "auth": {
     "signIn": "Ingia",
-    "signUp": "Jisajili",
     "signOut": "Toka",
     "email": "Barua pepe",
     "password": "Nenosiri",
-    "confirmPassword": "Thibitisha nenosiri",
     "signingIn": "Inaingia...",
-    "creatingAccount": "Inaunda akaunti...",
-    "subtitle": "Ingia ili kuchanganua mazao yako na AI"
+    "subtitle": "Ingia ili kuchanganua mazao yako na AI",
+    "orContinueWith": "au endelea na",
+    "continueWithGoogle": "Endelea na Google",
+    "continueWithApple": "Endelea na Apple",
+    "accessNote": "Akaunti hutolewa na msimamizi wa MyFarm."
   },
   "weather": {
     "title": "Utabiri wa Hali ya Hewa",

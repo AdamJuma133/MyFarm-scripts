@@ -202,14 +202,15 @@
   },
   "auth": {
     "signIn": "Giriş Yap",
-    "signUp": "Kayıt Ol",
     "signOut": "Çıkış Yap",
     "email": "E-posta",
     "password": "Şifre",
-    "confirmPassword": "Şifreyi onayla",
     "signingIn": "Giriş yapılıyor...",
-    "creatingAccount": "Hesap oluşturuluyor...",
-    "subtitle": "Yapay zeka ile ürünlerinizi analiz etmek için giriş yapın"
+    "subtitle": "Yapay zeka ile ürünlerinizi analiz etmek için giriş yapın",
+    "orContinueWith": "veya şununla devam et",
+    "continueWithGoogle": "Google ile devam et",
+    "continueWithApple": "Apple ile devam et",
+    "accessNote": "Hesaplar MyFarm yöneticiniz tarafından oluşturulur."
   },
   "weather": {
     "title": "Hava Durumu Tahmini",
