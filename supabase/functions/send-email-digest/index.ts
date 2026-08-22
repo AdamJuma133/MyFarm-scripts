@@ -54,10 +54,17 @@ Deno.serve(async (req) => {
       );
     }
 
-    // Check admin role using the service role client
+    // Check admin role server-side using the service role client.
+    // Role helpers live in a private schema that is not exposed via the API,
+    // so read the roles table directly instead of calling an RPC.
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
-    const { data: isAdmin } = await supabase.rpc('has_role', { _user_id: user.id, _role: 'admin' });
-    if (!isAdmin) {
+    const { data: adminRole } = await supabase
+      .from('user_roles')
+      .select('role')
+      .eq('user_id', user.id)
+      .eq('role', 'admin')
+      .maybeSingle();
+    if (!adminRole) {
       return new Response(
         JSON.stringify({ error: 'Forbidden: admin role required' }),
         { status: 403, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
