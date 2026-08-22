@@ -439,20 +439,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      can_moderate: { Args: { _user_id: string }; Returns: boolean }
-      can_pin_posts: { Args: { _user_id: string }; Returns: boolean }
       cleanup_stale_device_tokens: { Args: never; Returns: undefined }
-      has_role: {
-        Args: {
-          _role: Database["public"]["Enums"]["app_role"]
-          _user_id: string
-        }
-        Returns: boolean
-      }
-      is_post_author: {
-        Args: { _post_id: string; _user_id: string }
-        Returns: boolean
-      }
     }
     Enums: {
       app_role: "user" | "moderator" | "admin"
