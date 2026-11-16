@@ -1,0 +1,8 @@
+{
+  "target": {
+    "project_id": "c5a9ee43-5090-4c94-affb-dada429507e0",
+    "supabase_project_id": "lrshcfjphfuwooyjbnde"
+  },
+  "base_sha": "9367c9af0811647ee289ad7dcf9db2885f5fc352",
+  "migration_count": 1
+}
